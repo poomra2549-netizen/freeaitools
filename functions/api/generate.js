@@ -27,9 +27,19 @@ export async function onRequestPost({ request, env }) {
       })
     });
     const data = await apiResponse.json();
-    if (!apiResponse.ok) {
-      return Response.json({ error: "The AI service is temporarily unavailable. Please try again later." }, { status: 502 });
-    }
+    
+if (!apiResponse.ok) {
+  console.error("Gemini API failed:", {
+    httpStatus: apiResponse.status,
+    errorCode: data.error?.code,
+    errorStatus: data.error?.status
+  });
+
+  return Response.json({
+    error: "The AI service is temporarily unavailable. Please try again later."
+  }, { status: 502 });
+}
+
     const text = data.candidates?.[0]?.content?.parts?.map(p => p.text || "").join("").trim();
     if (!text) return Response.json({ error: "No result was returned. Please try a different prompt." }, { status: 502 });
     return Response.json({ text }, { headers: { "Cache-Control": "no-store" } });
