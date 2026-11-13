@@ -11,9 +11,69 @@ export async function onRequestPost({ request, env }) {
   }
   let body;
   try { body = await request.json(); } catch { return Response.json({ error: "Please send a valid request." }, { status: 400 }); }
-  const { tool, prompt, tone } = body || {};
+  
+const { tool, prompt, tone, turnstileToken } = body || {};
+
   if (!instructions[tool] || typeof prompt !== "string" || prompt.trim().length < 8 || prompt.length > 1800) {
     return Response.json({ error: "Please choose a tool and enter a prompt between 8 and 1,800 characters." }, { status: 400 });
+  }
+
+  // Verify Turnstile before accessing Gemini.
+  if (!env.TURNSTILE_SECRET_KEY) {
+    return Response.json(
+      { error: "Verification is not configured." },
+      { status: 503 }
+    );
+  }
+
+  if (
+    typeof turnstileToken !== "string" ||
+    !turnstileToken ||
+    turnstileToken.length > 2048
+  ) {
+    return Response.json(
+      { error: "Please complete verification." },
+      { status: 403 }
+    );
+  }
+
+  let verification;
+
+  try {
+    const verifyResponse = await fetch(
+      "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          secret: env.TURNSTILE_SECRET_KEY,
+          response: turnstileToken
+        })
+      }
+    );
+
+    if (!verifyResponse.ok) {
+      throw new Error("Siteverify unavailable");
+    }
+
+    verification = await verifyResponse.json();
+  } catch {
+    return Response.json(
+      { error: "Verification service unavailable. Please try again." },
+      { status: 503 }
+    );
+  }
+
+  if (
+    verification.success !== true ||
+    verification.hostname !== "freeaitools-5pd.pages.dev"
+  ) {
+    return Response.json(
+      { error: "Verification failed. Please try again." },
+      { status: 403 }
+    );
   }
 
   // Basic daily rate limit: 5 requests per IP.
