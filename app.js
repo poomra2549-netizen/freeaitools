@@ -25,10 +25,36 @@ document.querySelector("#generate").addEventListener("click", async () => {
   const prompt = promptEl.value.trim();
   if (prompt.length < 8) { statusEl.textContent = "Please enter a little more detail (at least 8 characters)."; return; }
   const button = document.querySelector("#generate");
+  
+  if (!window.turnstile || turnstileWidgetId === null) {
+    statusEl.textContent = "Verification is not ready. Please refresh.";
+    return;
+  }
+
+  const turnstileToken = window.turnstile.getResponse(turnstileWidgetId);
+
+  if (!turnstileToken) {
+    statusEl.textContent = "Please complete verification before generating.";
+    return;
+  }
+
   button.disabled = true; button.textContent = "Generating…"; statusEl.textContent = "Creating your draft. This may take a few seconds.";
   document.querySelector("#result-wrap").hidden = true;
   try {
-    const response = await fetch("/api/generate", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({tool:activeTool,prompt,tone:document.querySelector("#tone").value})});
+    
+    const response = await fetch("/api/generate", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        tool: activeTool,
+        prompt,
+        tone: document.querySelector("#tone").value,
+        turnstileToken
+      })
+    });
+
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || "Something went wrong. Please try again.");
     document.querySelector("#result").textContent = data.text;
