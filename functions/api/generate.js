@@ -119,11 +119,34 @@ const { tool, prompt, tone, turnstileToken } = body || {};
       );
     }
 
+    // Check the website-wide daily quota.
+    const globalKey = `global:${date}`;
+    const globalCount = Number(
+      (await env.RATE_LIMIT_KV.get(globalKey)) || "0"
+    );
+
+    if (globalCount >= 20) {
+      return Response.json(
+        {
+          error: "The website has reached its daily AI limit. Please try again tomorrow."
+        },
+        { status: 429 }
+      );
+    }
+
     await env.RATE_LIMIT_KV.put(
       rateKey,
       String(current + 1),
       { expirationTtl: 86400 }
     );
+    
+    // Save the website-wide daily request count.
+    await env.RATE_LIMIT_KV.put(
+      globalKey,
+      String(globalCount + 1),
+      { expirationTtl: 86400 }
+    );
+
   } catch (error) {
     console.error("Rate limit storage unavailable");
     return Response.json(
