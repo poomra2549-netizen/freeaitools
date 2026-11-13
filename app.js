@@ -42,3 +42,29 @@ document.querySelector("#copy").addEventListener("click", async () => {
   document.querySelector("#copy").textContent = "Copied!";
   setTimeout(() => document.querySelector("#copy").textContent = "Copy text", 1500);
 });
+
+let turnstileWidgetId = null;
+
+window.addEventListener("load", () => {
+  if (!window.turnstile) {
+    statusEl.textContent = "Verification could not load. Please refresh.";
+    return;
+  }
+
+  turnstileWidgetId = window.turnstile.render(
+    "#turnstile-container",
+    {
+      sitekey: "0x4AAAAAAF_WfVRO61WotOaI",
+      theme: "dark",
+      callback: () => {
+        statusEl.textContent = "";
+      },
+      "expired-callback": () => {
+        statusEl.textContent = "Verification expired. Please verify again.";
+      },
+      "error-callback": () => {
+        statusEl.textContent = "Verification failed. Please refresh.";
+      }
+    }
+  );
+});
