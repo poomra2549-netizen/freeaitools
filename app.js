@@ -61,7 +61,16 @@ document.querySelector("#generate").addEventListener("click", async () => {
     document.querySelector("#result-wrap").hidden = false;
     statusEl.textContent = "";
   } catch (error) { statusEl.textContent = error.message; }
-  finally { button.disabled = false; button.innerHTML = 'Generate <span>✦</span>'; }
+  
+  finally {
+    button.disabled = false;
+    button.innerHTML = 'Generate <span>✦</span>';
+
+    if (window.turnstile && turnstileWidgetId !== null) {
+      window.turnstile.reset(turnstileWidgetId);
+    }
+  }
+
 });
 document.querySelector("#copy").addEventListener("click", async () => {
   await navigator.clipboard.writeText(document.querySelector("#result").textContent);
