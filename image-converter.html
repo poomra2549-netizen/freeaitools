@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Convert JPG, PNG and WebP images for free directly in your browser. No uploads required.">
+  <title>Free Image Converter | FreeAITools</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #080e1e;
+      color: #eef2ff;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 22px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 1px solid #293856;
+    }
+
+    a { color: #a78bfa; text-decoration: none; }
+
+    .brand {
+      color: white;
+      font-size: 23px;
+      font-weight: bold;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(30px, 5vw, 46px);
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      color: #aab8d3;
+      text-align: center;
+      margin-bottom: 34px;
+    }
+
+    .panel, .info {
+      background: #101a30;
+      border: 1px solid #293856;
+      border-radius: 18px;
+      padding: 28px;
+    }
+
+    .upload {
+      display: block;
+      text-align: center;
+      padding: 42px 18px;
+      border: 2px dashed #7165e9;
+      border-radius: 14px;
+      background: #151e3a;
+      cursor: pointer;
+    }
+
+    .upload strong { font-size: 20px; }
+
+    .upload span {
+      display: block;
+      color: #aab8d3;
+      margin-top: 8px;
+    }
+
+    input[type="file"] { display: none; }
+
+    .preview {
+      margin-top: 24px;
+      text-align: center;
+    }
+
+    .preview img {
+      max-width: 100%;
+      max-height: 350px;
+      object-fit: contain;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .details {
+      color: #aab8d3;
+      margin-top: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    label.field {
+      display: block;
+      margin-top: 22px;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    select {
+      width: 100%;
+      padding: 14px;
+      color: white;
+      background: #080e1e;
+      border: 1px solid #46577a;
+      border-radius: 9px;
+      font-size: 16px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: #9565ff;
+    }
+
+    .hint {
+      font-size: 14px;
+      color: #aab8d3;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 18px;
+      color: white;
+      cursor: pointer;
+      background: #3a4768;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .primary {
+      width: 100%;
+      margin-top: 26px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: bold;
+      background: linear-gradient(110deg, #965cff, #625ff4);
+    }
+
+    .secondary { margin-top: 12px; }
+
+    #status {
+      color: #c7d2fe;
+      min-height: 25px;
+      overflow-wrap: anywhere;
+    }
+
+    .result {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid #46577a;
+      border-radius: 12px;
+      background: #17233c;
+    }
+
+    .download {
+      display: block;
+      text-align: center;
+      background: #7255ec;
+      color: white;
+      padding: 14px;
+      border-radius: 10px;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    .info { margin-top: 28px; }
+
+    footer {
+      padding: 35px;
+      text-align: center;
+      color: #aab8d3;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 500px) {
+      header { flex-direction: column; }
+      .panel, .info { padding: 17px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a class="brand" href="/">FreeAITools</a>
+    <nav>
+      <a href="/">Home</a> |
+      <a href="/merge-pdf.html">PDF Tools</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Free Image Converter</h1>
+
+    <p class="subtitle">
+      Convert JPG, PNG and WebP images instantly.
+      Free, simple and private.
+    </p>
+
+    <section class="panel">
+      <label class="upload" for="imageFile">
+        <strong>🖼️ Choose an Image</strong>
+        <span>Select a JPG, PNG or WebP file</span>
+      </label>
+
+      <input
+        id="imageFile"
+        type="file"
+        accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+      >
+
+      <div id="preview" class="preview" hidden>
+        <img id="previewImage" alt="Selected image preview">
+        <p id="fileDetails" class="details"></p>
+      </div>
+
+      <label class="field" for="format">
+        Convert to
+      </label>
+
+      <select id="format">
+        <option value="image/jpeg">JPG</option>
+        <option value="image/png">PNG</option>
+        <option value="image/webp">WebP</option>
+      </select>
+
+      <div id="qualitySection">
+        <label class="field" for="quality">
+          Image quality: <span id="qualityValue">85%</span>
+        </label>
+
+        <input
+          id="quality"
+          type="range"
+          min="10"
+          max="100"
+          value="85"
+        >
+
+        <p class="hint">
+          Lower quality usually means a smaller file.
+          Quality settings apply to JPG and WebP.
+        </p>
+      </div>
+
+      <button id="convertBtn" class="primary" disabled>
+        Convert Image
+      </button>
+
+      <button id="clearBtn" class="secondary">
+        Clear image
+      </button>
+
+      <p id="status" role="status" aria-live="polite"></p>
+
+      <div id="result" class="result" hidden>
+        <h3>Conversion complete!</h3>
+        <p id="resultDetails"></p>
+        <a id="downloadLink" class="download" download>
+          Download Converted Image
+        </a>
+      </div>
+
+      <p class="hint">
+        Maximum input file size: 25 MB.
+        Very large images may require more device memory.
+      </p>
+    </section>
+
+    <section class="info">
+      <h2>How to convert images</h2>
+      <ol>
+        <li>Choose an image from your device.</li>
+        <li>Select JPG, PNG or WebP.</li>
+        <li>Adjust image quality if needed.</li>
+        <li>Click Convert Image.</li>
+        <li>Download the converted file.</li>
+      </ol>
+
+      <h2>Supported image formats</h2>
+      <p><strong>JPG:</strong> Ideal for photographs and sharing.</p>
+      <p><strong>PNG:</strong> Supports transparency and lossless output encoding.</p>
+      <p><strong>WebP:</strong> Often offers smaller file sizes.</p>
+
+      <h2>Private browser processing</h2>
+      <p>
+        Images are converted locally in your browser
+        using the Canvas API. Image contents are not
+        uploaded to FreeAITools servers.
+      </p>
+
+      <p>
+        Converting to JPG removes transparency.
+        Transparent areas become white.
+        Some image metadata may not be preserved.
+        Animated images are not supported.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    FreeAITools — Free online tools
+    <p>
+      <a href="/privacy.html">Privacy</a> |
+      <a href="/terms.html">Terms</a>
+    </p>
+  </footer>
+
+  <script>
+    const fileInput = document.getElementById("imageFile");
+    const preview = document.getElementById("preview");
+    const previewImage = document.getElementById("previewImage");
+    const fileDetails = document.getElementById("fileDetails");
+    const format = document.getElementById("format");
+    const quality = document.getElementById("quality");
+    const qualityValue = document.getElementById("qualityValue");
+    const qualitySection = document.getElementById("qualitySection");
+    const convertBtn = document.getElementById("convertBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const status = document.getElementById("status");
+    const result = document.getElementById("result");
+    const resultDetails = document.getElementById("resultDetails");
+    const downloadLink = document.getElementById("downloadLink");
+
+    const MAX_SIZE = 25 * 1024 * 1024;
+    const MAX_PIXELS = 40000000;
+
+    const allowedTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/webp"
+    ];
+
+    let selectedFile = null;
+    let previewUrl = null;
+    let downloadUrl = null;
+    let busy = false;
+
+    function setStatus(message) {
+      status.textContent = message;
+    }
+
+    function sizeText(bytes) {
+      return (bytes / 1048576).toFixed(2) + " MB";
+    }
+
+    function updateButtons() {
+      convertBtn.disabled = !selectedFile || busy;
+      fileInput.disabled = busy;
+      clearBtn.disabled = busy;
+      format.disabled = busy;
+      quality.disabled = busy;
+    }
+
+    function clearResult() {
+      result.hidden = true;
+      downloadLink.removeAttribute("href");
+
+      if (downloadUrl) {
+        URL.revokeObjectURL(downloadUrl);
+        downloadUrl = null;
+      }
+    }
+
+    function resetImage() {
+      selectedFile = null;
+      fileInput.value = "";
+
+      if (previewUrl) {
+        URL.revokeObjectURL(previewUrl);
+        previewUrl = null;
+      }
+
+      previewImage.removeAttribute("src");
+      preview.hidden = true;
+      fileDetails.textContent = "";
+
+      clearResult();
+      setStatus("");
+      updateButtons();
+    }
+
+    function updateQuality() {
+      qualityValue.textContent = quality.value + "%";
+      qualitySection.hidden = format.value === "image/png";
+      clearResult();
+    }
+
+    async function loadImage(file) {
+      const objectUrl = URL.createObjectURL(file);
+      const img = new Image();
+
+      try {
+        await new Promise((resolve, reject) => {
+          img.onload = resolve;
+          img.onerror = () => reject(
+            new Error("Unable to decode image.")
+          );
+          img.src = objectUrl;
+        });
+
+        if (
+          !img.naturalWidth ||
+          !img.naturalHeight ||
+          img.naturalWidth * img.naturalHeight > MAX_PIXELS
+        ) {
+          throw new Error(
+            "Image dimensions are too large for this tool."
+          );
+        }
+
+        return { img, objectUrl };
+      } catch (error) {
+        URL.revokeObjectURL(objectUrl);
+        throw error;
+      }
+    }
+
+    fileInput.addEventListener("change", async () => {
+      const file = fileInput.files[0];
+      
+      resetImage();
+      // resetImage clears the input, but the File remains
+      // available in this local variable.
+
+      if (!file) return;
+
+      if (!allowedTypes.includes(file.type)) {
+        setStatus("Please choose a JPG, PNG or WebP image.");
+        return;
+      }
+
+      if (file.size > MAX_SIZE) {
+        setStatus("Image exceeds the 25 MB limit.");
+        return;
+      }
+
+      busy = true;
+      updateButtons();
+      setStatus("Reading image...");
+
+      try {
+        const loaded = await loadImage(file);
+
+        selectedFile = file;
+        previewUrl = loaded.objectUrl;
+
+        previewImage.src = previewUrl;
+        preview.hidden = false;
+
+        fileDetails.textContent =
+          file.name + " | " +
+          loaded.img.naturalWidth + " × " +
+          loaded.img.naturalHeight + " px | " +
+          sizeText(file.size);
+
+        setStatus("Image loaded. Choose an output format.");
+      } catch (error) {
+        setStatus(error.message);
+      } finally {
+        busy = false;
+        updateButtons();
+      }
+    });
+
+    format.addEventListener("change", updateQuality);
+
+    quality.addEventListener("input", () => {
+      qualityValue.textContent = quality.value + "%";
+      clearResult();
+    });
+
+    clearBtn.addEventListener("click", resetImage);
+
+    convertBtn.addEventListener("click", async () => {
+      if (!selectedFile || busy) return;
+
+      busy = true;
+      updateButtons();
+      clearResult();
+      setStatus("Converting image...");
+
+      try {
+        const outputType = format.value;
+
+        const loaded = await loadImage(selectedFile);
+
+        try {
+          const canvas = document.createElement("canvas");
+          canvas.width = loaded.img.naturalWidth;
+          canvas.height = loaded.img.naturalHeight;
+
+          const context = canvas.getContext("2d");
+
+          if (!context) {
+            throw new Error("Canvas is not supported.");
+          }
+
+          if (outputType === "image/jpeg") {
+            context.fillStyle = "#ffffff";
+            context.fillRect(
+              0, 0, canvas.width, canvas.height
+            );
+          }
+
+          context.drawImage(loaded.img, 0, 0);
+
+          const blob = await new Promise((resolve, reject) => {
+            canvas.toBlob(
+              value => value
+                ? resolve(value)
+                : reject(new Error("Conversion failed.")),
+              outputType,
+              Number(quality.value) / 100
+            );
+          });
+
+          if (blob.type !== outputType) {
+            throw new Error(
+              "This browser does not support the selected output format."
+            );
+          }
+
+          downloadUrl = URL.createObjectURL(blob);
+
+          const extension = {
+            "image/jpeg": "jpg",
+            "image/png": "png",
+            "image/webp": "webp"
+          }[outputType];
+
+          const originalName = selectedFile.name
+            .replace(/\.[^.]+$/, "");
+
+          downloadLink.href = downloadUrl;
+          downloadLink.download =
+            originalName + "-freeaitools." + extension;
+
+          resultDetails.textContent =
+            "Original: " + sizeText(selectedFile.size) +
+            " | Converted: " + sizeText(blob.size) +
+            " | Format: " + extension.toUpperCase();
+
+          result.hidden = false;
+
+          setStatus(
+            "Success! Your converted image is ready."
+          );
+        } finally {
+          URL.revokeObjectURL(loaded.objectUrl);
+        }
+      } catch (error) {
+        console.error("Image conversion error:", error);
+
+        setStatus(
+          error.message || "Could not convert this image."
+        );
+      } finally {
+        busy = false;
+        updateButtons();
+      }
+    });
+
+    updateQuality();
+    updateButtons();
+  </script>
+</body>
+</html>
