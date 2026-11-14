@@ -1,0 +1,465 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Rotate PDF pages online for free. Secure browser-based PDF rotation without uploading your documents.">
+  <title>Rotate PDF Free Online | FreeAITools</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #080e1e;
+      color: #eef2ff;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 22px 6%;
+      border-bottom: 1px solid #25324c;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    a {
+      color: #a89cff;
+      text-decoration: none;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      color: white;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 50px auto;
+      padding: 0 20px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: clamp(30px, 5vw, 46px);
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #aab8d3;
+      margin-bottom: 34px;
+    }
+
+    .panel {
+      background: #101a30;
+      border: 1px solid #293856;
+      border-radius: 20px;
+      padding: 28px;
+    }
+
+    .upload {
+      display: block;
+      padding: 46px 20px;
+      text-align: center;
+      border: 2px dashed #7165e9;
+      border-radius: 15px;
+      background: #151e3a;
+      cursor: pointer;
+    }
+
+    .upload strong {
+      font-size: 20px;
+    }
+
+    .upload span {
+      display: block;
+      margin-top: 8px;
+      color: #aab8d3;
+    }
+
+    input[type=file] {
+      display: none;
+    }
+
+    .file-info {
+      margin-top: 22px;
+      padding: 16px;
+      background: #1b2945;
+      border-radius: 10px;
+      overflow-wrap: anywhere;
+    }
+
+    .field-label {
+      display: block;
+      font-weight: bold;
+      margin: 24px 0 10px;
+    }
+
+    select {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #46577a;
+      border-radius: 10px;
+      background: #080e1e;
+      color: white;
+      font-size: 16px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 9px;
+      padding: 12px 16px;
+      color: white;
+      background: #3a4768;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .primary {
+      width: 100%;
+      margin-top: 26px;
+      padding: 16px;
+      font-size: 17px;
+      font-weight: bold;
+      background: linear-gradient(110deg, #965cff, #625ff4);
+    }
+
+    .secondary {
+      margin-top: 12px;
+    }
+
+    .help {
+      color: #aab8d3;
+      font-size: 14px;
+    }
+
+    #status {
+      min-height: 26px;
+      color: #bfc8e2;
+      overflow-wrap: anywhere;
+    }
+
+    .info {
+      margin-top: 30px;
+      padding: 22px;
+      background: #101a30;
+      border-radius: 15px;
+    }
+
+    footer {
+      padding: 35px;
+      text-align: center;
+      color: #aab8d3;
+    }
+
+    @media (max-width: 500px) {
+      header { flex-direction: column; }
+      .panel { padding: 16px; }
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+</head>
+
+<body>
+  <header>
+    <a class="brand" href="/">FreeAITools</a>
+    <nav>
+      <a href="/">Home</a> |
+      <a href="/merge-pdf.html">Merge PDF</a> |
+      <a href="/split-pdf.html">Split PDF</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Rotate PDF Files</h1>
+
+    <p class="subtitle">
+      Rotate all pages in your PDF.
+      Free, simple, and private.
+    </p>
+
+    <section class="panel">
+      <label class="upload" for="pdfFile">
+        <strong>📄 Choose a PDF File</strong>
+        <span>Select the PDF you want to rotate</span>
+      </label>
+
+      <input
+        id="pdfFile"
+        type="file"
+        accept=".pdf,application/pdf"
+      >
+
+      <div
+        id="fileInfo"
+        class="file-info"
+        hidden
+      ></div>
+
+      <label class="field-label" for="rotation">
+        Rotation angle
+      </label>
+
+      <select id="rotation">
+        <option value="90">
+          Rotate 90° clockwise
+        </option>
+        <option value="180">
+          Rotate 180°
+        </option>
+        <option value="270">
+          Rotate 90° counterclockwise
+        </option>
+      </select>
+
+      <p class="help">
+        The selected rotation will be applied
+        to every page of the document.
+      </p>
+
+      <button
+        id="rotateBtn"
+        class="primary"
+        type="button"
+        disabled
+      >
+        Rotate PDF
+      </button>
+
+      <button
+        id="clearBtn"
+        class="secondary"
+        type="button"
+      >
+        Clear file
+      </button>
+
+      <p id="status" role="status" aria-live="polite"></p>
+
+      <p class="help">
+        Maximum file size: 50 MB.
+        Large files may require more device memory.
+      </p>
+    </section>
+
+    <section class="info">
+      <h2>How to rotate a PDF</h2>
+      <ol>
+        <li>Select a PDF from your device.</li>
+        <li>Choose the rotation angle.</li>
+        <li>Click Rotate PDF.</li>
+        <li>Download your rotated document.</li>
+      </ol>
+
+      <h2>Available rotations</h2>
+      <p><strong>90° clockwise:</strong> Turn pages to the right.</p>
+      <p><strong>180°:</strong> Turn pages upside down.</p>
+      <p><strong>90° counterclockwise:</strong> Turn pages to the left.</p>
+
+      <h2>Your privacy matters</h2>
+      <p>
+        PDF documents are processed locally
+        in your browser. Your documents are
+        not uploaded to FreeAITools servers.
+        An internet connection is needed to
+        load the PDF processing library.
+      </p>
+
+      <p>
+        Password-protected PDFs are not supported.
+        This tool rotates every page in the PDF.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>FreeAITools — Free online tools</p>
+    <a href="/privacy.html">Privacy</a> |
+    <a href="/terms.html">Terms</a>
+  </footer>
+
+  <script>
+    const fileInput = document.getElementById("pdfFile");
+    const fileInfo = document.getElementById("fileInfo");
+    const rotation = document.getElementById("rotation");
+    const rotateBtn = document.getElementById("rotateBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const status = document.getElementById("status");
+
+    const MAX_SIZE = 50 * 1024 * 1024;
+
+    let selectedFile = null;
+    let busy = false;
+
+    function setStatus(message) {
+      status.textContent = message;
+    }
+
+    function updateButtons() {
+      rotateBtn.disabled = busy || !selectedFile;
+      clearBtn.disabled = busy;
+      fileInput.disabled = busy;
+      rotation.disabled = busy;
+    }
+
+    function resetFile() {
+      selectedFile = null;
+      fileInput.value = "";
+      fileInfo.textContent = "";
+      fileInfo.hidden = true;
+      rotation.value = "90";
+      setStatus("");
+      updateButtons();
+    }
+
+    fileInput.addEventListener("change", async () => {
+      const file = fileInput.files[0];
+
+      selectedFile = null;
+      fileInfo.hidden = true;
+      fileInfo.textContent = "";
+      setStatus("");
+      updateButtons();
+
+      if (!file) return;
+
+      if (!file.name.toLowerCase().endsWith(".pdf")) {
+        setStatus("Please select a PDF file.");
+        return;
+      }
+
+      if (file.size > MAX_SIZE) {
+        setStatus("File exceeds the 50 MB limit.");
+        return;
+      }
+
+      if (!window.PDFLib) {
+        setStatus(
+          "PDF library failed to load. Refresh and try again."
+        );
+        return;
+      }
+
+      busy = true;
+      updateButtons();
+      setStatus("Reading PDF information...");
+
+      try {
+        const bytes = await file.arrayBuffer();
+
+        const pdf = await PDFLib.PDFDocument.load(bytes);
+
+        const totalPages = pdf.getPageCount();
+
+        if (totalPages < 1) {
+          throw new Error("PDF contains no pages.");
+        }
+
+        selectedFile = file;
+
+        fileInfo.textContent =
+          file.name + " — " +
+          totalPages + " page(s) — " +
+          (file.size / 1048576).toFixed(2) + " MB";
+
+        fileInfo.hidden = false;
+
+        setStatus(
+          "PDF loaded successfully. Choose a rotation angle."
+        );
+      } catch (error) {
+        console.error("PDF loading error:", error);
+
+        setStatus(
+          "Unable to read PDF. Check that the file is valid and not password-protected."
+        );
+      } finally {
+        busy = false;
+        updateButtons();
+      }
+    });
+
+    clearBtn.addEventListener("click", resetFile);
+
+    rotateBtn.addEventListener("click", async () => {
+      if (busy || !selectedFile) return;
+
+      const angle = Number(rotation.value);
+
+      if (![90, 180, 270].includes(angle)) {
+        setStatus("Please choose a valid rotation angle.");
+        return;
+      }
+
+      busy = true;
+      updateButtons();
+      setStatus("Rotating PDF pages...");
+
+      try {
+        const bytes = await selectedFile.arrayBuffer();
+
+        const pdf = await PDFLib.PDFDocument.load(bytes);
+
+        const pages = pdf.getPages();
+
+        for (const page of pages) {
+          const currentAngle = page.getRotation().angle;
+
+          const newAngle =
+            (((currentAngle + angle) % 360) + 360) % 360;
+
+          page.setRotation(PDFLib.degrees(newAngle));
+        }
+
+        const result = await pdf.save();
+
+        const blob = new Blob([result], {
+          type: "application/pdf"
+        });
+
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "rotated-freeaitools.pdf";
+
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+
+        setTimeout(() => {
+          URL.revokeObjectURL(url);
+        }, 60000);
+
+        setStatus(
+          "Success! Rotated " +
+          pages.length +
+          " page(s). Your PDF is ready."
+        );
+      } catch (error) {
+        console.error("PDF rotation error:", error);
+
+        setStatus(
+          "Unable to rotate this PDF. Please try another valid PDF."
+        );
+      } finally {
+        busy = false;
+        updateButtons();
+      }
+    });
+
+    updateButtons();
+  </script>
+</body>
+</html>
