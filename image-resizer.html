@@ -1,0 +1,371 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Resize JPG, PNG and WebP images for free in your browser.">
+<title>Free Image Resizer | FreeAITools</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080e1e;color:#eef2ff;font-family:Arial,sans-serif;line-height:1.6}
+header{padding:22px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #293856}
+a{color:#a78bfa;text-decoration:none}
+.brand{color:white;font-size:23px;font-weight:bold}
+main{max-width:850px;margin:50px auto;padding:0 20px}
+h1{text-align:center;font-size:clamp(30px,5vw,46px);margin-bottom:8px}
+.subtitle{text-align:center;color:#aab8d3;margin-bottom:34px}
+.panel,.info{background:#101a30;border:1px solid #293856;border-radius:18px;padding:28px}
+.upload{display:block;text-align:center;padding:42px 18px;border:2px dashed #7165e9;border-radius:14px;background:#151e3a;cursor:pointer}
+.upload strong{font-size:20px}
+.upload span{display:block;color:#aab8d3;margin-top:8px}
+input[type=file]{display:none}
+.preview{text-align:center;margin-top:24px}
+.preview img{max-width:100%;max-height:320px;object-fit:contain;border-radius:10px}
+.details{color:#aab8d3;overflow-wrap:anywhere}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:22px}
+label.field{display:block;margin:12px 0 7px;font-weight:bold}
+input[type=number],select{width:100%;padding:13px;border:1px solid #46577a;border-radius:9px;background:#080e1e;color:white;font-size:16px}
+.check{display:flex;align-items:center;gap:10px;margin-top:18px}
+.check input{width:18px;height:18px;accent-color:#9565ff}
+button{border:0;border-radius:10px;padding:13px 18px;color:white;cursor:pointer;background:#3a4768}
+button:disabled{opacity:.5;cursor:not-allowed}
+.primary{width:100%;margin-top:25px;padding:16px;font-size:17px;font-weight:bold;background:linear-gradient(110deg,#965cff,#625ff4)}
+.secondary{margin-top:12px}
+.hint{font-size:14px;color:#aab8d3}
+#status{min-height:25px;color:#c7d2fe;overflow-wrap:anywhere}
+.result{margin-top:22px;padding:18px;background:#17233c;border:1px solid #46577a;border-radius:12px}
+.download{display:block;text-align:center;background:#7255ec;color:white;padding:14px;border-radius:10px;font-weight:bold;margin-top:15px}
+.info{margin-top:28px}
+footer{text-align:center;padding:35px;color:#aab8d3}
+[hidden]{display:none!important}
+@media(max-width:500px){.fields{grid-template-columns:1fr}.panel,.info{padding:17px}header{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav><a href="/">Home</a> | <a href="/image-converter.html">Image Converter</a></nav>
+</header>
+
+<main>
+<h1>Free Image Resizer</h1>
+<p class="subtitle">Resize images in pixels. Free, simple and private.</p>
+
+<section class="panel">
+<label class="upload" for="imageFile">
+<strong>🖼️ Choose an Image</strong>
+<span>Select a JPG, PNG or WebP image</span>
+</label>
+<input id="imageFile" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+
+<div id="preview" class="preview" hidden>
+<img id="previewImage" alt="Original image preview">
+<p id="fileDetails" class="details"></p>
+</div>
+
+<div class="fields">
+<div>
+<label class="field" for="width">Width (px)</label>
+<input id="width" type="number" min="1" max="10000" placeholder="Width">
+</div>
+<div>
+<label class="field" for="height">Height (px)</label>
+<input id="height" type="number" min="1" max="10000" placeholder="Height">
+</div>
+</div>
+
+<label class="check">
+<input id="lockRatio" type="checkbox" checked>
+Keep aspect ratio
+</label>
+
+<label class="field" for="format">Output format</label>
+<select id="format">
+<option value="image/jpeg">JPG</option>
+<option value="image/png">PNG</option>
+<option value="image/webp">WebP</option>
+</select>
+
+<p class="hint">Maximum output dimensions: 10,000 × 10,000 pixels, up to 40 million pixels total.</p>
+
+<button id="resizeBtn" class="primary" disabled>Resize Image</button>
+<button id="clearBtn" class="secondary">Clear image</button>
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h3>Image resized successfully!</h3>
+<p id="resultDetails"></p>
+<a id="downloadLink" class="download" download>Download Resized Image</a>
+</div>
+
+<p class="hint">Maximum input size: 25 MB. Very large images may require more device memory.</p>
+</section>
+
+<section class="info">
+<h2>How to resize images</h2>
+<ol>
+<li>Choose a JPG, PNG or WebP image.</li>
+<li>Enter your desired width or height.</li>
+<li>Keep the aspect ratio locked to avoid stretching.</li>
+<li>Choose an output format.</li>
+<li>Click Resize Image and download the result.</li>
+</ol>
+<h2>Private image processing</h2>
+<p>Your image is processed locally using the browser Canvas API. Image contents are not uploaded to FreeAITools servers.</p>
+<p>JPG does not support transparency. Transparent areas become white. Some metadata may be removed, and animated images are not supported.</p>
+</section>
+</main>
+
+<footer>
+FreeAITools — Free online tools
+<p><a href="/privacy.html">Privacy</a> | <a href="/terms.html">Terms</a></p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const fileInput = $("imageFile");
+const preview = $("preview");
+const previewImage = $("previewImage");
+const fileDetails = $("fileDetails");
+const widthInput = $("width");
+const heightInput = $("height");
+const lockRatio = $("lockRatio");
+const format = $("format");
+const resizeBtn = $("resizeBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const resultDetails = $("resultDetails");
+const downloadLink = $("downloadLink");
+
+const MAX_SIZE = 25 * 1024 * 1024;
+const MAX_PIXELS = 40000000;
+const MAX_DIMENSION = 10000;
+const types = ["image/jpeg","image/png","image/webp"];
+
+let selectedFile = null;
+let originalWidth = 0;
+let originalHeight = 0;
+let previewUrl = null;
+let downloadUrl = null;
+let busy = false;
+
+function message(text){status.textContent=text}
+function fileSize(bytes){return (bytes/1048576).toFixed(2)+" MB"}
+
+function buttons(){
+  resizeBtn.disabled = !selectedFile || busy;
+  fileInput.disabled = busy;
+  clearBtn.disabled = busy;
+  widthInput.disabled = busy;
+  heightInput.disabled = busy;
+  lockRatio.disabled = busy;
+  format.disabled = busy;
+}
+
+function clearResult(){
+  result.hidden = true;
+  downloadLink.removeAttribute("href");
+  if(downloadUrl){
+    URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+  }
+}
+
+function reset(){
+  selectedFile = null;
+  fileInput.value = "";
+  if(previewUrl){
+    URL.revokeObjectURL(previewUrl);
+    previewUrl = null;
+  }
+  previewImage.removeAttribute("src");
+  preview.hidden = true;
+  fileDetails.textContent = "";
+  widthInput.value = "";
+  heightInput.value = "";
+  originalWidth = 0;
+  originalHeight = 0;
+  clearResult();
+  message("");
+  buttons();
+}
+
+function validDimensions(w,h){
+  return Number.isInteger(w) && Number.isInteger(h)
+    && w >= 1 && h >= 1
+    && w <= MAX_DIMENSION && h <= MAX_DIMENSION
+    && w*h <= MAX_PIXELS;
+}
+
+async function decodeImage(file){
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  try{
+    await new Promise((resolve,reject)=>{
+      img.onload = resolve;
+      img.onerror = () => reject(new Error("Unable to open this image."));
+      img.src = url;
+    });
+    return {img,url};
+  }catch(error){
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+}
+
+function dimensionsChanged(changed){
+  clearResult();
+  if(!lockRatio.checked || !originalWidth || !originalHeight)return;
+  const input = changed === "width" ? widthInput : heightInput;
+  const number = Number(input.value);
+  if(!Number.isInteger(number) || number < 1)return;
+  if(changed === "width"){
+    heightInput.value = Math.max(1,Math.round(number*originalHeight/originalWidth));
+  }else{
+    widthInput.value = Math.max(1,Math.round(number*originalWidth/originalHeight));
+  }
+}
+
+widthInput.addEventListener("input",()=>dimensionsChanged("width"));
+heightInput.addEventListener("input",()=>dimensionsChanged("height"));
+lockRatio.addEventListener("change",()=>{
+  if(lockRatio.checked) dimensionsChanged("width");
+});
+format.addEventListener("change",clearResult);
+clearBtn.addEventListener("click",reset);
+
+fileInput.addEventListener("change",async()=>{
+  const file = fileInput.files[0];
+  reset();
+  if(!file)return;
+
+  if(!types.includes(file.type)){
+    message("Please choose a JPG, PNG or WebP image.");
+    return;
+  }
+  if(file.size > MAX_SIZE){
+    message("Image exceeds the 25 MB limit.");
+    return;
+  }
+
+  busy = true;
+  buttons();
+  message("Loading image...");
+
+  try{
+    const loaded = await decodeImage(file);
+    try{
+      const w = loaded.img.naturalWidth;
+      const h = loaded.img.naturalHeight;
+      if(!w || !h || w*h > MAX_PIXELS){
+        throw new Error("This image is too large.");
+      }
+
+      selectedFile = file;
+      originalWidth = w;
+      originalHeight = h;
+      previewUrl = loaded.url;
+      previewImage.src = previewUrl;
+      preview.hidden = false;
+      widthInput.value = w;
+      heightInput.value = h;
+      fileDetails.textContent =
+        file.name+" | "+w+" × "+h+" px | "+fileSize(file.size);
+
+      // The preview now owns the object URL.
+      message("Image loaded. Enter your new dimensions.");
+    }catch(error){
+      URL.revokeObjectURL(loaded.url);
+      throw error;
+    }
+  }catch(error){
+    message(error.message);
+  }finally{
+    busy = false;
+    buttons();
+  }
+});
+
+resizeBtn.addEventListener("click",async()=>{
+  if(!selectedFile || busy)return;
+  const w = Number(widthInput.value);
+  const h = Number(heightInput.value);
+
+  if(!validDimensions(w,h)){
+    message("Enter valid dimensions within the size limits.");
+    return;
+  }
+
+  busy = true;
+  buttons();
+  clearResult();
+  message("Resizing image...");
+
+  try{
+    const loaded = await decodeImage(selectedFile);
+    try{
+      const canvas = document.createElement("canvas");
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d");
+      if(!ctx)throw new Error("Canvas is unavailable.");
+
+      if(format.value === "image/jpeg"){
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0,0,w,h);
+      }
+
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
+      ctx.drawImage(loaded.img,0,0,w,h);
+
+      const type = format.value;
+      const blob = await new Promise((resolve,reject)=>{
+        canvas.toBlob(
+          output => output
+            ? resolve(output)
+            : reject(new Error("Unable to export image.")),
+          type,
+          0.9
+        );
+      });
+
+      if(blob.type !== type){
+        throw new Error("This output format is not supported.");
+      }
+
+      const extension = {
+        "image/jpeg":"jpg",
+        "image/png":"png",
+        "image/webp":"webp"
+      }[type];
+
+      downloadUrl = URL.createObjectURL(blob);
+      const baseName = selectedFile.name.replace(/\.[^.]+$/,"");
+      downloadLink.href = downloadUrl;
+      downloadLink.download = baseName+"-resized-freeaitools."+extension;
+
+      resultDetails.textContent =
+        originalWidth+" × "+originalHeight+" px → "+
+        w+" × "+h+" px | "+fileSize(blob.size);
+
+      result.hidden = false;
+      message("Success! Your resized image is ready.");
+    }finally{
+      URL.revokeObjectURL(loaded.url);
+    }
+  }catch(error){
+    console.error("Resize error:",error);
+    message(error.message || "Unable to resize image.");
+  }finally{
+    busy = false;
+    buttons();
+  }
+});
+
+buttons();
+</script>
+</body>
+</html>
