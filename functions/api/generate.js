@@ -6,6 +6,27 @@ const instructions = {
 };
 
 export async function onRequestPost({ request, env }) {
+  
+  // Restrict unpaid Gemini API access by visitor country.
+  const country = request.cf?.country;
+
+  const restrictedCountries = new Set([
+    "AT", "BE", "BG", "HR", "CY", "CZ", "DK",
+    "EE", "FI", "FR", "DE", "GR", "HU", "IE",
+    "IT", "LV", "LT", "LU", "MT", "NL", "PL",
+    "PT", "RO", "SK", "SI", "ES", "SE",
+    "IS", "LI", "NO", "GB", "CH"
+  ]);
+
+  if (!country || restrictedCountries.has(country)) {
+    return Response.json(
+      {
+        error: "The AI tools are currently unavailable in your region. PDF and image tools remain available."
+      },
+      { status: 403 }
+    );
+  }
+
   if (!env.GEMINI_API_KEY) {
     return Response.json({ error: "The AI service is not configured yet. Add GEMINI_API_KEY in your Cloudflare Pages environment variables." }, { status: 503 });
   }
