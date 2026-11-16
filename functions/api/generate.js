@@ -7,6 +7,18 @@ const instructions = {
 
 export async function onRequestPost({ request, env }) {
   
+  // Temporarily suspend public AI generation.
+  return Response.json(
+    {
+      error: "AI writing tools are temporarily unavailable. Our free PDF and image tools remain available."
+    },
+    {
+      status: 503,
+      headers: { "Cache-Control": "no-store" }
+    }
+  );
+
+  
   // Restrict unpaid Gemini API access by visitor country.
   const country = request.cf?.country;
 
