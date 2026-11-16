@@ -170,6 +170,106 @@
       header { flex-direction: column; }
       .panel { padding: 16px; }
     }
+    
+/* =====================================
+   FreeAITools - Split PDF enhancements
+===================================== */
+
+/* Smooth transitions */
+.upload,
+button,
+.panel,
+.info {
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+/* Hover animations */
+@media (hover: hover) and (pointer: fine) {
+  .upload:hover {
+    border-color: #b7a8ff;
+    background: #1b2547;
+    box-shadow: 0 8px 25px rgba(139,92,246,.12);
+  }
+
+  button:not(:disabled):hover {
+    transform: translateY(-2px);
+  }
+
+  .primary:not(:disabled):hover {
+    box-shadow: 0 10px 28px rgba(139,92,246,.25);
+  }
+}
+
+/* Keyboard accessibility */
+button:focus-visible,
+a:focus-visible,
+.upload:focus-within {
+  outline: 2px solid #67e8f9;
+  outline-offset: 3px;
+}
+
+/* FAQ section */
+.faq {
+  margin-top: 30px;
+  padding: 26px;
+  background: #101a30;
+  border: 1px solid #293856;
+  border-radius: 15px;
+}
+
+.faq h2 {
+  margin-top: 0;
+}
+
+.faq details {
+  padding: 15px 0;
+  border-bottom: 1px solid #293856;
+}
+
+.faq details:last-child {
+  border-bottom: none;
+}
+
+.faq summary {
+  cursor: pointer;
+  color: #eef2ff;
+  font-weight: 700;
+}
+
+.faq p {
+  color: #aab8d3;
+  margin: 12px 0 0;
+}
+
+/* Future advertisements remain hidden */
+.future-ad-slot[hidden] {
+  display: none !important;
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .upload,
+  button,
+  .panel,
+  .info {
+    transition: none !important;
+  }
+
+  button:hover {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .faq {
+    padding: 18px;
+  }
+}
+
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
@@ -263,7 +363,74 @@
         This tool extracts selected pages into one PDF.
       </p>
     </section>
+  
+<!-- Split PDF Frequently Asked Questions -->
+<section class="faq" aria-labelledby="faq-title">
+
+  <h2 id="faq-title">Frequently Asked Questions</h2>
+
+  <details>
+    <summary>Is this PDF splitter free?</summary>
+    <p>
+      Yes. You can extract pages from PDF files
+      for free without creating an account.
+    </p>
+  </details>
+
+  <details>
+    <summary>Are my PDF files uploaded to a server?</summary>
+    <p>
+      No. Your selected PDF is processed locally
+      in your browser. The document is not uploaded
+      to our servers for splitting.
+    </p>
+  </details>
+
+  <details>
+    <summary>How do I select specific pages?</summary>
+    <p>
+      Enter page numbers separated by commas.
+      For example, 2,5,7 extracts pages 2, 5 and 7.
+      You can also use ranges such as 1-3,6-8.
+    </p>
+  </details>
+
+  <details>
+    <summary>Can I extract multiple page ranges?</summary>
+    <p>
+      Yes. You can combine several ranges in one
+      request, such as 1-3,5,7-9. All selected pages
+      are saved into one new PDF document.
+    </p>
+  </details>
+
+  <details>
+    <summary>What is the maximum PDF file size?</summary>
+    <p>
+      The maximum supported file size is 50 MB.
+      Large PDFs may require additional browser memory.
+    </p>
+  </details>
+
+  <details>
+    <summary>Can I split password-protected PDFs?</summary>
+    <p>
+      No. Password-protected PDFs are not supported
+      by this tool.
+    </p>
+  </details>
+
+</section>
+<!-- End Split PDF FAQ -->
+
   </main>
+
+<!-- Reserved for future advertising.
+     No AdSense scripts are loaded here. -->
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden>
+</section>
 
   <footer>
     <p>FreeAITools — Free online tools</p>
