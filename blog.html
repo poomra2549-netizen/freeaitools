@@ -1,1 +1,435 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AI Guides — FreeAITools</title><link rel="stylesheet" href="/styles.css"></head><body><header class="topbar"><a class="brand" href="/">✦ FreeAI<span>Tools</span></a><a class="nav-cta" href="/">Back to tools</a></header><main class="tools-section"><div class="eyebrow">LEARN & CREATE</div><h1>AI guides and practical tips</h1><p>We are preparing original, hands-on guides about writing workflows, prompt design and responsible AI use. New articles will be published after editorial review.</p><h2>Coming next</h2><ul><li>How to write a useful AI prompt: a practical checklist</li><li>How to review AI-generated text before publishing</li><li>Simple ways to plan social media captions</li></ul><p>We will only publish guides that include useful examples, clear explanations and original editorial value.</p></main><footer><a href="/">Home</a> · <a href="/about.html">About</a> · <a href="/contact.html">Contact</a> · <a href="/privacy.html">Privacy</a></footer></body></html>
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="description"
+        content="Explore practical FreeAITools guides about image formats, PDF files and everyday digital workflows. Learn useful tips and try our free browser-based tools.">
+
+  <meta name="theme-color" content="#090e1c">
+
+  <title>Free Guides & Tutorials | FreeAITools</title>
+
+  <link rel="canonical"
+        href="https://freeaitools-5pd.pages.dev/blog.html">
+
+  <link rel="stylesheet" href="/styles.css">
+
+  <style>
+    .blog-wrap {
+      max-width: 1100px;
+      margin: 55px auto 75px;
+      padding: 0 24px;
+    }
+
+    .blog-hero {
+      text-align: center;
+      padding: 42px 10px 48px;
+    }
+
+    .blog-hero h1 {
+      font-family: Manrope, Arial, sans-serif;
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: -1.3px;
+      margin: 18px 0;
+    }
+
+    .blog-hero h1 span {
+      background: linear-gradient(
+        90deg,
+        #c4b5fd,
+        #67e8f9
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .blog-intro {
+      max-width: 680px;
+      margin: 0 auto;
+      color: #b5bfd3;
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .blog-section {
+      margin: 45px 0;
+    }
+
+    .blog-section h2 {
+      font-size: clamp(22px, 3vw, 28px);
+      margin-bottom: 10px;
+    }
+
+    .section-desc {
+      color: #aab8d3;
+      margin-bottom: 25px;
+    }
+
+    .blog-grid {
+      display: grid;
+      grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .blog-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #111a2d;
+      border: 1px solid #293856;
+      border-radius: 18px;
+      text-decoration: none;
+      color: inherit;
+      transition:
+        transform .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+    }
+
+    .blog-card-art {
+      min-height: 185px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background:
+        radial-gradient(
+          circle at 70% 25%,
+          rgba(103,232,249,.18),
+          transparent 45%
+        ),
+        linear-gradient(
+          135deg,
+          #24204c,
+          #101a30 65%,
+          #16344d
+        );
+      border-bottom: 1px solid #293856;
+      padding: 25px;
+    }
+
+    .format-icons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+      flex-wrap: wrap;
+    }
+
+    .format-icon {
+      min-width: 86px;
+      padding: 22px 12px;
+      border-radius: 14px;
+      border: 1px solid #7c73db;
+      background: rgba(14,20,45,.8);
+      color: #eef2ff;
+      font-size: 16px;
+      font-weight: 800;
+      text-align: center;
+      box-shadow:
+        0 10px 25px rgba(0,0,0,.14);
+    }
+
+    .format-icon:nth-child(2) {
+      border-color: #67e8f9;
+    }
+
+    .format-icon:nth-child(3) {
+      border-color: #b7a8ff;
+    }
+
+    .blog-card-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 25px;
+    }
+
+    .blog-category {
+      color: #bca9ff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .blog-card h3 {
+      color: #f4f7ff;
+      font-size: clamp(19px, 2.5vw, 23px);
+      line-height: 1.4;
+      margin: 14px 0 12px;
+    }
+
+    .blog-card p {
+      color: #aab8d3;
+      font-size: 14px;
+      line-height: 1.8;
+      margin: 0 0 18px;
+    }
+
+    .blog-card-meta {
+      margin-top: auto;
+      padding-top: 10px;
+      color: #8996b0;
+      font-size: 13px;
+    }
+
+    .blog-read {
+      display: inline-block;
+      margin-top: 18px;
+      color: #c4b5fd;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .blog-card:focus-visible,
+    .tool-links a:focus-visible,
+    .blog-contact a:focus-visible {
+      outline: 2px solid #67e8f9;
+      outline-offset: 4px;
+    }
+
+    .tool-links {
+      display: grid;
+      grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 25px;
+    }
+
+    .tool-links a {
+      display: block;
+      padding: 18px;
+      text-align: center;
+      color: #d8d2ff;
+      font-weight: 700;
+      background: #151b34;
+      border: 1px solid #51457d;
+      border-radius: 12px;
+      text-decoration: none;
+      transition:
+        border-color .2s ease,
+        transform .2s ease;
+    }
+
+    .blog-contact {
+      text-align: center;
+      padding: 28px;
+      margin-top: 55px;
+      background: #111a2d;
+      border: 1px solid #293856;
+      border-radius: 16px;
+    }
+
+    .blog-contact p {
+      color: #aab8d3;
+    }
+
+    .blog-contact a {
+      color: #c4b5fd;
+      overflow-wrap: anywhere;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .blog-card:hover {
+        transform: translateY(-5px);
+        border-color: #9b8cf5;
+        box-shadow:
+          0 14px 34px rgba(101,85,211,.16);
+      }
+
+      .tool-links a:hover {
+        transform: translateY(-3px);
+        border-color: #a78bfa;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .blog-wrap {
+        margin: 25px auto 50px;
+        padding: 0 16px;
+      }
+
+      .blog-hero {
+        padding: 30px 5px;
+      }
+
+      .blog-grid,
+      .tool-links {
+        grid-template-columns: 1fr;
+      }
+
+      .blog-card-body {
+        padding: 20px;
+      }
+
+      .format-icon {
+        min-width: 73px;
+        padding: 17px 10px;
+        font-size: 14px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .blog-card,
+      .tool-links a {
+        transition: none;
+      }
+
+      .blog-card:hover,
+      .tool-links a:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="topbar">
+    <a class="brand" href="/">
+      ✦ FreeAI<span>Tools</span>
+    </a>
+    <a class="nav-cta" href="/">
+      Back to tools
+    </a>
+  </header>
+
+  <main class="blog-wrap">
+
+    <section class="blog-hero">
+      <div class="eyebrow">FREEAITOOLS GUIDES</div>
+
+      <h1>
+        Practical guides for
+        <span>everyday digital tasks.</span>
+      </h1>
+
+      <p class="blog-intro">
+        Learn how to work with image formats,
+        optimize file sizes and manage PDF
+        documents. Explore clear explanations,
+        practical examples and free tools
+        you can try directly in your browser.
+      </p>
+    </section>
+
+    <section class="blog-section"
+             aria-labelledby="guides-title">
+
+      <h2 id="guides-title">Latest guides</h2>
+
+      <p class="section-desc">
+        Explore our published tutorials and
+        choose a topic that helps with your work.
+      </p>
+
+      <div class="blog-grid">
+
+        <!-- Published article -->
+        <a class="blog-card"
+           href="/jpg-vs-png-vs-webp.html">
+
+          <div class="blog-card-art"
+               aria-hidden="true">
+            <div class="format-icons">
+              <div class="format-icon">JPG</div>
+              <div class="format-icon">PNG</div>
+              <div class="format-icon">WebP</div>
+            </div>
+          </div>
+
+          <div class="blog-card-body">
+            <span class="blog-category">
+              Image Formats
+            </span>
+
+            <h3>
+              JPG vs PNG vs WebP:
+              Which Image Format Should You Use?
+            </h3>
+
+            <p>
+              Understand the differences between
+              popular image formats, including
+              compression, transparency, quality
+              and the best situations for each.
+            </p>
+
+            <div class="blog-card-meta">
+              November 17, 2026 · FreeAITools Guides
+            </div>
+
+            <span class="blog-read">
+              Read guide →
+            </span>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <section class="blog-section"
+             aria-labelledby="tools-title">
+
+      <h2 id="tools-title">
+        Put what you learn into practice
+      </h2>
+
+      <p class="section-desc">
+        Try our free browser-based image tools.
+        Image contents are processed locally
+        rather than uploaded to FreeAITools
+        servers for these operations.
+      </p>
+
+      <div class="tool-links">
+        <a href="/image-converter.html">
+          🖼️ Image Converter
+        </a>
+
+        <a href="/image-resizer.html">
+          📐 Image Resizer
+        </a>
+
+        <a href="/image-compressor.html">
+          🗜️ Image Compressor
+        </a>
+      </div>
+
+    </section>
+
+    <section class="blog-contact">
+      <h2>Have a question or suggestion?</h2>
+
+      <p>
+        We welcome feedback about our guides,
+        including corrections and ideas for
+        future tutorials.
+      </p>
+
+      <p>
+        <a href="/contact.html">
+          Contact FreeAITools →
+        </a>
+      </p>
+    </section>
+
+  </main>
+
+  <footer>
+    <a href="/">Home</a> ·
+    <a href="/about.html">About</a> ·
+    <a href="/contact.html">Contact</a> ·
+    <a href="/privacy.html">Privacy</a> ·
+    <a href="/terms.html">Terms</a>
+  </footer>
+
+</body>
+</html>
