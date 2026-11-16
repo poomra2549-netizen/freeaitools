@@ -123,6 +123,120 @@
       li { flex-wrap: wrap; }
       .filename { flex-basis: 100%; }
     }
+    
+/* FreeAITools — Merge PDF improvements */
+
+html {
+  scroll-behavior: smooth;
+}
+
+.panel,
+.info,
+.upload,
+button {
+  transition: transform .22s ease,
+              box-shadow .22s ease,
+              border-color .22s ease,
+              background-color .22s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .upload:hover {
+    border-color: #b7a8ff;
+    background: #1b2547;
+    box-shadow: 0 8px 25px rgba(139,92,246,.12);
+  }
+
+  button:not(:disabled):hover {
+    transform: translateY(-2px);
+  }
+
+  .primary:not(:disabled):hover {
+    box-shadow: 0 10px 28px rgba(139,92,246,.25);
+  }
+}
+
+button:focus-visible,
+.upload:focus-within,
+a:focus-visible {
+  outline: 2px solid #67e8f9;
+  outline-offset: 3px;
+}
+
+/* Restore numbered instructions */
+.info ol {
+  padding-left: 24px;
+}
+
+.info ol li {
+  display: list-item;
+  list-style-type: decimal;
+  background: transparent;
+  padding: 3px 0;
+  margin-bottom: 8px;
+}
+
+/* FAQ */
+.faq {
+  margin-top: 30px;
+  padding: 26px;
+  border: 1px solid #293856;
+  background: #101a30;
+  border-radius: 15px;
+}
+
+.faq h2 {
+  margin-top: 0;
+}
+
+.faq details {
+  padding: 15px 0;
+  border-bottom: 1px solid #293856;
+}
+
+.faq details:last-child {
+  border-bottom: none;
+}
+
+.faq summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: #eef2ff;
+}
+
+.faq p {
+  color: #aab8d3;
+  margin: 12px 0 0;
+}
+
+/* Reserved ad container: remains hidden until approval */
+.future-ad-slot[hidden] {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .panel,
+  .info,
+  .upload,
+  button {
+    transition: none !important;
+  }
+
+  button:hover {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .faq {
+    padding: 18px;
+  }
+}
+
   </style>
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </head>
@@ -179,7 +293,65 @@
         Password-protected PDFs are not supported.
       </p>
     </section>
+    
+<!-- Frequently Asked Questions -->
+<section class="faq" aria-labelledby="faq-title">
+  <h2 id="faq-title">Frequently Asked Questions</h2>
+
+  <details>
+    <summary>Is this PDF merger free?</summary>
+    <p>
+      Yes. You can merge PDF files for free without
+      creating an account.
+    </p>
+  </details>
+
+  <details>
+    <summary>Are my PDF files uploaded to a server?</summary>
+    <p>
+      No. PDF merging takes place locally in your browser.
+      Your selected PDF documents are not uploaded to
+      our servers for merging.
+    </p>
+  </details>
+
+  <details>
+    <summary>Can I change the order of PDF files?</summary>
+    <p>
+      Yes. After selecting your files, use the up and down
+      arrow buttons to arrange them before merging.
+    </p>
+  </details>
+
+  <details>
+    <summary>What are the file size limits?</summary>
+    <p>
+      Each PDF can be up to 25 MB, with a combined
+      selection limit of 100 MB. Larger files may
+      require more device memory.
+    </p>
+  </details>
+
+  <details>
+    <summary>Can I merge password-protected PDFs?</summary>
+    <p>
+      Password-protected PDF documents are not supported.
+      Please use PDF files that do not require a password
+      to open.
+    </p>
+  </details>
+</section>
+<!-- End FAQ -->
+
   </main>
+  
+<!-- Reserved for a future approved ad placement.
+     No advertising scripts are loaded here. -->
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden>
+</section>
+
 
   <footer>
     <p>FreeAITools — Free online tools</p>
