@@ -1,1 +1,352 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>About — FreeAITools</title><link rel="stylesheet" href="/styles.css"></head><body><header class="topbar"><a class="brand" href="/">✦ FreeAI<span>Tools</span></a><a class="nav-cta" href="/">Back to tools</a></header><main class="tools-section"><div class="eyebrow">ABOUT US</div><h1>Practical AI for everyday tasks.</h1><p>FreeAITools is an independent project designed to make common writing tasks easier. Our tools help people create first drafts, explore ideas and communicate more clearly.</p><h2>Our approach</h2><p>We aim to keep our tools simple, explain their limitations and encourage users to review AI-generated content before publishing or relying on it. AI can make mistakes, so please verify important details.</p><p>We are continuously improving the site based on usefulness, clarity and responsible use.</p></main><footer><a href="/">Home</a> · <a href="/contact.html">Contact</a> · <a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a></footer></body></html>
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Learn about FreeAITools, an independent project offering free browser-based PDF and image tools.">
+  <meta name="theme-color" content="#090e1c">
+  <title>About Us — FreeAITools</title>
+  <link rel="stylesheet" href="/styles.css">
+
+  <style>
+    .about-wrap {
+      max-width: 1000px;
+      margin: 65px auto;
+      padding: 0 24px;
+    }
+
+    .about-hero {
+      text-align: center;
+      padding: 45px 15px 55px;
+    }
+
+    .about-hero h1 {
+      font: 800 clamp(32px, 5vw, 54px)/1.2 Manrope, sans-serif;
+      letter-spacing: -1.5px;
+      margin: 18px 0;
+    }
+
+    .about-hero h1 span {
+      background: linear-gradient(90deg, #c4b5fd, #67e8f9);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .about-intro {
+      max-width: 670px;
+      margin: auto;
+      font-size: 16px;
+      color: #a6b0c5;
+    }
+
+    .about-section {
+      margin: 45px 0;
+    }
+
+    .about-section h2 {
+      font: 700 27px Manrope, sans-serif;
+      margin-bottom: 12px;
+    }
+
+    .about-section > p {
+      color: #a6b0c5;
+      max-width: 780px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 25px;
+    }
+
+    .about-card {
+      display: block;
+      background: #111a2d;
+      border: 1px solid #26334c;
+      border-radius: 16px;
+      padding: 23px;
+      transition:
+        transform .22s ease,
+        border-color .22s ease,
+        box-shadow .22s ease;
+    }
+
+    .about-card h3 {
+      color: #f4f7ff;
+      font: 700 17px Manrope, sans-serif;
+      margin: 12px 0 7px;
+    }
+
+    .about-card p {
+      color: #a6b0c5;
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .about-icon {
+      font-size: 27px;
+    }
+
+    .about-link {
+      display: inline-block;
+      margin-top: 15px;
+      color: #a78bfa;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .about-notice {
+      padding: 24px;
+      margin-top: 35px;
+      border: 1px solid #51457d;
+      border-radius: 15px;
+      background: #151b34;
+    }
+
+    .about-notice h2 {
+      margin-top: 0;
+    }
+
+    .about-notice p {
+      color: #a6b0c5;
+      margin-bottom: 0;
+    }
+
+    .about-contact {
+      text-align: center;
+      padding: 35px 20px;
+      background: #111a2d;
+      border: 1px solid #26334c;
+      border-radius: 16px;
+      margin-top: 55px;
+    }
+
+    .about-contact h2 {
+      margin-top: 0;
+    }
+
+    .about-contact p {
+      color: #a6b0c5;
+    }
+
+    .about-contact a {
+      color: #a78bfa;
+      overflow-wrap: anywhere;
+    }
+
+    .about-card:focus-visible,
+    .about-contact a:focus-visible {
+      outline: 2px solid #67e8f9;
+      outline-offset: 3px;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .about-card:hover {
+        transform: translateY(-5px);
+        border-color: #8b7be8;
+        box-shadow: 0 12px 28px rgba(101,85,211,.16);
+      }
+    }
+
+    @media (max-width: 760px) {
+      .about-wrap {
+        padding: 0 16px;
+        margin: 30px auto;
+      }
+
+      .about-hero {
+        padding: 35px 10px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-section h2 {
+        font-size: 23px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .about-card {
+        transition: none;
+      }
+
+      .about-card:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="FreeAITools home">
+      ✦ FreeAI<span>Tools</span>
+    </a>
+    <a class="nav-cta" href="/">Back to tools</a>
+  </header>
+
+  <main class="about-wrap">
+    <section class="about-hero">
+      <div class="eyebrow">ABOUT FREEAITOOLS</div>
+
+      <h1>
+        Simple tools.<br>
+        <span>More productive work.</span>
+      </h1>
+
+      <p class="about-intro">
+        FreeAITools is an independent project focused
+        on making everyday digital tasks simpler.
+        Our free browser-based utilities help you
+        work with PDF documents and images without
+        complicated software or account registration.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>What is FreeAITools?</h2>
+
+      <p>
+        FreeAITools brings practical online utilities
+        together in one place. The goal is to provide
+        straightforward tools with clear instructions,
+        useful results and accessible interfaces.
+      </p>
+
+      <p>
+        We focus on common tasks such as combining PDF
+        documents, extracting pages, rotating files,
+        converting image formats, resizing pictures
+        and reducing image file sizes.
+      </p>
+    </section>
+
+    <section class="about-section">
+      <h2>Explore our free tools</h2>
+
+      <p>
+        Choose a tool below to get started.
+        Each tool includes instructions and
+        information about its limitations.
+      </p>
+
+      <div class="about-grid">
+        <a class="about-card" href="/merge-pdf.html">
+          <div class="about-icon" aria-hidden="true">📑</div>
+          <h3>Merge PDF</h3>
+          <p>Combine multiple PDFs into one document.</p>
+          <span class="about-link">Open tool →</span>
+        </a>
+
+        <a class="about-card" href="/split-pdf.html">
+          <div class="about-icon" aria-hidden="true">✂️</div>
+          <h3>Split PDF</h3>
+          <p>Extract selected pages into a new PDF.</p>
+          <span class="about-link">Open tool →</span>
+        </a>
+
+        <a class="about-card" href="/rotate-pdf.html">
+          <div class="about-icon" aria-hidden="true">🔄</div>
+          <h3>Rotate PDF</h3>
+          <p>Rotate every page in a PDF document.</p>
+          <span class="about-link">Open tool →</span>
+        </a>
+
+        <a class="about-card" href="/image-converter.html">
+          <div class="about-icon" aria-hidden="true">🖼️</div>
+          <h3>Image Converter</h3>
+          <p>Convert images between JPG, PNG and WebP.</p>
+          <span class="about-link">Open tool →</span>
+        </a>
+
+        <a class="about-card" href="/image-resizer.html">
+          <div class="about-icon" aria-hidden="true">📐</div>
+          <h3>Image Resizer</h3>
+          <p>Change image dimensions in pixels.</p>
+          <span class="about-link">Open tool →</span>
+        </a>
+
+        <a class="about-card" href="/image-compressor.html">
+          <div class="about-icon" aria-hidden="true">🗜️</div>
+          <h3>Image Compressor</h3>
+          <p>Reduce image sizes using JPG or WebP encoding.</p>
+          <span class="about-link">Open tool →</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <h2>Our approach</h2>
+
+      <p>
+        We aim to make tools easy to understand,
+        with practical guidance and honest
+        explanations of their capabilities.
+      </p>
+
+      <p>
+        Our PDF and image tools are designed to
+        process selected files locally in your
+        browser rather than uploading file contents
+        to FreeAITools servers for processing.
+        Your browser still connects to the website
+        and may load supporting software.
+      </p>
+
+      <p>
+        We recommend keeping backups of important
+        files and checking downloaded results
+        before relying on them.
+      </p>
+    </section>
+
+    <section class="about-notice" aria-labelledby="ai-status">
+      <h2 id="ai-status">About our AI features</h2>
+
+      <p>
+        FreeAITools also includes interfaces for AI
+        writing, social media captions, business
+        name ideas and email drafts.
+      </p>
+
+      <p>
+        Public AI generation is currently
+        temporarily unavailable while we review
+        provider requirements and access controls.
+        Our PDF and image tools remain available.
+      </p>
+    </section>
+
+    <section class="about-contact">
+      <h2>Questions or suggestions?</h2>
+
+      <p>
+        We welcome feedback, bug reports and ideas
+        for improving FreeAITools.
+      </p>
+
+      <p>
+        <a href="mailto:freeaitools.contact@gmail.com">
+          freeaitools.contact@gmail.com
+        </a>
+      </p>
+
+      <p>
+        <a href="/contact.html">Visit our Contact page →</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <a href="/">Home</a> ·
+    <a href="/contact.html">Contact</a> ·
+    <a href="/privacy.html">Privacy</a> ·
+    <a href="/terms.html">Terms</a>
+  </footer>
+</body>
+</html>
