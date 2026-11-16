@@ -166,6 +166,108 @@
       header { flex-direction: column; }
       .panel { padding: 16px; }
     }
+    
+/* =====================================
+   FreeAITools - Rotate PDF enhancements
+===================================== */
+
+/* Smooth interactive animations */
+.upload,
+button,
+.panel,
+.info {
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+/* Hover effects */
+@media (hover: hover) and (pointer: fine) {
+  .upload:hover {
+    border-color: #b7a8ff;
+    background: #1b2547;
+    box-shadow: 0 8px 25px rgba(139,92,246,.12);
+  }
+
+  button:not(:disabled):hover {
+    transform: translateY(-2px);
+  }
+
+  .primary:not(:disabled):hover {
+    box-shadow: 0 10px 28px rgba(139,92,246,.25);
+  }
+}
+
+/* Improve keyboard focus */
+button:focus-visible,
+select:focus-visible,
+a:focus-visible,
+.upload:focus-within {
+  outline: 2px solid #67e8f9;
+  outline-offset: 3px;
+}
+
+/* FAQ */
+.faq {
+  margin-top: 30px;
+  padding: 26px;
+  background: #101a30;
+  border: 1px solid #293856;
+  border-radius: 15px;
+}
+
+.faq h2 {
+  margin-top: 0;
+}
+
+.faq details {
+  padding: 15px 0;
+  border-bottom: 1px solid #293856;
+}
+
+.faq details:last-child {
+  border-bottom: none;
+}
+
+.faq summary {
+  cursor: pointer;
+  color: #eef2ff;
+  font-weight: 700;
+}
+
+.faq p {
+  color: #aab8d3;
+  margin: 12px 0 0;
+}
+
+/* Hidden future advertising placement */
+.future-ad-slot[hidden] {
+  display: none !important;
+}
+
+/* Accessibility: reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .upload,
+  button,
+  .panel,
+  .info {
+    transition: none !important;
+  }
+
+  button:hover {
+    transform: none !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 500px) {
+  .faq {
+    padding: 18px;
+  }
+}
+
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
@@ -281,7 +383,81 @@
         This tool rotates every page in the PDF.
       </p>
     </section>
+    
+<!-- Rotate PDF Frequently Asked Questions -->
+<section class="faq" aria-labelledby="faq-title">
+  <h2 id="faq-title">Frequently Asked Questions</h2>
+
+  <details>
+    <summary>Is this PDF rotation tool free?</summary>
+    <p>
+      Yes. You can rotate PDF documents for free
+      without creating an account.
+    </p>
+  </details>
+
+  <details>
+    <summary>Are my PDF files uploaded to a server?</summary>
+    <p>
+      No. PDF rotation is performed locally
+      in your browser. Your selected documents
+      are not uploaded to FreeAITools servers.
+    </p>
+  </details>
+
+  <details>
+    <summary>Which rotation angles are available?</summary>
+    <p>
+      You can rotate PDF pages 90 degrees clockwise,
+      180 degrees, or 90 degrees counterclockwise.
+    </p>
+  </details>
+
+  <details>
+    <summary>Can I rotate only one page?</summary>
+    <p>
+      This tool currently rotates every page
+      in the selected PDF. Rotating individual
+      pages is not supported.
+    </p>
+  </details>
+
+  <details>
+    <summary>Will rotating a PDF remove its pages?</summary>
+    <p>
+      The tool changes the rotation settings
+      of the pages rather than intentionally
+      removing pages from the document.
+    </p>
+  </details>
+
+  <details>
+    <summary>What is the maximum file size?</summary>
+    <p>
+      The maximum file size is 50 MB.
+      Large documents may require more memory
+      on your device.
+    </p>
+  </details>
+
+  <details>
+    <summary>Can I rotate a password-protected PDF?</summary>
+    <p>
+      No. Password-protected PDF documents
+      are not supported by this tool.
+    </p>
+  </details>
+</section>
+<!-- End Rotate PDF FAQ -->
+
   </main>
+
+<!-- Reserved for future approved advertising.
+     No advertising scripts are loaded here. -->
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden>
+</section>
 
   <footer>
     <p>FreeAITools — Free online tools</p>
