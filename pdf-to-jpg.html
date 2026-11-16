@@ -1,0 +1,719 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Convert PDF pages to JPG for free. Select pages, adjust image quality and download JPG or ZIP files. Private browser-based PDF conversion.">
+<title>Free PDF to JPG Converter | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/pdf-to-jpg.html">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080e1e;color:#eef2ff;font-family:Arial,sans-serif;line-height:1.6}
+header{padding:22px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #293856}
+a{color:#b7a8ff;text-decoration:none}
+.brand{font-size:23px;color:white;font-weight:bold}
+main{max-width:850px;margin:48px auto;padding:0 20px}
+h1{text-align:center;font-size:clamp(30px,5vw,46px);margin-bottom:8px}
+.subtitle{text-align:center;color:#aab8d3;margin-bottom:32px}
+.panel,.info,.faq{background:#101a30;border:1px solid #293856;border-radius:18px;padding:26px}
+.upload{display:block;text-align:center;padding:42px 18px;border:2px dashed #7165e9;border-radius:14px;background:#151e3a;cursor:pointer}
+.upload strong{font-size:20px}
+.upload span{display:block;color:#aab8d3;margin-top:7px}
+.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+.upload:focus-within{outline:2px solid #67e8f9;outline-offset:3px}
+.details{overflow-wrap:anywhere;color:#aab8d3}
+.field{display:block;font-weight:bold;margin:20px 0 8px}
+input[type=text],select{width:100%;padding:13px;background:#080e1e;color:white;border:1px solid #46577a;border-radius:10px;font-size:16px}
+input[type=range]{width:100%;accent-color:#9565ff}
+.hint{font-size:14px;color:#aab8d3}
+button{border:0;border-radius:10px;padding:13px 18px;background:#3a4768;color:white;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{width:100%;padding:16px;margin-top:24px;font-size:17px;font-weight:bold;background:linear-gradient(110deg,#965cff,#625ff4)}
+.secondary{margin-top:12px}
+#status{color:#c7d2fe;min-height:26px;overflow-wrap:anywhere}
+.result{margin-top:22px;padding:20px;background:#17233c;border:1px solid #46577a;border-radius:12px}
+.download{display:block;text-align:center;background:#7255ec;color:white;padding:14px;border-radius:10px;font-weight:bold;margin-top:15px}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{padding:15px 0;border-bottom:1px solid #293856}
+.faq details:last-child{border:0}
+.faq summary{font-weight:bold;cursor:pointer}
+footer{text-align:center;padding:35px;color:#aab8d3}
+[hidden]{display:none!important}
+.upload,button,.download{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+button:focus-visible,select:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid #67e8f9;outline-offset:3px}
+@media(hover:hover) and (pointer:fine){
+.upload:hover{border-color:#b7a8ff;box-shadow:0 8px 25px rgba(139,92,246,.12)}
+button:not(:disabled):hover,.download:hover{transform:translateY(-2px)}
+.primary:not(:disabled):hover,.download:hover{box-shadow:0 10px 28px rgba(139,92,246,.25)}
+}
+@media(max-width:500px){
+header{flex-direction:column}
+.panel,.info,.faq{padding:17px}
+}
+@media(prefers-reduced-motion:reduce){
+.upload,button,.download{transition:none}
+button:hover,.download:hover{transform:none}
+}
+</style>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/jpg-to-pdf.html">JPG to PDF</a>
+</nav>
+</header>
+
+<main>
+<h1>Free PDF to JPG Converter</h1>
+<p class="subtitle">
+Convert PDF pages into JPG images.
+Free, simple and private.
+</p>
+
+<section class="panel">
+
+<label class="upload" for="pdfFile">
+<strong>📄 Choose a PDF File</strong>
+<span>Select a PDF from your device</span>
+</label>
+
+<input class="visually-hidden"
+       type="file"
+       id="pdfFile"
+       accept=".pdf,application/pdf">
+
+<p class="hint">
+Maximum PDF size: 30 MB.
+Convert up to 20 pages at a time.
+</p>
+
+<div id="fileDetails" class="details" hidden></div>
+
+<label class="field" for="pages">
+Pages to convert
+</label>
+<input id="pages"
+       type="text"
+       value="all"
+       placeholder="all or 1,3-5"
+       aria-describedby="pageHint">
+
+<p id="pageHint" class="hint">
+Enter "all", or select pages such as 1,3-5.
+Page numbers start at 1.
+Maximum 20 output pages.
+</p>
+
+<label class="field" for="resolution">
+Image resolution
+</label>
+<select id="resolution">
+<option value="1">Standard (72 DPI equivalent)</option>
+<option value="1.5" selected>Medium (108 DPI equivalent)</option>
+<option value="2">High (144 DPI equivalent)</option>
+</select>
+
+<p class="hint">
+Higher resolution produces larger images
+and may use more device memory.
+The selected setting scales PDF page rendering.
+</p>
+
+<label class="field" for="quality">
+JPG quality: <span id="qualityValue">85%</span>
+</label>
+<input id="quality"
+       type="range"
+       min="40"
+       max="100"
+       step="5"
+       value="85">
+
+<button id="convertBtn" class="primary" disabled>
+Convert PDF to JPG
+</button>
+
+<button id="clearBtn" class="secondary" type="button">
+Clear PDF
+</button>
+
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h2>Conversion complete!</h2>
+<p id="resultDetails"></p>
+<a id="downloadLink" class="download" download>
+Download
+</a>
+</div>
+
+<p class="hint">
+Images are generated one page at a time.
+One selected page downloads as JPG.
+Multiple pages download together as ZIP.
+Each output page is limited to 12 million pixels
+and 10,000 pixels per side.
+</p>
+
+</section>
+
+<section class="info">
+<h2>How to convert PDF to JPG</h2>
+<ol>
+<li>Choose a PDF file from your device.</li>
+<li>Enter "all" or select specific page numbers.</li>
+<li>Choose the image resolution and JPG quality.</li>
+<li>Click Convert PDF to JPG.</li>
+<li>Download a JPG file or a ZIP containing the images.</li>
+</ol>
+
+<h2>Private PDF processing</h2>
+<p>
+The selected PDF is processed locally
+inside your browser using PDF.js.
+PDF contents are not uploaded to
+FreeAITools servers for conversion.
+</p>
+
+<p>
+An internet connection is needed to load
+the PDF processing libraries.
+Encrypted or password-protected PDF files
+are not supported in this version.
+</p>
+
+<p>
+JPG images do not retain searchable text,
+interactive PDF elements or vector quality.
+Some PDFs may render differently depending
+on embedded fonts and advanced features.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is PDF to JPG free?</summary>
+<p>Yes. You can convert supported PDF pages to JPG for free without creating an account.</p>
+</details>
+
+<details>
+<summary>Can I convert every page?</summary>
+<p>Yes, if your PDF has 20 pages or fewer. For longer PDFs, select up to 20 pages per conversion.</p>
+</details>
+
+<details>
+<summary>Can I choose specific PDF pages?</summary>
+<p>Yes. Enter page numbers or ranges such as 1,3-5.</p>
+</details>
+
+<details>
+<summary>How are multiple JPG files downloaded?</summary>
+<p>If you select multiple pages, the converter places the JPG images in one ZIP file.</p>
+</details>
+
+<details>
+<summary>Are PDF files uploaded?</summary>
+<p>No. The selected PDF contents are converted locally in your browser, not uploaded to FreeAITools servers.</p>
+</details>
+
+<details>
+<summary>Will PDF text remain selectable?</summary>
+<p>No. JPG is an image format, so text becomes pixels and cannot be selected as PDF text.</p>
+</details>
+
+<details>
+<summary>Can I convert password-protected PDFs?</summary>
+<p>No. This version does not support encrypted or password-protected PDF documents.</p>
+</details>
+
+<details>
+<summary>What if my PDF is very large?</summary>
+<p>Large PDF pages may require significant memory. Try a lower resolution or select fewer pages.</p>
+</details>
+</section>
+
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden></section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const fileInput = $("pdfFile");
+const fileDetails = $("fileDetails");
+const pagesInput = $("pages");
+const resolution = $("resolution");
+const quality = $("quality");
+const qualityValue = $("qualityValue");
+const convertBtn = $("convertBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const resultDetails = $("resultDetails");
+const downloadLink = $("downloadLink");
+
+const MAX_FILE_SIZE = 30 * 1024 * 1024;
+const MAX_OUTPUT_PAGES = 20;
+const MAX_PIXELS = 12000000;
+const MAX_DIMENSION = 10000;
+
+let selectedFile = null;
+let busy = false;
+let downloadUrl = null;
+let pdfDoc = null;
+let loadingTask = null;
+
+function message(text) {
+  status.textContent = text;
+}
+
+function fileSize(bytes) {
+  return (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function clearResult() {
+  result.hidden = true;
+  downloadLink.removeAttribute("href");
+
+  if (downloadUrl) {
+    URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+  }
+}
+
+function updateButtons() {
+  convertBtn.disabled = busy || !selectedFile || !pdfDoc;
+  clearBtn.disabled = busy;
+  fileInput.disabled = busy;
+  pagesInput.disabled = busy;
+  resolution.disabled = busy;
+  quality.disabled = busy;
+}
+
+async function clearDocument() {
+  clearResult();
+
+  selectedFile = null;
+  fileDetails.hidden = true;
+  fileDetails.textContent = "";
+
+  const oldPdf = pdfDoc;
+  const oldTask = loadingTask;
+
+  pdfDoc = null;
+  loadingTask = null;
+
+  try {
+    if (oldPdf) {
+      await oldPdf.destroy();
+    } else if (oldTask) {
+      await oldTask.destroy();
+    }
+  } catch (error) {
+    console.warn("PDF cleanup:", error);
+  }
+}
+
+function parsePages(input, total) {
+  const text = input.trim().toLowerCase();
+
+  if (text === "all") {
+    if (total > MAX_OUTPUT_PAGES) {
+      throw new Error(
+        "This PDF has " + total +
+        " pages. Select up to 20 pages using numbers or ranges."
+      );
+    }
+
+    return Array.from(
+      {length: total},
+      (_, i) => i + 1
+    );
+  }
+
+  if (!text) {
+    throw new Error(
+      'Enter "all" or page numbers such as 1,3-5.'
+    );
+  }
+
+  const selected = [];
+  const seen = new Set();
+  const parts = text.split(",");
+
+  for (const part of parts) {
+    const match = part.trim().match(/^(\d+)(?:\s*-\s*(\d+))?$/);
+
+    if (!match) {
+      throw new Error("Invalid page selection. Example: 1,3-5.");
+    }
+
+    const start = Number(match[1]);
+    const end = match[2] ? Number(match[2]) : start;
+
+    if (
+      !Number.isSafeInteger(start) ||
+      !Number.isSafeInteger(end) ||
+      start < 1 ||
+      end < start ||
+      end > total
+    ) {
+      throw new Error(
+        "Page numbers must be within 1 to " + total + "."
+      );
+    }
+
+    if (end - start + 1 > MAX_OUTPUT_PAGES) {
+      throw new Error("Select no more than 20 pages.");
+    }
+
+    for (let n = start; n <= end; n++) {
+      if (seen.has(n)) {
+        throw new Error("Duplicate page number: " + n);
+      }
+
+      seen.add(n);
+      selected.push(n);
+
+      if (selected.length > MAX_OUTPUT_PAGES) {
+        throw new Error("Select no more than 20 pages.");
+      }
+    }
+  }
+
+  return selected;
+}
+
+function exportJpg(canvas, imageQuality) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(
+      blob => {
+        if (!blob || blob.type !== "image/jpeg") {
+          reject(new Error("Unable to export JPG image."));
+          return;
+        }
+
+        resolve(blob);
+      },
+      "image/jpeg",
+      imageQuality
+    );
+  });
+}
+
+async function renderPageAsJpg(pageNumber, scale, imageQuality) {
+  const page = await pdfDoc.getPage(pageNumber);
+
+  let canvas = null;
+
+  try {
+    const viewport = page.getViewport({scale});
+
+    const width = Math.ceil(viewport.width);
+    const height = Math.ceil(viewport.height);
+
+    if (
+      width < 1 || height < 1 ||
+      width > MAX_DIMENSION ||
+      height > MAX_DIMENSION ||
+      width * height > MAX_PIXELS
+    ) {
+      throw new Error(
+        "Page " + pageNumber +
+        " is too large at this resolution. Choose a lower resolution."
+      );
+    }
+
+    canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext("2d", {alpha: false});
+
+    if (!ctx) {
+      throw new Error("Canvas is unavailable.");
+    }
+
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
+
+    await page.render({
+      canvasContext: ctx,
+      viewport,
+      background: "#ffffff"
+    }).promise;
+
+    return await exportJpg(canvas, imageQuality);
+  } finally {
+    if (canvas) {
+      canvas.width = 0;
+      canvas.height = 0;
+    }
+
+    page.cleanup();
+  }
+}
+
+fileInput.addEventListener("change", async () => {
+  const file = fileInput.files[0];
+
+  if (busy) return;
+
+  busy = true;
+  updateButtons();
+
+  await clearDocument();
+  fileInput.value = "";
+  pagesInput.value = "all";
+
+  if (!file) {
+    busy = false;
+    updateButtons();
+    message("");
+    return;
+  }
+
+  if (
+    !(file.type === "application/pdf" ||
+      file.name.toLowerCase().endsWith(".pdf"))
+  ) {
+    message("Please choose a PDF file.");
+    busy = false;
+    updateButtons();
+    return;
+  }
+
+  if (file.size === 0 || file.size > MAX_FILE_SIZE) {
+    message("PDF must be larger than 0 bytes and no more than 30 MB.");
+    busy = false;
+    updateButtons();
+    return;
+  }
+
+  if (!window.pdfjsLib) {
+    message("PDF library unavailable. Check your connection and refresh.");
+    busy = false;
+    updateButtons();
+    return;
+  }
+
+  message("Loading PDF...");
+
+  try {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+    const bytes = new Uint8Array(await file.arrayBuffer());
+
+    loadingTask = pdfjsLib.getDocument({
+      data: bytes
+    });
+
+    pdfDoc = await loadingTask.promise;
+
+    selectedFile = file;
+
+    fileDetails.textContent =
+      file.name + " | " +
+      fileSize(file.size) + " | " +
+      pdfDoc.numPages + " page(s)";
+
+    fileDetails.hidden = false;
+
+    message(
+      "PDF loaded. Select up to 20 pages to convert."
+    );
+  } catch (error) {
+    console.error("PDF load error:", error);
+
+    await clearDocument();
+
+    if (
+      error.name === "PasswordException"
+    ) {
+      message("Password-protected PDFs are not supported.");
+    } else {
+      message("Unable to open this PDF. It may be damaged or unsupported.");
+    }
+  } finally {
+    busy = false;
+    updateButtons();
+  }
+});
+
+quality.addEventListener("input", () => {
+  qualityValue.textContent = quality.value + "%";
+  clearResult();
+});
+
+pagesInput.addEventListener("input", clearResult);
+resolution.addEventListener("change", clearResult);
+
+clearBtn.addEventListener("click", async () => {
+  if (busy) return;
+
+  busy = true;
+  updateButtons();
+
+  await clearDocument();
+
+  fileInput.value = "";
+  pagesInput.value = "all";
+  quality.value = "85";
+  qualityValue.textContent = "85%";
+  resolution.value = "1.5";
+
+  busy = false;
+  updateButtons();
+  message("");
+});
+
+convertBtn.addEventListener("click", async () => {
+  if (busy || !selectedFile || !pdfDoc) return;
+
+  let selectedPages;
+
+  try {
+    selectedPages = parsePages(
+      pagesInput.value,
+      pdfDoc.numPages
+    );
+  } catch (error) {
+    message(error.message);
+    return;
+  }
+
+  if (!window.JSZip && selectedPages.length > 1) {
+    message("ZIP library unavailable. Check your connection and refresh.");
+    return;
+  }
+
+  busy = true;
+  updateButtons();
+  clearResult();
+
+  try {
+    const scale = Number(resolution.value);
+    const imageQuality = Number(quality.value) / 100;
+
+    const baseName = selectedFile.name
+      .replace(/\.pdf$/i, "")
+      .replace(/[^\w.-]+/g, "_")
+      .slice(0, 80) || "document";
+
+    let finalBlob;
+    let extension;
+
+    if (selectedPages.length === 1) {
+      const n = selectedPages[0];
+
+      message("Converting page " + n + "...");
+
+      finalBlob = await renderPageAsJpg(
+        n,
+        scale,
+        imageQuality
+      );
+
+      extension = "jpg";
+
+      downloadLink.download =
+        baseName + "-page-" + n + ".jpg";
+
+    } else {
+      const zip = new JSZip();
+
+      for (let i = 0; i < selectedPages.length; i++) {
+        const n = selectedPages[i];
+
+        message(
+          "Converting page " + (i + 1) +
+          " of " + selectedPages.length +
+          " (PDF page " + n + ")..."
+        );
+
+        const jpg = await renderPageAsJpg(
+          n,
+          scale,
+          imageQuality
+        );
+
+        const padded = String(n).padStart(3, "0");
+
+        zip.file(
+          "page-" + padded + ".jpg",
+          jpg,
+          {compression: "STORE"}
+        );
+      }
+
+      message("Preparing ZIP download...");
+
+      finalBlob = await zip.generateAsync({
+        type: "blob",
+        compression: "STORE"
+      });
+
+      extension = "zip";
+
+      downloadLink.download =
+        baseName + "-jpg-pages.zip";
+    }
+
+    downloadUrl = URL.createObjectURL(finalBlob);
+    downloadLink.href = downloadUrl;
+
+    resultDetails.textContent =
+      selectedPages.length + " page(s) | " +
+      fileSize(finalBlob.size) + " | " +
+      extension.toUpperCase() + " | " +
+      quality.value + "% quality";
+
+    downloadLink.textContent =
+      extension === "zip"
+        ? "Download ZIP"
+        : "Download JPG";
+
+    result.hidden = false;
+    message("Success! Your images are ready.");
+
+  } catch (error) {
+    console.error("PDF to JPG error:", error);
+    message(
+      error.message ||
+      "Unable to convert PDF. Try fewer pages or lower resolution."
+    );
+  } finally {
+    busy = false;
+    updateButtons();
+  }
+});
+
+updateButtons();
+</script>
+</body>
+</html>
