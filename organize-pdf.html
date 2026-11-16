@@ -610,13 +610,16 @@ fileInput.addEventListener("change", async () => {
         "Unable to read this PDF."
       );
     }
+
   } finally {
     busy = false;
+    renderCards();
     updateButtons();
   }
 });
 
 clearBtn.addEventListener("click", async () => {
+
   if (busy) return;
 
   busy = true;
