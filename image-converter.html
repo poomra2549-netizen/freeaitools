@@ -190,6 +190,106 @@
       header { flex-direction: column; }
       .panel, .info { padding: 17px; }
     }
+    
+/* FreeAITools — Image Converter enhancements */
+
+.upload,
+button,
+.download,
+.panel,
+.info {
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .upload:hover {
+    border-color: #b7a8ff;
+    background: #1b2547;
+    box-shadow: 0 8px 25px rgba(139, 92, 246, .12);
+  }
+
+  button:not(:disabled):hover,
+  .download:hover {
+    transform: translateY(-2px);
+  }
+
+  .primary:not(:disabled):hover,
+  .download:hover {
+    box-shadow: 0 10px 28px rgba(139, 92, 246, .25);
+  }
+}
+
+button:focus-visible,
+select:focus-visible,
+a:focus-visible,
+.upload:focus-within {
+  outline: 2px solid #67e8f9;
+  outline-offset: 3px;
+}
+
+/* FAQ design */
+.faq {
+  margin-top: 30px;
+  padding: 26px;
+  background: #101a30;
+  border: 1px solid #293856;
+  border-radius: 15px;
+}
+
+.faq h2 {
+  margin-top: 0;
+}
+
+.faq details {
+  padding: 15px 0;
+  border-bottom: 1px solid #293856;
+}
+
+.faq details:last-child {
+  border-bottom: none;
+}
+
+.faq summary {
+  cursor: pointer;
+  color: #eef2ff;
+  font-weight: 700;
+}
+
+.faq p {
+  color: #aab8d3;
+  margin: 12px 0 0;
+}
+
+/* Future ads stay hidden */
+.future-ad-slot[hidden] {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .upload,
+  button,
+  .download,
+  .panel,
+  .info {
+    transition: none !important;
+  }
+
+  button:not(:disabled):hover,
+  .download:hover {
+    transform: none !important;
+  }
+}
+
+@media (max-width: 500px) {
+  .faq {
+    padding: 18px;
+  }
+}
+
   </style>
 </head>
 
@@ -309,7 +409,93 @@
         Animated images are not supported.
       </p>
     </section>
+    
+<!-- Image Converter FAQ -->
+<section class="faq" aria-labelledby="faq-title">
+  <h2 id="faq-title">Frequently Asked Questions</h2>
+
+  <details>
+    <summary>Is this image converter free?</summary>
+    <p>
+      Yes. You can convert images for free
+      without creating an account.
+    </p>
+  </details>
+
+  <details>
+    <summary>Are my images uploaded to a server?</summary>
+    <p>
+      No. Image conversion happens locally
+      in your browser using the Canvas API.
+      Your selected images are not uploaded
+      to FreeAITools servers for conversion.
+    </p>
+  </details>
+
+  <details>
+    <summary>Which image formats are supported?</summary>
+    <p>
+      You can convert between JPG, PNG and WebP,
+      provided your browser supports the
+      selected output format.
+    </p>
+  </details>
+
+  <details>
+    <summary>Does converting an image reduce its size?</summary>
+    <p>
+      Not always. The output size depends
+      on the image content, selected format
+      and quality settings. WebP often
+      produces smaller files than JPG or PNG.
+    </p>
+  </details>
+
+  <details>
+    <summary>Can I convert transparent images to JPG?</summary>
+    <p>
+      Yes, but JPG does not support transparency.
+      Transparent areas are filled with white.
+    </p>
+  </details>
+
+  <details>
+    <summary>Does the quality slider affect PNG?</summary>
+    <p>
+      No. The quality slider applies to
+      JPG and WebP. It is hidden when PNG
+      is selected as the output format.
+    </p>
+  </details>
+
+  <details>
+    <summary>What is the maximum image size?</summary>
+    <p>
+      Input files are limited to 25 MB
+      and images must not exceed
+      40 million pixels.
+    </p>
+  </details>
+
+  <details>
+    <summary>Are animated images supported?</summary>
+    <p>
+      No. This tool converts still images.
+      Animation and some original image
+      metadata may not be preserved.
+    </p>
+  </details>
+</section>
+<!-- End Image Converter FAQ -->
+
   </main>
+
+<!-- Reserved for future approved advertising.
+     No AdSense scripts are loaded here. -->
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden>
+</section>
 
   <footer>
     FreeAITools — Free online tools
