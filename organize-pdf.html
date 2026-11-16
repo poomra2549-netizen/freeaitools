@@ -1,0 +1,723 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Organize PDF pages for free. Reorder, delete and rotate individual pages with previews. Private browser-based PDF editing.">
+<title>Organize PDF Pages Free Online | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/organize-pdf.html">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080e1e;color:#eef2ff;font-family:Arial,sans-serif;line-height:1.6}
+header{padding:22px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #293856}
+a{color:#b7a8ff;text-decoration:none}
+.brand{font-size:23px;color:white;font-weight:bold}
+main{max-width:1050px;margin:46px auto;padding:0 20px}
+h1{text-align:center;font-size:clamp(30px,5vw,46px);margin-bottom:8px}
+.subtitle{text-align:center;color:#aab8d3;margin-bottom:32px}
+.panel,.info,.faq{background:#101a30;border:1px solid #293856;border-radius:18px;padding:26px}
+.upload{display:block;text-align:center;padding:38px 18px;border:2px dashed #7165e9;border-radius:14px;background:#151e3a;cursor:pointer}
+.upload strong{font-size:20px}
+.upload span{display:block;margin-top:8px;color:#aab8d3}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.upload:focus-within{outline:2px solid #67e8f9;outline-offset:3px}
+.hint,.details{font-size:14px;color:#aab8d3}
+.details{overflow-wrap:anywhere;margin:18px 0}
+.pages-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:15px;margin:24px 0}
+.page-card{background:#17233c;border:1px solid #344562;border-radius:14px;padding:13px;text-align:center;min-width:0}
+.thumb{height:175px;background:#0b1428;border-radius:9px;display:flex;justify-content:center;align-items:center;overflow:hidden;margin-bottom:12px}
+.thumb img{display:block;max-width:90%;max-height:90%;object-fit:contain;transition:transform .2s ease}
+.page-title{font-weight:700;margin-bottom:9px}
+.page-subtitle{font-size:12px;color:#aab8d3;margin-bottom:10px}
+.page-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+button{border:0;border-radius:9px;padding:11px 12px;background:#3a4768;color:white;cursor:pointer;font-size:14px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.remove{background:#693345}
+.primary{width:100%;margin-top:18px;padding:16px;font-size:17px;font-weight:700;background:linear-gradient(110deg,#965cff,#625ff4)}
+.secondary{margin-top:12px}
+#status{min-height:26px;color:#c7d2fe;overflow-wrap:anywhere}
+.result{padding:20px;margin-top:20px;background:#17233c;border:1px solid #46577a;border-radius:12px}
+.result h2{margin-top:0}
+.download{display:block;text-align:center;background:#7255ec;color:white;padding:14px;border-radius:10px;font-weight:700;margin-top:14px}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{padding:15px 0;border-bottom:1px solid #293856}
+.faq details:last-child{border:0}
+.faq summary{font-weight:700;cursor:pointer}
+footer{text-align:center;padding:35px;color:#aab8d3}
+[hidden]{display:none!important}
+.upload,button,.download,.page-card{transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+button:focus-visible,a:focus-visible,.faq summary:focus-visible{outline:2px solid #67e8f9;outline-offset:3px}
+@media(hover:hover) and (pointer:fine){
+.upload:hover{border-color:#b7a8ff}
+button:not(:disabled):hover,.download:hover{transform:translateY(-2px)}
+.page-card:hover{border-color:#8b7be8}
+.primary:not(:disabled):hover{box-shadow:0 10px 28px rgba(139,92,246,.25)}
+}
+@media(max-width:500px){
+header{flex-direction:column}
+.panel,.info,.faq{padding:17px}
+.pages-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.page-card{padding:9px}
+.page-controls button{padding:10px 5px;font-size:12px}
+.thumb{height:135px}
+}
+@media(max-width:340px){
+.pages-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+.upload,button,.download,.page-card,.thumb img{transition:none}
+button:hover,.download:hover{transform:none}
+}
+</style>
+
+<script defer src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/merge-pdf.html">Merge PDF</a>
+</nav>
+</header>
+
+<main>
+<h1>Free Organize PDF Pages</h1>
+<p class="subtitle">
+Reorder, rotate and remove PDF pages.
+Free, simple and private.
+</p>
+
+<section class="panel">
+<label class="upload" for="pdfFile">
+<strong>📄 Choose a PDF File</strong>
+<span>Select a PDF to organize its pages</span>
+</label>
+
+<input class="visually-hidden"
+       id="pdfFile"
+       type="file"
+       accept=".pdf,application/pdf">
+
+<p class="hint">
+Maximum file size: 30 MB. Maximum 60 pages.
+Password-protected PDFs are not supported.
+</p>
+
+<p id="fileDetails" class="details" hidden></p>
+
+<div id="editor" hidden>
+<h2>Organize your pages</h2>
+<p class="hint">
+Use ↑ and ↓ to move pages, ↺ and ↻ to rotate
+pages by 90°, or Remove to delete a page.
+Changes are saved only when you download
+the new PDF.
+</p>
+
+<div id="pageList"
+     class="pages-grid"
+     aria-label="PDF page organizer"></div>
+
+<button id="saveBtn" class="primary" type="button">
+Save Organized PDF
+</button>
+</div>
+
+<button id="clearBtn" class="secondary" type="button">
+Clear PDF
+</button>
+
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h2>Your PDF is ready!</h2>
+<p id="resultDetails"></p>
+<a id="downloadLink" class="download" download>
+Download Organized PDF
+</a>
+</div>
+
+<p class="hint">
+Page previews are generated inside your browser.
+Large or complex PDFs may require additional
+time and device memory.
+</p>
+</section>
+
+<section class="info">
+<h2>How to organize PDF pages</h2>
+<ol>
+<li>Choose a PDF file from your device.</li>
+<li>Review the page previews.</li>
+<li>Move pages up or down to change their order.</li>
+<li>Rotate individual pages or remove unwanted pages.</li>
+<li>Click Save Organized PDF and download the result.</li>
+</ol>
+
+<h2>Privacy and limitations</h2>
+<p>
+PDF contents are processed locally in your
+browser using PDF.js and pdf-lib. Selected
+PDF files are not uploaded to FreeAITools
+servers for editing.
+</p>
+<p>
+Internet access is needed to load the
+PDF libraries. This tool does not support
+password-protected PDFs. Advanced forms,
+annotations, links, bookmarks or digital
+signatures may not be preserved exactly.
+Always review the downloaded PDF.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is Organize PDF free?</summary>
+<p>Yes. You can organize PDF pages for free without creating an account.</p>
+</details>
+
+<details>
+<summary>Can I change the order of PDF pages?</summary>
+<p>Yes. Use the up and down buttons under each page preview to rearrange the pages.</p>
+</details>
+
+<details>
+<summary>Can I delete individual PDF pages?</summary>
+<p>Yes. Click Remove on any unwanted page. You must keep at least one page.</p>
+</details>
+
+<details>
+<summary>Can I rotate only one page?</summary>
+<p>Yes. Each page has its own clockwise and counterclockwise rotation buttons.</p>
+</details>
+
+<details>
+<summary>Are my PDF files uploaded?</summary>
+<p>No. The selected PDF is processed locally in your browser for this operation.</p>
+</details>
+
+<details>
+<summary>Does the original PDF change?</summary>
+<p>No. The original file remains unchanged. You download a separate organized PDF.</p>
+</details>
+
+<details>
+<summary>What are the limits?</summary>
+<p>The current version supports PDFs up to 30 MB and 60 pages.</p>
+</details>
+
+<details>
+<summary>Will all PDF features be preserved?</summary>
+<p>Not necessarily. Advanced interactive features and digital signatures may be changed or lost. Check important output files.</p>
+</details>
+</section>
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden></section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const fileInput = $("pdfFile");
+const fileDetails = $("fileDetails");
+const editor = $("editor");
+const pageList = $("pageList");
+const saveBtn = $("saveBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const resultDetails = $("resultDetails");
+const downloadLink = $("downloadLink");
+
+const MAX_SIZE = 30 * 1024 * 1024;
+const MAX_PAGES = 60;
+
+let selectedFile = null;
+let originalBytes = null;
+let previewDoc = null;
+let pages = [];
+let downloadUrl = null;
+let busy = false;
+
+function message(text) {
+  status.textContent = text;
+}
+
+function sizeText(bytes) {
+  return (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function updateButtons() {
+  fileInput.disabled = busy;
+  clearBtn.disabled = busy;
+  saveBtn.disabled = busy || pages.length === 0;
+}
+
+function clearResult() {
+  result.hidden = true;
+  downloadLink.removeAttribute("href");
+
+  if (downloadUrl) {
+    URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+  }
+}
+
+async function resetDocument() {
+  clearResult();
+
+  selectedFile = null;
+  originalBytes = null;
+  pages = [];
+
+  editor.hidden = true;
+  fileDetails.hidden = true;
+  fileDetails.textContent = "";
+  pageList.replaceChildren();
+
+  if (previewDoc) {
+    const oldDoc = previewDoc;
+    previewDoc = null;
+
+    try {
+      await oldDoc.destroy();
+    } catch (error) {
+      console.warn("PDF cleanup:", error);
+    }
+  }
+}
+
+function makeButton(label, title, callback, disabled) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.textContent = label;
+  button.title = title;
+  button.setAttribute("aria-label", title);
+  button.disabled = busy || disabled;
+  button.addEventListener("click", callback);
+  return button;
+}
+
+function renderCards() {
+  pageList.replaceChildren();
+
+  pages.forEach((entry, index) => {
+    const card = document.createElement("div");
+    card.className = "page-card";
+
+    const preview = document.createElement("div");
+    preview.className = "thumb";
+
+    const img = document.createElement("img");
+    img.src = entry.thumbnail;
+    img.alt = "Preview of original PDF page " +
+      (entry.originalIndex + 1);
+    img.style.transform =
+      "rotate(" + entry.rotation + "deg)";
+
+    preview.appendChild(img);
+
+    const title = document.createElement("div");
+    title.className = "page-title";
+    title.textContent = "Position " + (index + 1);
+
+    const subtitle = document.createElement("div");
+    subtitle.className = "page-subtitle";
+    subtitle.textContent =
+      "Original page " + (entry.originalIndex + 1) +
+      " | Rotation: " + entry.rotation + "°";
+
+    const controls = document.createElement("div");
+    controls.className = "page-controls";
+
+    const moveUp = makeButton(
+      "↑ Up",
+      "Move position " + (index + 1) + " up",
+      () => {
+        if (busy || index === 0) return;
+
+        [pages[index - 1], pages[index]] =
+          [pages[index], pages[index - 1]];
+
+        clearResult();
+        renderCards();
+      },
+      index === 0
+    );
+
+    const moveDown = makeButton(
+      "↓ Down",
+      "Move position " + (index + 1) + " down",
+      () => {
+        if (busy || index === pages.length - 1) return;
+
+        [pages[index + 1], pages[index]] =
+          [pages[index], pages[index + 1]];
+
+        clearResult();
+        renderCards();
+      },
+      index === pages.length - 1
+    );
+
+    const rotateLeft = makeButton(
+      "↺ Left",
+      "Rotate original page " +
+        (entry.originalIndex + 1) + " left",
+      () => {
+        if (busy) return;
+
+        entry.rotation =
+          (entry.rotation + 270) % 360;
+
+        clearResult();
+        renderCards();
+      },
+      false
+    );
+
+    const rotateRight = makeButton(
+      "↻ Right",
+      "Rotate original page " +
+        (entry.originalIndex + 1) + " right",
+      () => {
+        if (busy) return;
+
+        entry.rotation =
+          (entry.rotation + 90) % 360;
+
+        clearResult();
+        renderCards();
+      },
+      false
+    );
+
+    const remove = makeButton(
+      "Remove",
+      "Remove original page " +
+        (entry.originalIndex + 1),
+      () => {
+        if (busy || pages.length <= 1) return;
+
+        pages.splice(index, 1);
+        clearResult();
+        renderCards();
+        updateButtons();
+
+        message(
+          pages.length + " page(s) remaining."
+        );
+      },
+      pages.length <= 1
+    );
+
+    remove.classList.add("remove");
+
+    controls.append(
+      moveUp,
+      moveDown,
+      rotateLeft,
+      rotateRight,
+      remove
+    );
+
+    card.append(
+      preview,
+      title,
+      subtitle,
+      controls
+    );
+
+    pageList.appendChild(card);
+  });
+}
+
+async function makeThumbnail(pdf, pageNumber) {
+  const page = await pdf.getPage(pageNumber);
+
+  const base = page.getViewport({scale: 1});
+
+  const scale = Math.min(
+    130 / base.width,
+    160 / base.height,
+    1
+  );
+
+  const viewport = page.getViewport({scale});
+
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.ceil(viewport.width));
+  canvas.height = Math.max(1, Math.ceil(viewport.height));
+
+  try {
+    const ctx = canvas.getContext("2d", {alpha: false});
+
+    if (!ctx) {
+      throw new Error("Canvas is unavailable.");
+    }
+
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    await page.render({
+      canvasContext: ctx,
+      viewport,
+      background: "#ffffff"
+    }).promise;
+
+    return canvas.toDataURL("image/png");
+  } finally {
+    canvas.width = 0;
+    canvas.height = 0;
+    page.cleanup();
+  }
+}
+
+fileInput.addEventListener("change", async () => {
+  if (busy) return;
+
+  const file = fileInput.files[0];
+  fileInput.value = "";
+
+  busy = true;
+  updateButtons();
+
+  await resetDocument();
+
+  if (!file) {
+    busy = false;
+    updateButtons();
+    message("");
+    return;
+  }
+
+  if (
+    !(file.type === "application/pdf" ||
+      file.name.toLowerCase().endsWith(".pdf"))
+  ) {
+    message("Please choose a PDF file.");
+    busy = false;
+    updateButtons();
+    return;
+  }
+
+  if (!file.size || file.size > MAX_SIZE) {
+    message("PDF must be no larger than 30 MB.");
+    busy = false;
+    updateButtons();
+    return;
+  }
+
+  if (!window.pdfjsLib || !window.PDFLib) {
+    message(
+      "PDF libraries unavailable. Check your connection and refresh."
+    );
+    busy = false;
+    updateButtons();
+    return;
+  }
+
+  try {
+    message("Loading PDF...");
+
+    const bytes = await file.arrayBuffer();
+
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+    const task = pdfjsLib.getDocument({
+      data: new Uint8Array(bytes.slice(0))
+    });
+
+    previewDoc = await task.promise;
+
+    if (
+      previewDoc.numPages < 1 ||
+      previewDoc.numPages > MAX_PAGES
+    ) {
+      throw new Error(
+        "PDF must contain 1 to 60 pages."
+      );
+    }
+
+    originalBytes = bytes;
+    selectedFile = file;
+    pages = [];
+
+    for (let i = 1; i <= previewDoc.numPages; i++) {
+      message(
+        "Preparing preview " + i +
+        " of " + previewDoc.numPages + "..."
+      );
+
+      const thumbnail =
+        await makeThumbnail(previewDoc, i);
+
+      pages.push({
+        originalIndex: i - 1,
+        rotation: 0,
+        thumbnail
+      });
+    }
+
+    fileDetails.textContent =
+      file.name + " | " +
+      sizeText(file.size) + " | " +
+      pages.length + " page(s)";
+
+    fileDetails.hidden = false;
+    editor.hidden = false;
+
+    renderCards();
+
+    message(
+      "PDF loaded. Arrange pages, rotate or remove them."
+    );
+  } catch (error) {
+    console.error("PDF loading error:", error);
+
+    await resetDocument();
+
+    if (error.name === "PasswordException") {
+      message(
+        "Password-protected PDFs are not supported."
+      );
+    } else {
+      message(
+        error.message ||
+        "Unable to read this PDF."
+      );
+    }
+  } finally {
+    busy = false;
+    updateButtons();
+  }
+});
+
+clearBtn.addEventListener("click", async () => {
+  if (busy) return;
+
+  busy = true;
+  updateButtons();
+
+  await resetDocument();
+
+  message("");
+  busy = false;
+  updateButtons();
+});
+
+saveBtn.addEventListener("click", async () => {
+  if (
+    busy ||
+    !selectedFile ||
+    !originalBytes ||
+    pages.length === 0
+  ) return;
+
+  busy = true;
+  updateButtons();
+  clearResult();
+  message("Organizing PDF...");
+
+  try {
+    // Use a fresh copy because PDF.js may transfer
+    // buffers supplied to its worker.
+    const source = await PDFLib.PDFDocument.load(
+      originalBytes.slice(0)
+    );
+
+    const output = await PDFLib.PDFDocument.create();
+
+    const indices = pages.map(
+      entry => entry.originalIndex
+    );
+
+    const copied = await output.copyPages(
+      source,
+      indices
+    );
+
+    copied.forEach((page, index) => {
+      const originalRotation =
+        page.getRotation().angle;
+
+      const extraRotation =
+        pages[index].rotation;
+
+      const finalRotation =
+        ((originalRotation + extraRotation) % 360 + 360) % 360;
+
+      page.setRotation(
+        PDFLib.degrees(finalRotation)
+      );
+
+      output.addPage(page);
+    });
+
+    const pdfBytes = await output.save();
+
+    const blob = new Blob(
+      [pdfBytes],
+      {type: "application/pdf"}
+    );
+
+    downloadUrl = URL.createObjectURL(blob);
+
+    const filename = selectedFile.name
+      .replace(/\.pdf$/i, "")
+      .replace(/[^\w.-]+/g, "_")
+      .slice(0, 80) || "document";
+
+    downloadLink.href = downloadUrl;
+
+    downloadLink.download =
+      filename + "-organized-freeaitools.pdf";
+
+    resultDetails.textContent =
+      pages.length + " page(s) | " +
+      sizeText(blob.size);
+
+    result.hidden = false;
+
+    message(
+      "Success! Your organized PDF is ready."
+    );
+  } catch (error) {
+    console.error("PDF save error:", error);
+
+    message(
+      "Unable to save PDF. This file may contain unsupported features or exceed available memory."
+    );
+  } finally {
+    busy = false;
+    updateButtons();
+  }
+});
+
+updateButtons();
+</script>
+</body>
+</html>
