@@ -1,0 +1,1034 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Crop PDF pages for free. Adjust top, bottom, left and right margins, preview the result and download your PDF. Private browser-based processing.">
+<title>Crop PDF Free Online | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/crop-pdf.html">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#080e1e;color:#eef2ff;
+  font-family:Arial,sans-serif;line-height:1.6
+}
+header{
+  padding:22px 6%;display:flex;
+  justify-content:space-between;align-items:center;
+  gap:15px;border-bottom:1px solid #293856
+}
+a{color:#b7a8ff;text-decoration:none}
+.brand{font-size:23px;color:white;font-weight:bold}
+main{max-width:950px;margin:46px auto;padding:0 20px}
+h1{
+  text-align:center;
+  font-size:clamp(30px,5vw,46px);
+  margin-bottom:8px
+}
+.subtitle{
+  text-align:center;color:#aab8d3;
+  margin-bottom:32px
+}
+.panel,.info,.faq{
+  background:#101a30;border:1px solid #293856;
+  border-radius:18px;padding:26px
+}
+.upload{
+  display:block;text-align:center;padding:42px 18px;
+  border:2px dashed #7165e9;border-radius:14px;
+  background:#151e3a;cursor:pointer
+}
+.upload strong{font-size:20px}
+.upload span{
+  display:block;color:#aab8d3;margin-top:8px
+}
+.visually-hidden{
+  position:absolute;width:1px;height:1px;
+  padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0
+}
+.upload:focus-within{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+.hint,.details{color:#aab8d3;font-size:14px}
+.details{margin:18px 0;overflow-wrap:anywhere}
+.field{
+  display:block;font-weight:bold;margin:22px 0 8px
+}
+input[type=number],input[type=text],select{
+  width:100%;padding:13px;
+  background:#080e1e;color:white;
+  border:1px solid #46577a;border-radius:10px;
+  font-size:16px
+}
+.fields{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0 18px
+}
+.preview-panel{
+  margin-top:24px;padding:18px;
+  background:#0b1428;border:1px solid #344562;
+  border-radius:14px
+}
+.preview-wrap{
+  position:relative;
+  margin:14px auto;
+  width:max-content;
+  max-width:100%;
+  line-height:0;
+  overflow:hidden;
+  background:#fff
+}
+#previewCanvas{
+  display:block;max-width:100%;
+  height:auto
+}
+#cropOutline{
+  position:absolute;
+  border:2px solid #34d399;
+  box-shadow:0 0 0 2000px rgba(8,14,30,.50);
+  pointer-events:none
+}
+#previewNote{
+  margin-top:12px;overflow-wrap:anywhere
+}
+button{
+  border:0;border-radius:10px;padding:13px 18px;
+  background:#3a4768;color:white;cursor:pointer
+}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{
+  width:100%;padding:16px;margin-top:24px;
+  font-size:17px;font-weight:bold;
+  background:linear-gradient(110deg,#965cff,#625ff4)
+}
+.secondary{margin-top:12px}
+#status{
+  color:#c7d2fe;min-height:26px;
+  overflow-wrap:anywhere
+}
+.result{
+  padding:20px;margin-top:20px;
+  border:1px solid #46577a;
+  background:#17233c;border-radius:12px
+}
+.result h2{margin-top:0}
+.download{
+  display:block;text-align:center;padding:14px;
+  margin-top:15px;background:#7255ec;
+  color:white;border-radius:10px;font-weight:bold
+}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{
+  padding:15px 0;border-bottom:1px solid #293856
+}
+.faq details:last-child{border:0}
+.faq summary{font-weight:bold;cursor:pointer}
+footer{
+  text-align:center;padding:35px;color:#aab8d3
+}
+[hidden]{display:none!important}
+.upload,button,.download{
+  transition:transform .2s ease,
+    border-color .2s ease,box-shadow .2s ease
+}
+button:focus-visible,a:focus-visible,
+input:focus-visible,.faq summary:focus-visible{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+@media(hover:hover) and (pointer:fine){
+  .upload:hover{border-color:#b7a8ff}
+  button:not(:disabled):hover,
+  .download:hover{transform:translateY(-2px)}
+}
+@media(max-width:600px){
+  header{flex-direction:column}
+  .panel,.info,.faq{padding:17px}
+  .fields{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){
+  .upload,button,.download{transition:none}
+  button:hover,.download:hover{transform:none}
+}
+</style>
+
+<script defer src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/organize-pdf.html">Organize PDF</a>
+</nav>
+</header>
+
+<main>
+<h1>Free Crop PDF</h1>
+<p class="subtitle">
+Trim visible page margins in your PDF.
+Free, simple and private.
+</p>
+
+<section class="panel">
+<label class="upload" for="pdfFile">
+<strong>✂️ Choose a PDF File</strong>
+<span>Select the document you want to crop</span>
+</label>
+<input id="pdfFile" class="visually-hidden"
+       type="file" accept=".pdf,application/pdf">
+
+<p class="hint">
+Maximum 30 MB and 100 pages.
+Pages with PDF rotation are not supported
+in this version. Password-protected PDFs
+are not supported.
+</p>
+
+<p id="fileDetails" class="details" hidden></p>
+
+<div id="editor" hidden>
+<h2>Adjust crop margins</h2>
+
+<p class="hint">
+Enter the amount to remove from each edge.
+Units are PDF points (pt).
+72 pt is approximately 1 inch.
+Values apply to each selected page.
+</p>
+
+<div class="fields">
+  <div>
+    <label class="field" for="topMargin">
+      Top margin (pt)
+    </label>
+    <input id="topMargin" type="number"
+           min="0" max="300" step="1" value="20">
+  </div>
+  <div>
+    <label class="field" for="bottomMargin">
+      Bottom margin (pt)
+    </label>
+    <input id="bottomMargin" type="number"
+           min="0" max="300" step="1" value="20">
+  </div>
+  <div>
+    <label class="field" for="leftMargin">
+      Left margin (pt)
+    </label>
+    <input id="leftMargin" type="number"
+           min="0" max="300" step="1" value="20">
+  </div>
+  <div>
+    <label class="field" for="rightMargin">
+      Right margin (pt)
+    </label>
+    <input id="rightMargin" type="number"
+           min="0" max="300" step="1" value="20">
+  </div>
+</div>
+
+<label class="field" for="pages">
+Pages to crop
+</label>
+<input id="pages" type="text" value="all"
+       placeholder="all or 1,3-5"
+       spellcheck="false" autocomplete="off"
+       aria-describedby="pagesHint">
+
+<p id="pagesHint" class="hint">
+Use "all" to crop every page or enter
+page numbers and ranges such as 1,3-5.
+</p>
+
+<div class="preview-panel">
+  <label class="field" for="previewPage">
+    Preview PDF page
+  </label>
+  <select id="previewPage"></select>
+
+  <div id="previewWrap" class="preview-wrap">
+    <canvas id="previewCanvas"></canvas>
+    <div id="cropOutline" hidden></div>
+  </div>
+
+  <p id="previewNote" class="hint"></p>
+</div>
+
+<button id="cropBtn" class="primary"
+        type="button" disabled>
+Crop PDF and Download
+</button>
+</div>
+
+<button id="clearBtn" class="secondary"
+        type="button">
+Clear PDF
+</button>
+
+<p id="status" role="status"
+   aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h2>Your cropped PDF is ready!</h2>
+<p id="resultDetails"></p>
+<a id="downloadLink" class="download" download>
+Download Cropped PDF
+</a>
+</div>
+
+<p class="hint">
+Cropping changes the visible page area.
+It does not securely delete hidden content
+from the PDF file.
+</p>
+</section>
+
+<section class="info">
+<h2>How to crop PDF pages</h2>
+<ol>
+<li>Choose a PDF document.</li>
+<li>Set the top, bottom, left and right margins.</li>
+<li>Select all pages or specific page numbers.</li>
+<li>Check the preview using the page selector.</li>
+<li>Click Crop PDF and Download.</li>
+<li>Open the downloaded PDF and review the result.</li>
+</ol>
+
+<h2>Private browser-based processing</h2>
+<p>
+This tool uses pdf-lib and PDF.js inside your
+browser. PDF contents are not uploaded to
+FreeAITools servers for cropping.
+An internet connection is required to load
+the PDF libraries.
+</p>
+
+<h2>Important limitations</h2>
+<p>
+Cropping adjusts the PDF CropBox. The
+content outside the selected area can
+still exist inside the PDF file.
+Do not use cropping to redact confidential
+information or permanently erase content.
+</p>
+<p>
+Complex PDFs containing digital signatures,
+forms or annotations may behave differently
+after saving. Always review the output.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is Crop PDF free?</summary>
+<p>Yes. This tool is free to use without creating an account.</p>
+</details>
+
+<details>
+<summary>Can I crop every page at once?</summary>
+<p>Yes. Enter "all" to apply the margins to every supported page.</p>
+</details>
+
+<details>
+<summary>Can I crop only selected pages?</summary>
+<p>Yes. Enter page numbers and ranges such as 1,3-5.</p>
+</details>
+
+<details>
+<summary>What does 20 pt mean?</summary>
+<p>It means 20 PDF points. There are approximately 72 points in one inch.</p>
+</details>
+
+<details>
+<summary>Can I preview the crop?</summary>
+<p>Yes. Select a page to display its content and the proposed crop boundaries.</p>
+</details>
+
+<details>
+<summary>Are PDF files uploaded?</summary>
+<p>No. PDF processing happens locally in your browser.</p>
+</details>
+
+<details>
+<summary>Does cropping permanently remove content?</summary>
+<p>No. Cropping hides content outside the visible page area. It does not securely erase it.</p>
+</details>
+
+<details>
+<summary>Are rotated or password-protected PDFs supported?</summary>
+<p>No. This version does not support PDFs containing rotated pages or password-protected documents.</p>
+</details>
+</section>
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement" hidden></section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const fileInput = $("pdfFile");
+const fileDetails = $("fileDetails");
+const editor = $("editor");
+
+const topInput = $("topMargin");
+const bottomInput = $("bottomMargin");
+const leftInput = $("leftMargin");
+const rightInput = $("rightMargin");
+const pagesInput = $("pages");
+const previewPage = $("previewPage");
+
+const previewWrap = $("previewWrap");
+const canvas = $("previewCanvas");
+const cropOutline = $("cropOutline");
+const previewNote = $("previewNote");
+
+const cropBtn = $("cropBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const resultDetails = $("resultDetails");
+const downloadLink = $("downloadLink");
+
+const MAX_SIZE = 30 * 1024 * 1024;
+const MAX_PAGES = 100;
+const MIN_REMAINING = 36;
+
+let selectedFile = null;
+let pageInfo = [];
+let previewDoc = null;
+let busy = false;
+let previewBusy = false;
+let previewRequest = 0;
+let downloadUrl = null;
+
+function message(value) {
+  status.textContent = value;
+}
+
+function sizeText(bytes) {
+  return (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function clearResult() {
+  result.hidden = true;
+  downloadLink.removeAttribute("href");
+
+  if (downloadUrl) {
+    URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+  }
+}
+
+function readMargins() {
+  const elements = [
+    topInput,bottomInput,leftInput,rightInput
+  ];
+
+  const numbers = elements.map(input => {
+    const value = Number(input.value);
+
+    if (
+      input.value.trim() === "" ||
+      !Number.isFinite(value) ||
+      value < 0 ||
+      value > 300
+    ) {
+      throw new Error(
+        "Margins must be numbers between 0 and 300 pt."
+      );
+    }
+
+    return value;
+  });
+
+  return {
+    top:numbers[0],
+    bottom:numbers[1],
+    left:numbers[2],
+    right:numbers[3]
+  };
+}
+
+function parsePages(value,total) {
+  const text = value.trim().toLowerCase();
+
+  if (text === "all") {
+    return Array.from(
+      {length:total},
+      (_,i) => i
+    );
+  }
+
+  if (!text) {
+    throw new Error(
+      'Enter "all" or page numbers like 1,3-5.'
+    );
+  }
+
+  const chosen = new Set();
+
+  for (const raw of text.split(",")) {
+    const match = raw.trim().match(
+      /^(\d+)(?:\s*-\s*(\d+))?$/
+    );
+
+    if (!match) {
+      throw new Error(
+        "Invalid selection. Example: 1,3-5."
+      );
+    }
+
+    const start = Number(match[1]);
+    const end = match[2] ? Number(match[2]) : start;
+
+    if (
+      !Number.isSafeInteger(start) ||
+      !Number.isSafeInteger(end) ||
+      start < 1 ||
+      end < start ||
+      end > total
+    ) {
+      throw new Error(
+        "Page numbers must be between 1 and " +
+        total + "."
+      );
+    }
+
+    for (let n=start;n<=end;n++) {
+      if (chosen.has(n-1)) {
+        throw new Error(
+          "Duplicate page number: " + n
+        );
+      }
+
+      chosen.add(n-1);
+    }
+  }
+
+  return [...chosen].sort((a,b) => a-b);
+}
+
+function validateCrop() {
+  if (!selectedFile || !pageInfo.length) {
+    throw new Error("Choose a PDF file first.");
+  }
+
+  const margins = readMargins();
+
+  if (
+    margins.top === 0 &&
+    margins.bottom === 0 &&
+    margins.left === 0 &&
+    margins.right === 0
+  ) {
+    throw new Error(
+      "Increase at least one margin to crop the PDF."
+    );
+  }
+
+  const indices = parsePages(
+    pagesInput.value,
+    pageInfo.length
+  );
+
+  for (const index of indices) {
+    const box = pageInfo[index];
+
+    if (
+      margins.left + margins.right >
+        box.width - MIN_REMAINING ||
+      margins.top + margins.bottom >
+        box.height - MIN_REMAINING
+    ) {
+      throw new Error(
+        "Margins are too large for page " +
+        (index+1) + ". Keep at least 36 pt " +
+        "of visible width and height."
+      );
+    }
+  }
+
+  return {margins,indices};
+}
+
+function updateButtons() {
+  fileInput.disabled = busy;
+  clearBtn.disabled = busy;
+  cropBtn.disabled = busy || previewBusy;
+
+  [
+    topInput,bottomInput,leftInput,
+    rightInput,pagesInput,previewPage
+  ].forEach(el => {
+    el.disabled = busy;
+  });
+
+  if (!busy && !previewBusy) {
+    try {
+      validateCrop();
+      cropBtn.disabled = false;
+    } catch {
+      cropBtn.disabled = true;
+    }
+  }
+}
+
+async function resetDocument() {
+  clearResult();
+  selectedFile = null;
+  pageInfo = [];
+  editor.hidden = true;
+
+  fileDetails.hidden = true;
+  fileDetails.textContent = "";
+
+  previewRequest++;
+  cropOutline.hidden = true;
+  previewNote.textContent = "";
+
+  canvas.width = 0;
+  canvas.height = 0;
+
+  previewPage.replaceChildren();
+  fileInput.value = "";
+  pagesInput.value = "all";
+
+  if (previewDoc) {
+    const old = previewDoc;
+    previewDoc = null;
+
+    try {
+      await old.destroy();
+    } catch (error) {
+      console.warn("PDF cleanup:",error);
+    }
+  }
+
+  previewBusy = false;
+}
+
+function updateCropOverlay() {
+  cropOutline.hidden = true;
+
+  if (!selectedFile || !pageInfo.length) return;
+
+  try {
+    const {margins,indices} = validateCrop();
+    const pageIndex = Number(previewPage.value)-1;
+
+    if (!indices.includes(pageIndex)) {
+      previewNote.textContent =
+        "This page is not selected for cropping.";
+      return;
+    }
+
+    const box = pageInfo[pageIndex];
+
+    cropOutline.style.left =
+      (margins.left/box.width*100) + "%";
+
+    cropOutline.style.right =
+      (margins.right/box.width*100) + "%";
+
+    cropOutline.style.top =
+      (margins.top/box.height*100) + "%";
+
+    cropOutline.style.bottom =
+      (margins.bottom/box.height*100) + "%";
+
+    cropOutline.hidden = false;
+
+    const newWidth =
+      box.width-margins.left-margins.right;
+
+    const newHeight =
+      box.height-margins.top-margins.bottom;
+
+    previewNote.textContent =
+      "Green outline: visible area to keep. " +
+      "Result: " + newWidth.toFixed(1) +
+      " × " + newHeight.toFixed(1) + " pt.";
+
+  } catch (error) {
+    previewNote.textContent = error.message;
+  }
+}
+
+async function renderPreview() {
+  if (!previewDoc || busy) return;
+
+  const request = ++previewRequest;
+  previewBusy = true;
+  updateButtons();
+
+  const n = Number(previewPage.value);
+
+  previewNote.textContent =
+    "Rendering page " + n + "...";
+
+  let page = null;
+
+  try {
+    page = await previewDoc.getPage(n);
+
+    const base = page.getViewport({scale:1});
+    const scale = Math.min(
+      1.4,
+      520/Math.max(base.width,base.height)
+    );
+
+    const viewport = page.getViewport({scale});
+
+    const temp = document.createElement("canvas");
+    temp.width = Math.max(
+      1,Math.ceil(viewport.width)
+    );
+    temp.height = Math.max(
+      1,Math.ceil(viewport.height)
+    );
+
+    const ctx = temp.getContext(
+      "2d",{alpha:false}
+    );
+
+    if (!ctx) {
+      throw new Error(
+        "Canvas is not available."
+      );
+    }
+
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(
+      0,0,temp.width,temp.height
+    );
+
+    await page.render({
+      canvasContext:ctx,
+      viewport,
+      background:"#ffffff"
+    }).promise;
+
+    if (request !== previewRequest) return;
+
+    canvas.width = temp.width;
+    canvas.height = temp.height;
+
+    const visibleCtx = canvas.getContext("2d");
+
+    if (!visibleCtx) {
+      throw new Error(
+        "Preview canvas is not available."
+      );
+    }
+
+    visibleCtx.drawImage(temp,0,0);
+
+    updateCropOverlay();
+
+  } catch (error) {
+    console.error("Preview error:",error);
+
+    if (request === previewRequest) {
+      previewNote.textContent =
+        "Unable to render this page preview.";
+    }
+  } finally {
+    if (page) {
+      page.cleanup();
+    }
+
+    if (request === previewRequest) {
+      previewBusy = false;
+      updateButtons();
+    }
+  }
+}
+
+[
+  topInput,bottomInput,leftInput,
+  rightInput,pagesInput
+].forEach(el => {
+  el.addEventListener("input",() => {
+    clearResult();
+    updateCropOverlay();
+    updateButtons();
+  });
+});
+
+previewPage.addEventListener(
+  "change",
+  () => {
+    clearResult();
+    renderPreview();
+  }
+);
+
+fileInput.addEventListener(
+  "change",
+  async () => {
+    if (busy) return;
+
+    const file = fileInput.files[0];
+
+    busy = true;
+    updateButtons();
+    await resetDocument();
+
+    if (!file) {
+      busy = false;
+      updateButtons();
+      message("");
+      return;
+    }
+
+    if (
+      !(file.type === "application/pdf" ||
+        file.name.toLowerCase().endsWith(".pdf"))
+    ) {
+      busy = false;
+      updateButtons();
+      message("Please choose a PDF file.");
+      return;
+    }
+
+    if (!file.size || file.size > MAX_SIZE) {
+      busy = false;
+      updateButtons();
+      message(
+        "PDF must be larger than 0 bytes " +
+        "and no more than 30 MB."
+      );
+      return;
+    }
+
+    if (!window.PDFLib || !window.pdfjsLib) {
+      busy = false;
+      updateButtons();
+      message(
+        "PDF libraries unavailable. " +
+        "Check your connection and refresh."
+      );
+      return;
+    }
+
+    message("Reading PDF...");
+
+    try {
+      const bytes = await file.arrayBuffer();
+
+      const pdf = await PDFLib.PDFDocument.load(
+        bytes.slice(0)
+      );
+
+      const count = pdf.getPageCount();
+
+      if (count < 1 || count > MAX_PAGES) {
+        throw new Error(
+          "PDF must contain 1 to 100 pages."
+        );
+      }
+
+      const info = pdf.getPages().map(
+        (page,index) => {
+          const rotation =
+            ((page.getRotation().angle%360)+360)%360;
+
+          if (rotation !== 0) {
+            throw new Error(
+              "Page " + (index+1) +
+              " has rotation. This version " +
+              "supports unrotated PDF pages only."
+            );
+          }
+
+          return page.getCropBox();
+        }
+      );
+
+      pdfjsLib.GlobalWorkerOptions.workerSrc =
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+      const task = pdfjsLib.getDocument({
+        data:new Uint8Array(bytes.slice(0))
+      });
+
+      previewDoc = await task.promise;
+
+      selectedFile = file;
+      pageInfo = info;
+
+      previewPage.replaceChildren();
+
+      for (let n=1;n<=count;n++) {
+        const option =
+          document.createElement("option");
+
+        option.value = String(n);
+        option.textContent = "Page " + n;
+
+        previewPage.appendChild(option);
+      }
+
+      previewPage.value = "1";
+
+      fileDetails.textContent =
+        file.name + " | " +
+        sizeText(file.size) + " | " +
+        count + " page(s)";
+
+      fileDetails.hidden = false;
+      editor.hidden = false;
+
+      message(
+        "PDF loaded. Adjust crop margins."
+      );
+
+    } catch (error) {
+      console.error("PDF load error:",error);
+      await resetDocument();
+
+      message(
+        error.name === "EncryptedPDFError" ||
+        error.name === "PasswordException"
+          ? "Password-protected PDFs are not supported."
+          : error.message || "Unable to read PDF."
+      );
+
+    } finally {
+      busy = false;
+      updateButtons();
+    }
+
+    if (selectedFile) {
+      await renderPreview();
+    }
+  }
+);
+
+clearBtn.addEventListener(
+  "click",
+  async () => {
+    if (busy) return;
+
+    busy = true;
+    updateButtons();
+
+    await resetDocument();
+
+    busy = false;
+    message("");
+    updateButtons();
+  }
+);
+
+cropBtn.addEventListener(
+  "click",
+  async () => {
+    if (busy || !selectedFile) return;
+
+    let settings;
+
+    try {
+      settings = validateCrop();
+    } catch (error) {
+      message(error.message);
+      return;
+    }
+
+    busy = true;
+    updateButtons();
+    clearResult();
+    message("Cropping PDF...");
+
+    try {
+      const pdf = await PDFLib.PDFDocument.load(
+        await selectedFile.arrayBuffer()
+      );
+
+      for (const index of settings.indices) {
+        const page = pdf.getPage(index);
+        const box = page.getCropBox();
+
+        const m = settings.margins;
+
+        const newX = box.x + m.left;
+        const newY = box.y + m.bottom;
+        const newWidth =
+          box.width - m.left - m.right;
+        const newHeight =
+          box.height - m.top - m.bottom;
+
+        page.setCropBox(
+          newX,newY,newWidth,newHeight
+        );
+      }
+
+      const outputBytes = await pdf.save();
+
+      const blob = new Blob(
+        [outputBytes],
+        {type:"application/pdf"}
+      );
+
+      downloadUrl = URL.createObjectURL(blob);
+
+      const baseName = selectedFile.name
+        .replace(/\.pdf$/i,"")
+        .replace(/[^\w.-]+/g,"_")
+        .slice(0,80) || "document";
+
+      downloadLink.href = downloadUrl;
+
+      downloadLink.download =
+        baseName + "-cropped-freeaitools.pdf";
+
+      resultDetails.textContent =
+        settings.indices.length +
+        " page(s) cropped | " +
+        sizeText(blob.size);
+
+      result.hidden = false;
+
+      message(
+        "Success! Your cropped PDF is ready."
+      );
+
+    } catch (error) {
+      console.error("Crop PDF error:",error);
+
+      message(
+        "Unable to crop PDF. Try a smaller " +
+        "supported document."
+      );
+
+    } finally {
+      busy = false;
+      updateButtons();
+    }
+  }
+);
+
+updateButtons();
+</script>
+</body>
+</html>
