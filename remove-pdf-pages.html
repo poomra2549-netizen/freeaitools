@@ -1,0 +1,979 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1">
+
+<meta name="description"
+      content="Remove pages from PDF files for free. Delete multiple PDF pages by entering page numbers or ranges. Private browser-based PDF editing.">
+
+<title>Remove PDF Pages Free Online | FreeAITools</title>
+
+<link rel="canonical"
+      href="https://freeaitools-5pd.pages.dev/remove-pdf-pages.html">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:#080e1e;
+  color:#eef2ff;
+  font-family:Arial,sans-serif;
+  line-height:1.6;
+}
+
+header{
+  padding:22px 6%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  border-bottom:1px solid #293856;
+}
+
+a{color:#b7a8ff;text-decoration:none}
+.brand{color:white;font-size:23px;font-weight:bold}
+
+main{
+  max-width:900px;
+  margin:48px auto;
+  padding:0 20px;
+}
+
+h1{
+  text-align:center;
+  font-size:clamp(30px,5vw,46px);
+  margin-bottom:8px;
+}
+
+.subtitle{
+  text-align:center;
+  color:#aab8d3;
+  margin-bottom:32px;
+}
+
+.panel,.info,.faq{
+  background:#101a30;
+  border:1px solid #293856;
+  border-radius:18px;
+  padding:26px;
+}
+
+.upload{
+  display:block;
+  text-align:center;
+  padding:42px 18px;
+  border:2px dashed #7165e9;
+  border-radius:14px;
+  background:#151e3a;
+  cursor:pointer;
+}
+
+.upload strong{font-size:20px}
+
+.upload span{
+  display:block;
+  color:#aab8d3;
+  margin-top:8px;
+}
+
+.visually-hidden{
+  position:absolute;
+  width:1px;
+  height:1px;
+  padding:0;
+  margin:-1px;
+  overflow:hidden;
+  clip:rect(0,0,0,0);
+  white-space:nowrap;
+  border:0;
+}
+
+.upload:focus-within{
+  outline:2px solid #67e8f9;
+  outline-offset:3px;
+}
+
+.hint,.details{
+  color:#aab8d3;
+  font-size:14px;
+}
+
+.details{
+  margin:18px 0;
+  overflow-wrap:anywhere;
+}
+
+.field{
+  display:block;
+  font-weight:bold;
+  margin:24px 0 8px;
+}
+
+input[type=text]{
+  width:100%;
+  padding:14px;
+  background:#080e1e;
+  border:1px solid #46577a;
+  border-radius:10px;
+  color:white;
+  font-size:16px;
+}
+
+.preview-summary{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin:22px 0;
+}
+
+.stat{
+  padding:17px;
+  border:1px solid #344562;
+  background:#17233c;
+  border-radius:12px;
+}
+
+.stat strong{
+  display:block;
+  font-size:25px;
+}
+
+.stat span{
+  color:#aab8d3;
+  font-size:13px;
+}
+
+.pages-grid{
+  display:grid;
+  grid-template-columns:
+    repeat(auto-fill,minmax(62px,1fr));
+  gap:8px;
+  margin:20px 0;
+}
+
+.page-chip{
+  padding:12px 5px;
+  border:1px solid #46577a;
+  background:#182742;
+  border-radius:9px;
+  text-align:center;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.page-chip.removed{
+  color:#fecaca;
+  border-color:#a74b61;
+  background:#562b3a;
+  text-decoration:line-through;
+}
+
+.legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:18px;
+  color:#aab8d3;
+  font-size:13px;
+}
+
+.legend span::before{
+  content:"";
+  display:inline-block;
+  width:11px;
+  height:11px;
+  margin-right:7px;
+  border-radius:3px;
+  background:#182742;
+  border:1px solid #46577a;
+}
+
+.legend .removed-key::before{
+  background:#562b3a;
+  border-color:#a74b61;
+}
+
+button{
+  border:0;
+  border-radius:10px;
+  padding:13px 18px;
+  background:#3a4768;
+  color:white;
+  cursor:pointer;
+}
+
+button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.primary{
+  width:100%;
+  margin-top:24px;
+  padding:16px;
+  font-size:17px;
+  font-weight:bold;
+  background:linear-gradient(110deg,#965cff,#625ff4);
+}
+
+.secondary{margin-top:12px}
+
+#status{
+  min-height:26px;
+  color:#c7d2fe;
+  overflow-wrap:anywhere;
+}
+
+.result{
+  margin-top:22px;
+  padding:20px;
+  background:#17233c;
+  border:1px solid #46577a;
+  border-radius:12px;
+}
+
+.result h2{margin-top:0}
+
+.download{
+  display:block;
+  margin-top:15px;
+  padding:14px;
+  text-align:center;
+  color:white;
+  background:#7255ec;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.info,.faq{margin-top:28px}
+
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+
+.faq details{
+  padding:15px 0;
+  border-bottom:1px solid #293856;
+}
+
+.faq details:last-child{border:0}
+
+.faq summary{
+  cursor:pointer;
+  font-weight:bold;
+}
+
+footer{
+  padding:35px;
+  color:#aab8d3;
+  text-align:center;
+}
+
+[hidden]{display:none!important}
+
+.upload,button,.download{
+  transition:
+    transform .22s ease,
+    box-shadow .22s ease,
+    border-color .22s ease;
+}
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible,
+.faq summary:focus-visible{
+  outline:2px solid #67e8f9;
+  outline-offset:3px;
+}
+
+@media(hover:hover) and (pointer:fine){
+  .upload:hover{border-color:#b7a8ff}
+
+  button:not(:disabled):hover,
+  .download:hover{
+    transform:translateY(-2px);
+  }
+
+  .primary:not(:disabled):hover{
+    box-shadow:0 10px 28px rgba(139,92,246,.25);
+  }
+}
+
+@media(max-width:500px){
+  header{flex-direction:column}
+  .panel,.info,.faq{padding:17px}
+  .preview-summary{gap:8px}
+  .stat{padding:12px}
+  .stat strong{font-size:21px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .upload,button,.download{transition:none}
+  button:hover,.download:hover{transform:none}
+}
+</style>
+
+<script defer
+  src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js">
+</script>
+</head>
+
+<body>
+
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/organize-pdf.html">Organize PDF</a>
+</nav>
+</header>
+
+<main>
+<h1>Free Remove PDF Pages</h1>
+
+<p class="subtitle">
+Delete unwanted PDF pages in seconds.
+Free, simple and private.
+</p>
+
+<section class="panel">
+
+<label class="upload" for="pdfFile">
+  <strong>📄 Choose a PDF File</strong>
+  <span>Select the PDF you want to edit</span>
+</label>
+
+<input id="pdfFile"
+       class="visually-hidden"
+       type="file"
+       accept=".pdf,application/pdf">
+
+<p class="hint">
+Maximum file size: 40 MB.
+Maximum document length: 200 pages.
+Password-protected PDFs are not supported.
+</p>
+
+<p id="fileDetails" class="details" hidden></p>
+
+<div id="editor" hidden>
+
+<label class="field" for="pages">
+Pages to remove
+</label>
+
+<input id="pages"
+       type="text"
+       placeholder="Example: 2,4-7,10"
+       aria-describedby="pagesHint"
+       autocomplete="off"
+       spellcheck="false">
+
+<p id="pagesHint" class="hint">
+Enter page numbers separated by commas.
+Use a hyphen for ranges, such as 4-7.
+Page numbers start at 1.
+</p>
+
+<div class="preview-summary">
+  <div class="stat">
+    <span>Pages to remove</span>
+    <strong id="removeCount">0</strong>
+  </div>
+
+  <div class="stat">
+    <span>Pages to keep</span>
+    <strong id="keepCount">0</strong>
+  </div>
+</div>
+
+<h2>Page selection preview</h2>
+
+<p class="hint">
+Pages marked in red will be removed
+from the downloaded PDF.
+</p>
+
+<div class="legend">
+  <span>Keep page</span>
+  <span class="removed-key">Remove page</span>
+</div>
+
+<div id="pagePreview"
+     class="pages-grid"
+     aria-label="PDF page selection preview">
+</div>
+
+<p class="hint">
+This preview shows page numbers, not
+the actual contents of each page.
+</p>
+
+<button id="removeBtn"
+        class="primary"
+        type="button"
+        disabled>
+Remove Pages and Save PDF
+</button>
+
+</div>
+
+<button id="clearBtn"
+        class="secondary"
+        type="button">
+Clear PDF
+</button>
+
+<p id="status"
+   role="status"
+   aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h2>Pages removed successfully!</h2>
+
+<p id="resultDetails"></p>
+
+<a id="downloadLink"
+   class="download"
+   download>
+Download Updated PDF
+</a>
+</div>
+
+<p class="hint">
+Your original file remains unchanged.
+The updated document is downloaded
+as a separate PDF.
+</p>
+
+</section>
+
+<section class="info">
+<h2>How to remove pages from PDF</h2>
+
+<ol>
+<li>Choose a PDF file from your device.</li>
+<li>Enter the page numbers you want to delete.</li>
+<li>Review the highlighted page numbers.</li>
+<li>Click Remove Pages and Save PDF.</li>
+<li>Download and check the updated document.</li>
+</ol>
+
+<h2>Example</h2>
+
+<p>
+For a PDF containing 10 pages, entering
+<strong>2,4-6</strong> removes pages
+2, 4, 5 and 6.
+</p>
+
+<p>
+The resulting PDF contains original pages
+1, 3, 7, 8, 9 and 10, in that order.
+</p>
+
+<h2>Private browser-based editing</h2>
+
+<p>
+This tool processes the selected PDF locally
+inside your browser using pdf-lib.
+File contents are not uploaded to
+FreeAITools servers for editing.
+</p>
+
+<p>
+Internet access is required to load the
+PDF processing library.
+</p>
+
+<p>
+Some advanced PDF elements, such as forms,
+bookmarks, annotations and digital
+signatures, may be affected when saving.
+Always review the downloaded result.
+</p>
+
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is Remove PDF Pages free?</summary>
+<p>Yes. This tool is free and does not require account registration.</p>
+</details>
+
+<details>
+<summary>Can I delete several PDF pages at once?</summary>
+<p>Yes. Enter a comma-separated list such as 2,5,8 or use ranges such as 3-7.</p>
+</details>
+
+<details>
+<summary>Can I remove the first or last page?</summary>
+<p>Yes. Any page can be removed, provided at least one page remains in the resulting PDF.</p>
+</details>
+
+<details>
+<summary>Can I delete every page?</summary>
+<p>No. The tool prevents removing every page because the downloaded PDF must contain at least one page.</p>
+</details>
+
+<details>
+<summary>Will the original PDF be changed?</summary>
+<p>No. Your original file remains unchanged. The tool creates a separate PDF for download.</p>
+</details>
+
+<details>
+<summary>Are PDF documents uploaded?</summary>
+<p>No. PDF processing happens locally in your browser for this operation.</p>
+</details>
+
+<details>
+<summary>Does removing pages compress the PDF?</summary>
+<p>Not necessarily. Removing pages can reduce file size, but it is not a dedicated PDF compression process.</p>
+</details>
+
+<details>
+<summary>What are the limits?</summary>
+<p>Input PDF files must be no larger than 40 MB and must contain no more than 200 pages. Encrypted or password-protected PDFs are not supported.</p>
+</details>
+
+</section>
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden>
+</section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const fileInput = $("pdfFile");
+const fileDetails = $("fileDetails");
+const editor = $("editor");
+const pagesInput = $("pages");
+const removeCount = $("removeCount");
+const keepCount = $("keepCount");
+const pagePreview = $("pagePreview");
+const removeBtn = $("removeBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const resultDetails = $("resultDetails");
+const downloadLink = $("downloadLink");
+
+const MAX_SIZE = 40 * 1024 * 1024;
+const MAX_PAGES = 200;
+
+let selectedFile = null;
+let totalPages = 0;
+let selectedPages = [];
+let busy = false;
+let downloadUrl = null;
+
+function message(text) {
+  status.textContent = text;
+}
+
+function fileSize(bytes) {
+  return (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function clearResult() {
+  result.hidden = true;
+  downloadLink.removeAttribute("href");
+
+  if (downloadUrl) {
+    URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+  }
+}
+
+function updateButtons() {
+  fileInput.disabled = busy;
+  clearBtn.disabled = busy;
+  pagesInput.disabled = busy;
+
+  removeBtn.disabled =
+    busy ||
+    !selectedFile ||
+    selectedPages.length === 0 ||
+    selectedPages.length >= totalPages;
+}
+
+function resetDocument() {
+  selectedFile = null;
+  totalPages = 0;
+  selectedPages = [];
+
+  fileInput.value = "";
+  pagesInput.value = "";
+
+  editor.hidden = true;
+  fileDetails.hidden = true;
+  fileDetails.textContent = "";
+
+  pagePreview.replaceChildren();
+
+  removeCount.textContent = "0";
+  keepCount.textContent = "0";
+
+  clearResult();
+  message("");
+  updateButtons();
+}
+
+function parsePages(value, total) {
+  const text = value.trim();
+
+  if (!text) {
+    return [];
+  }
+
+  const removed = new Set();
+  const parts = text.split(",");
+
+  for (const rawPart of parts) {
+    const part = rawPart.trim();
+
+    const match = part.match(
+      /^(\d+)(?:\s*-\s*(\d+))?$/
+    );
+
+    if (!match) {
+      throw new Error(
+        "Invalid page selection. Use 2,4-7,10."
+      );
+    }
+
+    const start = Number(match[1]);
+    const end = match[2]
+      ? Number(match[2])
+      : start;
+
+    if (
+      !Number.isSafeInteger(start) ||
+      !Number.isSafeInteger(end) ||
+      start < 1 ||
+      end < start ||
+      end > total
+    ) {
+      throw new Error(
+        "Page numbers must be between 1 and " +
+        total + "."
+      );
+    }
+
+    for (let page = start; page <= end; page++) {
+      if (removed.has(page)) {
+        throw new Error(
+          "Duplicate page number: " + page
+        );
+      }
+
+      removed.add(page);
+    }
+  }
+
+  if (removed.size >= total) {
+    throw new Error(
+      "You must keep at least one PDF page."
+    );
+  }
+
+  return [...removed].sort((a, b) => a - b);
+}
+
+function renderPreview() {
+  pagePreview.replaceChildren();
+
+  if (!selectedFile) {
+    return;
+  }
+
+  const removed = new Set(selectedPages);
+
+  const fragment = document.createDocumentFragment();
+
+  for (let page = 1; page <= totalPages; page++) {
+    const chip = document.createElement("div");
+
+    chip.className = "page-chip";
+    chip.textContent = page;
+
+    if (removed.has(page)) {
+      chip.classList.add("removed");
+      chip.setAttribute(
+        "aria-label",
+        "Page " + page + " will be removed"
+      );
+    } else {
+      chip.setAttribute(
+        "aria-label",
+        "Page " + page + " will be kept"
+      );
+    }
+
+    fragment.appendChild(chip);
+  }
+
+  pagePreview.appendChild(fragment);
+}
+
+function selectionChanged() {
+  clearResult();
+  selectedPages = [];
+
+  if (!selectedFile) {
+    updateButtons();
+    return;
+  }
+
+  try {
+    selectedPages = parsePages(
+      pagesInput.value,
+      totalPages
+    );
+
+    removeCount.textContent =
+      selectedPages.length;
+
+    keepCount.textContent =
+      totalPages - selectedPages.length;
+
+    renderPreview();
+
+    message(
+      selectedPages.length
+        ? selectedPages.length +
+          " page(s) selected for removal."
+        : "Enter the pages you want to remove."
+    );
+
+  } catch (error) {
+    removeCount.textContent = "0";
+    keepCount.textContent = totalPages;
+
+    renderPreview();
+    message(error.message);
+  }
+
+  updateButtons();
+}
+
+pagesInput.addEventListener(
+  "input",
+  selectionChanged
+);
+
+fileInput.addEventListener(
+  "change",
+  async () => {
+    if (busy) return;
+
+    const file = fileInput.files[0];
+
+    resetDocument();
+
+    if (!file) return;
+
+    if (
+      !(file.type === "application/pdf" ||
+        file.name.toLowerCase().endsWith(".pdf"))
+    ) {
+      message("Please select a PDF file.");
+      return;
+    }
+
+    if (file.size === 0 || file.size > MAX_SIZE) {
+      message(
+        "PDF must be larger than 0 bytes and no more than 40 MB."
+      );
+      return;
+    }
+
+    if (!window.PDFLib) {
+      message(
+        "PDF library unavailable. Check your connection and refresh."
+      );
+      return;
+    }
+
+    busy = true;
+    updateButtons();
+    message("Reading PDF...");
+
+    try {
+      const bytes = await file.arrayBuffer();
+
+      const pdf = await PDFLib.PDFDocument.load(
+        bytes
+      );
+
+      const count = pdf.getPageCount();
+
+      if (count < 1 || count > MAX_PAGES) {
+        throw new Error(
+          "PDF must contain 1 to 200 pages."
+        );
+      }
+
+      selectedFile = file;
+      totalPages = count;
+
+      fileDetails.textContent =
+        file.name + " | " +
+        fileSize(file.size) + " | " +
+        count + " page(s)";
+
+      fileDetails.hidden = false;
+      editor.hidden = false;
+
+      selectedPages = [];
+
+      removeCount.textContent = "0";
+      keepCount.textContent = count;
+
+      renderPreview();
+
+      message(
+        "PDF loaded. Enter pages to remove."
+      );
+
+    } catch (error) {
+      console.error("PDF loading error:", error);
+
+      resetDocument();
+
+      if (
+        error.name === "EncryptedPDFError"
+      ) {
+        message(
+          "Encrypted or password-protected PDFs are not supported."
+        );
+      } else {
+        message(
+          error.message ||
+          "Unable to read this PDF."
+        );
+      }
+
+    } finally {
+      busy = false;
+      updateButtons();
+    }
+  }
+);
+
+clearBtn.addEventListener("click", () => {
+  if (busy) return;
+  resetDocument();
+});
+
+removeBtn.addEventListener(
+  "click",
+  async () => {
+    if (busy || !selectedFile) return;
+
+    let pagesToRemove;
+
+    try {
+      pagesToRemove = parsePages(
+        pagesInput.value,
+        totalPages
+      );
+
+      if (!pagesToRemove.length) {
+        throw new Error(
+          "Enter at least one page to remove."
+        );
+      }
+
+    } catch (error) {
+      message(error.message);
+      return;
+    }
+
+    busy = true;
+    updateButtons();
+    clearResult();
+
+    message("Removing PDF pages...");
+
+    try {
+      const bytes = await selectedFile.arrayBuffer();
+
+      const pdf = await PDFLib.PDFDocument.load(
+        bytes
+      );
+
+      // Remove from highest page number to lowest
+      // so earlier page indices do not change.
+      for (const page of [...pagesToRemove].reverse()) {
+        pdf.removePage(page - 1);
+      }
+
+      const outputBytes = await pdf.save();
+
+      const blob = new Blob(
+        [outputBytes],
+        {type: "application/pdf"}
+      );
+
+      downloadUrl = URL.createObjectURL(blob);
+
+      const baseName = selectedFile.name
+        .replace(/\.pdf$/i, "")
+        .replace(/[^\w.-]+/g, "_")
+        .slice(0, 80) || "document";
+
+      downloadLink.href = downloadUrl;
+
+      downloadLink.download =
+        baseName + "-pages-removed-freeaitools.pdf";
+
+      resultDetails.textContent =
+        pagesToRemove.length +
+        " page(s) removed | " +
+        pdf.getPageCount() +
+        " page(s) remaining | " +
+        fileSize(blob.size);
+
+      result.hidden = false;
+
+      message(
+        "Success! Your updated PDF is ready."
+      );
+
+    } catch (error) {
+      console.error("Remove PDF pages error:", error);
+
+      message(
+        "Unable to save PDF. Try a smaller supported file."
+      );
+
+    } finally {
+      busy = false;
+      updateButtons();
+    }
+  }
+);
+
+updateButtons();
+</script>
+
+</body>
+</html>
