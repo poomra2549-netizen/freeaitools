@@ -1,0 +1,1255 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Create a free photo collage online. Combine up to 9 JPG, PNG or WebP images in 2x2 or 3x3 grids, adjust spacing and background color, then download PNG, JPG or WebP privately in your browser.">
+<title>Free Image Collage Maker Online | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/image-collage.html">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#080e1e;color:#eef2ff;
+  font-family:Arial,sans-serif;line-height:1.6
+}
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:15px;padding:22px 6%;
+  border-bottom:1px solid #293856
+}
+a{color:#b7a8ff;text-decoration:none}
+.brand{font-size:23px;font-weight:bold;color:white}
+main{max-width:1050px;margin:46px auto;padding:0 20px}
+h1{
+  font-size:clamp(30px,5vw,46px);
+  text-align:center;margin-bottom:8px
+}
+.subtitle{
+  text-align:center;color:#aab8d3;margin-bottom:30px
+}
+.panel,.info,.faq{
+  padding:26px;background:#101a30;
+  border:1px solid #293856;border-radius:18px
+}
+.upload{
+  display:block;text-align:center;padding:40px 18px;
+  background:#151e3a;border:2px dashed #7165e9;
+  border-radius:14px;cursor:pointer
+}
+.upload strong{font-size:20px}
+.upload span{
+  display:block;margin-top:8px;color:#aab8d3
+}
+.upload:focus-within{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+.visually-hidden{
+  position:absolute;width:1px;height:1px;
+  padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0
+}
+.hint,.details{color:#aab8d3;font-size:14px}
+.details{margin:15px 0;overflow-wrap:anywhere}
+.field{display:block;font-weight:bold;margin:18px 0 8px}
+.value{color:#c4b5fd;font-variant-numeric:tabular-nums}
+.settings{
+  display:grid;grid-template-columns:1fr 1fr;
+  column-gap:24px
+}
+select{
+  width:100%;padding:13px;font-size:16px;
+  color:white;background:#080e1e;
+  border:1px solid #46577a;border-radius:10px
+}
+input[type=range]{width:100%;accent-color:#9565ff}
+input[type=color]{
+  display:block;width:100%;height:47px;
+  padding:4px;cursor:pointer;background:#080e1e;
+  border:1px solid #46577a;border-radius:10px
+}
+button{
+  border:0;border-radius:10px;
+  padding:12px 17px;cursor:pointer;
+  background:#30405f;color:white
+}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{
+  display:block;width:100%;margin-top:23px;
+  padding:16px;font-weight:bold;font-size:17px;
+  background:linear-gradient(110deg,#965cff,#625ff4)
+}
+.secondary{margin-top:12px}
+.file-list{
+  display:grid;gap:9px;margin:17px 0
+}
+.file-item{
+  display:flex;align-items:center;gap:12px;
+  background:#17233c;border:1px solid #344562;
+  padding:11px;border-radius:12px
+}
+.thumb{
+  display:block;width:62px;height:62px;
+  object-fit:cover;border-radius:7px;
+  background:#fff;flex-shrink:0
+}
+.file-info{flex:1;min-width:0}
+.file-info strong{
+  display:block;font-size:14px;overflow-wrap:anywhere
+}
+.file-info small{
+  display:block;font-size:12px;color:#aab8d3
+}
+.file-actions{
+  display:flex;gap:5px;flex-wrap:wrap;
+  justify-content:flex-end
+}
+.file-actions button{
+  padding:8px 10px;font-size:13px
+}
+.preview-panel{
+  padding:18px;margin-top:23px;
+  background:#0b1428;border:1px solid #344562;
+  border-radius:14px
+}
+.preview-holder{
+  display:flex;justify-content:center;
+  margin:15px auto;overflow:hidden;max-width:100%
+}
+#previewCanvas{
+  display:block;max-width:100%;height:auto;
+  border-radius:5px
+}
+#status{
+  min-height:26px;overflow-wrap:anywhere;
+  color:#c7d2fe
+}
+.result{
+  margin-top:22px;padding:20px;
+  background:#17233c;border:1px solid #46577a;
+  border-radius:12px
+}
+.download{
+  display:block;text-align:center;padding:14px;
+  margin-top:14px;background:#7255ec;color:white;
+  border-radius:10px;font-weight:bold
+}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{
+  padding:15px 0;border-bottom:1px solid #293856
+}
+.faq details:last-child{border:0}
+.faq summary{cursor:pointer;font-weight:bold}
+footer{text-align:center;padding:35px;color:#aab8d3}
+[hidden]{display:none!important}
+button,.upload,.download{
+  transition:transform .2s ease,border-color .2s ease
+}
+button:focus-visible,input:focus-visible,
+select:focus-visible,a:focus-visible,
+.faq summary:focus-visible{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+@media(hover:hover) and (pointer:fine){
+  .upload:hover{border-color:#b7a8ff}
+  button:not(:disabled):hover,.download:hover{
+    transform:translateY(-2px)
+  }
+}
+@media(max-width:650px){
+  header{flex-direction:column}
+  .panel,.info,.faq{padding:17px}
+  .settings{grid-template-columns:1fr}
+  .preview-panel{padding:12px}
+  .file-item{gap:8px}
+  .thumb{width:48px;height:48px}
+  .file-actions{max-width:98px}
+  .file-actions button{padding:7px}
+}
+@media(prefers-reduced-motion:reduce){
+  button,.upload,.download{transition:none}
+  button:hover,.download:hover{transform:none}
+}
+</style>
+</head>
+
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/image-border.html">Image Border</a>
+</nav>
+</header>
+
+<main>
+<h1>Free Image Collage Maker</h1>
+<p class="subtitle">
+Create beautiful photo collages with 2×2
+or 3×3 grids. Free and private.
+</p>
+
+<section class="panel">
+<label class="upload" for="imageFiles">
+<strong>🖼️ Choose Your Images</strong>
+<span>Add JPG, PNG or WebP images (up to 9)</span>
+</label>
+
+<input id="imageFiles"
+       class="visually-hidden"
+       type="file"
+       multiple
+       accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+
+<p class="hint">
+Select up to 9 images in total.
+Each file must be 10 MB or smaller,
+with a combined maximum of 60 MB.
+Maximum 8,000 pixels per side and
+16 million pixels per image.
+Animated images are not supported.
+</p>
+
+<div id="selection" hidden>
+  <h2>Selected images</h2>
+  <p id="selectionDetails" class="details"></p>
+  <p class="hint">
+    Use the arrows to change image order.
+    Images fill the grid from left to right,
+    then top to bottom.
+  </p>
+  <div id="fileList" class="file-list"></div>
+</div>
+
+<div id="editor" hidden>
+<h2>Customize your collage</h2>
+
+<div class="settings">
+  <div>
+    <label for="layout" class="field">Grid layout</label>
+    <select id="layout">
+      <option value="2">2×2 — 4 cells</option>
+      <option value="3">3×3 — 9 cells</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="cellSize" class="field">
+      Cell size
+    </label>
+    <select id="cellSize">
+      <option value="400">400 × 400 px</option>
+      <option value="600" selected>600 × 600 px</option>
+      <option value="800">800 × 800 px</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="spacing" class="field">
+      Image spacing:
+      <span id="spacingValue" class="value">12 px</span>
+    </label>
+    <input id="spacing" type="range"
+           min="0" max="60" step="2" value="12">
+  </div>
+
+  <div>
+    <label for="backgroundColor" class="field">
+      Background color
+    </label>
+    <input id="backgroundColor"
+           type="color" value="#ffffff">
+  </div>
+
+  <div>
+    <label for="format" class="field">
+      Download format
+    </label>
+    <select id="format">
+      <option value="image/png">PNG</option>
+      <option value="image/jpeg">JPG</option>
+      <option value="image/webp">WebP</option>
+    </select>
+  </div>
+
+  <div id="qualityPanel" hidden>
+    <label for="quality" class="field">
+      Export quality:
+      <span id="qualityValue"
+            class="value">90%</span>
+    </label>
+    <input id="quality" type="range"
+           min="40" max="95" step="5" value="90">
+    <p class="hint">
+      Applies to JPG and WebP only.
+    </p>
+  </div>
+</div>
+
+<div class="preview-panel">
+  <h2>Live Collage Preview</h2>
+  <p class="hint">
+    Images are center-cropped to fill
+    square cells without stretching.
+    Empty cells display the background color.
+  </p>
+
+  <div class="preview-holder">
+    <canvas id="previewCanvas"
+            role="img"
+            aria-label="Collage preview">
+    </canvas>
+  </div>
+
+  <p id="previewDetails" class="details"></p>
+</div>
+
+<button id="prepareBtn"
+        class="primary"
+        type="button">
+  Prepare Collage Download
+</button>
+</div>
+
+<button id="clearBtn"
+        class="secondary"
+        type="button">
+  Clear All Images
+</button>
+
+<p id="status"
+   role="status"
+   aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+  <h2>Your collage is ready!</h2>
+  <p id="resultDetails"></p>
+  <a id="downloadLink"
+     class="download"
+     download>
+    Download Collage
+  </a>
+</div>
+
+<p class="hint">
+All images are processed locally in your
+browser. Image contents are not uploaded
+to FreeAITools servers for collage creation.
+</p>
+</section>
+
+<section class="info">
+<h2>How to make a photo collage</h2>
+<ol>
+  <li>Select one or more JPG, PNG or WebP images.</li>
+  <li>Choose a 2×2 or 3×3 grid.</li>
+  <li>Reorder or remove images as needed.</li>
+  <li>Adjust cell size, spacing and background color.</li>
+  <li>Review the live collage preview.</li>
+  <li>Download your finished collage as one image.</li>
+</ol>
+
+<h2>Two popular collage layouts</h2>
+<p>
+A 2×2 collage contains four square cells.
+A 3×3 collage contains nine square cells.
+You can leave some cells empty, where your
+chosen background color will appear.
+</p>
+
+<h2>How are images fitted?</h2>
+<p>
+Each selected image is center-cropped
+to fill its square cell. This prevents
+stretching, but may trim the edges of
+wide or tall photos. Image order can
+be adjusted before downloading.
+</p>
+
+<h2>Private browser-based collage maker</h2>
+<p>
+This tool uses your browser's Canvas API
+and does not send your selected image
+contents to FreeAITools servers for processing.
+No account or paid API key is required.
+</p>
+
+<h2>Important limitations</h2>
+<p>
+This version supports up to nine static
+images. Animated PNG and animated WebP
+are not supported. Original metadata,
+including EXIF and GPS information,
+may not be preserved.
+</p>
+<p>
+The collage background is an opaque
+color, even when exporting to PNG
+or WebP. Transparent input images
+are drawn over that background.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is Image Collage Maker free?</summary>
+<p>Yes. You can make collages without an account or payment.</p>
+</details>
+
+<details>
+<summary>Can I combine different image formats?</summary>
+<p>Yes. JPG, PNG and WebP images can be combined in the same collage.</p>
+</details>
+
+<details>
+<summary>How many images can I add?</summary>
+<p>You can add up to nine images in total.</p>
+</details>
+
+<details>
+<summary>Can I use only three images in a 2×2 grid?</summary>
+<p>Yes. The fourth cell will show your chosen background color.</p>
+</details>
+
+<details>
+<summary>Can I change image order?</summary>
+<p>Yes. Use the Move Up and Move Down buttons beside each selected image.</p>
+</details>
+
+<details>
+<summary>Are photos stretched?</summary>
+<p>No. Photos are center-cropped to fill the square cells while keeping their proportions.</p>
+</details>
+
+<details>
+<summary>Can I change the spaces between photos?</summary>
+<p>Yes. Adjust the Image spacing slider from 0 to 60 pixels.</p>
+</details>
+
+<details>
+<summary>Can I export JPG or WebP?</summary>
+<p>Yes, when supported by your browser. PNG is also available.</p>
+</details>
+
+<details>
+<summary>Are my images uploaded?</summary>
+<p>No. Collage creation happens locally in your browser.</p>
+</details>
+</section>
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden></section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const imageFiles = $("imageFiles");
+const selection = $("selection");
+const selectionDetails = $("selectionDetails");
+const fileList = $("fileList");
+const editor = $("editor");
+
+const layout = $("layout");
+const cellSize = $("cellSize");
+const spacing = $("spacing");
+const spacingValue = $("spacingValue");
+const backgroundColor = $("backgroundColor");
+const format = $("format");
+const qualityPanel = $("qualityPanel");
+const quality = $("quality");
+const qualityValue = $("qualityValue");
+
+const previewCanvas = $("previewCanvas");
+const previewDetails = $("previewDetails");
+
+const prepareBtn = $("prepareBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const resultDetails = $("resultDetails");
+const downloadLink = $("downloadLink");
+
+const MAX_FILES = 9;
+const MAX_EACH = 10 * 1048576;
+const MAX_TOTAL = 60 * 1048576;
+const MAX_DIMENSION = 8000;
+const MAX_PIXELS = 16000000;
+const PREVIEW_SIDE = 650;
+
+let images = [];
+let downloadUrl = null;
+let busy = false;
+
+function message(text) {
+  status.textContent = text;
+}
+
+function sizeText(bytes) {
+  return bytes < 1048576
+    ? (bytes / 1024).toFixed(1) + " KB"
+    : (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function totalSize(items) {
+  return items.reduce(
+    (sum,item) => sum + item.file.size,0
+  );
+}
+
+function clearResult() {
+  result.hidden = true;
+  downloadLink.removeAttribute("href");
+
+  if (downloadUrl) {
+    URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+  }
+}
+
+function setBusy(value) {
+  busy = value;
+
+  imageFiles.disabled = busy;
+  clearBtn.disabled = busy;
+
+  [
+    layout,cellSize,spacing,
+    backgroundColor,format,quality
+  ].forEach(control => {
+    control.disabled = busy;
+  });
+
+  prepareBtn.disabled =
+    busy || images.length === 0;
+
+  fileList.querySelectorAll("button")
+    .forEach(button => {
+      button.disabled = busy ||
+        button.dataset.locked === "true";
+    });
+}
+
+function releaseItem(item) {
+  if (item.release) {
+    item.release();
+  }
+}
+
+function clearAll() {
+  for (const item of images) {
+    releaseItem(item);
+  }
+
+  images = [];
+  imageFiles.value = "";
+
+  selection.hidden = true;
+  editor.hidden = true;
+  selectionDetails.textContent = "";
+  fileList.replaceChildren();
+
+  previewCanvas.width = 0;
+  previewCanvas.height = 0;
+  previewDetails.textContent = "";
+
+  clearResult();
+  setBusy(false);
+}
+
+function readSettings() {
+  return {
+    columns:Number(layout.value),
+    cell:Number(cellSize.value),
+    gap:Number(spacing.value),
+    background:backgroundColor.value,
+    format:format.value,
+    quality:Number(quality.value)/100
+  };
+}
+
+function getOutputSize(s) {
+  const side =
+    s.columns*s.cell +
+    (s.columns+1)*s.gap;
+
+  return {width:side,height:side};
+}
+
+function drawCover(
+  ctx,img,dx,dy,dWidth,dHeight
+) {
+  const iw = img.width;
+  const ih = img.height;
+
+  // Center crop source image to match
+  // the destination cell aspect ratio.
+  const targetRatio = dWidth/dHeight;
+  const imageRatio = iw/ih;
+
+  let sx = 0;
+  let sy = 0;
+  let sw = iw;
+  let sh = ih;
+
+  if (imageRatio > targetRatio) {
+    sw = ih*targetRatio;
+    sx = (iw-sw)/2;
+  } else {
+    sh = iw/targetRatio;
+    sy = (ih-sh)/2;
+  }
+
+  ctx.drawImage(
+    img,sx,sy,sw,sh,
+    dx,dy,dWidth,dHeight
+  );
+}
+
+// Preview and full output use exactly
+// the same layout and drawing function.
+function drawCollage(canvas,fullResolution) {
+  const s = readSettings();
+  const size = getOutputSize(s);
+
+  const scale = fullResolution
+    ? 1
+    : Math.min(
+        1,PREVIEW_SIDE/size.width
+      );
+
+  canvas.width = Math.max(
+    1,Math.round(size.width*scale)
+  );
+
+  canvas.height = Math.max(
+    1,Math.round(size.height*scale)
+  );
+
+  const ctx = canvas.getContext("2d",{
+    alpha:false
+  });
+
+  if (!ctx) {
+    throw new Error("Canvas is unavailable.");
+  }
+
+  const actualScale =
+    canvas.width/size.width;
+
+  ctx.setTransform(
+    actualScale,0,0,actualScale,0,0
+  );
+
+  // Opaque background fills gutters
+  // and any unoccupied grid cells.
+  ctx.fillStyle = s.background;
+  ctx.fillRect(
+    0,0,size.width,size.height
+  );
+
+  const capacity = s.columns*s.columns;
+  const count = Math.min(
+    images.length,capacity
+  );
+
+  for (let i=0;i<count;i++) {
+    const row = Math.floor(i/s.columns);
+    const col = i%s.columns;
+
+    const x =
+      s.gap+col*(s.cell+s.gap);
+
+    const y =
+      s.gap+row*(s.cell+s.gap);
+
+    drawCover(
+      ctx,images[i].image,
+      x,y,s.cell,s.cell
+    );
+  }
+
+  ctx.setTransform(1,0,0,1,0,0);
+
+  return size;
+}
+
+function refreshPreview() {
+  clearResult();
+
+  if (!images.length) {
+    previewCanvas.width = 0;
+    previewCanvas.height = 0;
+    previewDetails.textContent = "";
+    prepareBtn.disabled = true;
+    return;
+  }
+
+  try {
+    const size = drawCollage(
+      previewCanvas,false
+    );
+
+    const s = readSettings();
+    const capacity = s.columns*s.columns;
+    const visible = Math.min(
+      images.length,capacity
+    );
+
+    previewDetails.textContent =
+      visible + " image(s) in " +
+      s.columns + "×" + s.columns +
+      " grid | Output: " +
+      size.width + " × " +
+      size.height + " px";
+
+    message("Collage preview updated.");
+
+  } catch (error) {
+    console.error("Preview error:",error);
+    message("Unable to render collage.");
+  }
+}
+
+function showSettings() {
+  spacingValue.textContent =
+    spacing.value + " px";
+
+  qualityValue.textContent =
+    quality.value + "%";
+
+  qualityPanel.hidden =
+    format.value === "image/png";
+}
+
+function renderFileList() {
+  fileList.replaceChildren();
+
+  selection.hidden = images.length === 0;
+  editor.hidden = images.length === 0;
+
+  selectionDetails.textContent =
+    images.length + " / 9 images | " +
+    sizeText(totalSize(images)) +
+    " total";
+
+  images.forEach((item,index) => {
+    const row = document.createElement("div");
+    row.className = "file-item";
+
+    const thumb = document.createElement("img");
+    thumb.className = "thumb";
+    thumb.alt = "Selected image " + (index+1);
+
+    // File contents stay in memory.
+    // Object URLs are revoked when removed.
+    thumb.src = item.previewUrl;
+
+    const info = document.createElement("div");
+    info.className = "file-info";
+
+    const title = document.createElement("strong");
+    title.textContent =
+      (index+1) + ". " + item.file.name;
+
+    const meta = document.createElement("small");
+    meta.textContent =
+      item.image.width + " × " +
+      item.image.height + " px | " +
+      sizeText(item.file.size);
+
+    info.append(title,meta);
+
+    const actions = document.createElement("div");
+    actions.className = "file-actions";
+
+    function makeButton(text,label,handler,locked) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = text;
+      button.setAttribute("aria-label",label);
+      button.dataset.locked =
+        String(!!locked);
+
+      button.disabled = busy || locked;
+
+      button.addEventListener("click",() => {
+        if (busy) return;
+        handler();
+      });
+
+      return button;
+    }
+
+    const up = makeButton(
+      "↑","Move " + item.file.name + " up",
+      () => {
+        [images[index-1],images[index]] =
+          [images[index],images[index-1]];
+
+        renderFileList();
+        refreshPreview();
+      },
+      index === 0
+    );
+
+    const down = makeButton(
+      "↓","Move " + item.file.name + " down",
+      () => {
+        [images[index+1],images[index]] =
+          [images[index],images[index+1]];
+
+        renderFileList();
+        refreshPreview();
+      },
+      index === images.length-1
+    );
+
+    const remove = makeButton(
+      "✕","Remove " + item.file.name,
+      () => {
+        const removed = images.splice(index,1)[0];
+        releaseItem(removed);
+
+        renderFileList();
+        refreshPreview();
+
+        message(
+          images.length
+            ? "Image removed."
+            : "Choose images to create a collage."
+        );
+      },
+      false
+    );
+
+    actions.append(up,down,remove);
+    row.append(thumb,info,actions);
+    fileList.appendChild(row);
+  });
+
+  // A 2×2 grid can show only four images.
+  // Automatically switch to 3×3 when needed.
+  if (images.length > 4 && layout.value === "2") {
+    layout.value = "3";
+  }
+
+  setBusy(busy);
+}
+
+function uint32(bytes,index) {
+  return (
+    bytes[index]*16777216 +
+    bytes[index+1]*65536 +
+    bytes[index+2]*256 +
+    bytes[index+3]
+  );
+}
+
+async function validateFile(file) {
+  const name = file.name.toLowerCase();
+
+  if (!/\.(jpg|jpeg|png|webp)$/.test(name)) {
+    throw new Error(
+      "Only JPG, PNG and WebP images are supported."
+    );
+  }
+
+  if (!file.size || file.size > MAX_EACH) {
+    throw new Error(
+      "Each image must be larger than 0 bytes " +
+      "and no more than 10 MB: " + file.name
+    );
+  }
+
+  const bytes = new Uint8Array(
+    await file.slice(0,64).arrayBuffer()
+  );
+
+  const ascii = (start,length) =>
+    String.fromCharCode(
+      ...bytes.slice(start,start+length)
+    );
+
+  const jpeg =
+    bytes.length >= 3 &&
+    bytes[0] === 255 &&
+    bytes[1] === 216 &&
+    bytes[2] === 255;
+
+  const pngSignature = [
+    137,80,78,71,13,10,26,10
+  ];
+
+  const png =
+    bytes.length >= 24 &&
+    pngSignature.every(
+      (v,i) => bytes[i] === v
+    ) &&
+    uint32(bytes,8) === 13 &&
+    ascii(12,4) === "IHDR";
+
+  const webp =
+    bytes.length >= 21 &&
+    ascii(0,4) === "RIFF" &&
+    ascii(8,4) === "WEBP";
+
+  const expected =
+    /\.(jpg|jpeg)$/.test(name) ? "jpeg" :
+    /\.png$/.test(name) ? "png" : "webp";
+
+  const valid =
+    (expected === "jpeg" && jpeg) ||
+    (expected === "png" && png) ||
+    (expected === "webp" && webp);
+
+  if (!valid) {
+    throw new Error(
+      "Image data does not match its extension: " +
+      file.name
+    );
+  }
+
+  if (webp) {
+    const chunk = ascii(12,4);
+
+    if (
+      !["VP8 ","VP8L","VP8X"].includes(chunk)
+    ) {
+      throw new Error(
+        "Unsupported WebP structure."
+      );
+    }
+
+    if (
+      chunk === "VP8X" &&
+      (bytes[20] & 0x02) !== 0
+    ) {
+      throw new Error(
+        "Animated WebP is not supported."
+      );
+    }
+  }
+
+  if (png) {
+    const width = uint32(bytes,16);
+    const height = uint32(bytes,20);
+
+    if (
+      !width || !height ||
+      width > MAX_DIMENSION ||
+      height > MAX_DIMENSION ||
+      width*height > MAX_PIXELS
+    ) {
+      throw new Error(
+        "Image dimensions exceed limits: " +
+        file.name
+      );
+    }
+
+    // Check PNG chunks before IDAT for APNG.
+    let offset = 8;
+
+    while (offset+12 <= file.size) {
+      const header = new Uint8Array(
+        await file.slice(
+          offset,offset+8
+        ).arrayBuffer()
+      );
+
+      if (header.length !== 8) {
+        throw new Error(
+          "Invalid PNG structure."
+        );
+      }
+
+      const length = uint32(header,0);
+      const type = String.fromCharCode(
+        ...header.slice(4,8)
+      );
+
+      const next = offset+12+length;
+
+      if (
+        !Number.isSafeInteger(next) ||
+        next > file.size
+      ) {
+        throw new Error(
+          "Invalid PNG chunk structure."
+        );
+      }
+
+      if (type === "acTL") {
+        throw new Error(
+          "Animated PNG is not supported."
+        );
+      }
+
+      if (type === "IDAT" || type === "IEND") {
+        break;
+      }
+
+      offset = next;
+    }
+  }
+}
+
+async function decodeFile(file) {
+  if (window.createImageBitmap) {
+    const bitmap = await createImageBitmap(file);
+
+    return {
+      image:bitmap,
+      release:() => bitmap.close()
+    };
+  }
+
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.decoding = "async";
+
+  try {
+    await new Promise((resolve,reject) => {
+      img.onload = resolve;
+      img.onerror = () => reject(
+        new Error(
+          "Cannot decode image: " + file.name
+        )
+      );
+      img.src = url;
+    });
+
+    return {
+      image:img,
+      release:() => URL.revokeObjectURL(url)
+    };
+
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+}
+
+imageFiles.addEventListener("change",async () => {
+  if (busy) return;
+
+  const files = Array.from(imageFiles.files);
+  imageFiles.value = "";
+
+  if (!files.length) return;
+
+  if (images.length+files.length > MAX_FILES) {
+    message("You can select up to 9 images total.");
+    return;
+  }
+
+  const currentBytes = totalSize(images);
+  const newBytes = files.reduce(
+    (sum,file) => sum+file.size,0
+  );
+
+  if (currentBytes+newBytes > MAX_TOTAL) {
+    message("Images exceed the 60 MB total limit.");
+    return;
+  }
+
+  setBusy(true);
+  message("Loading selected images...");
+
+  const staged = [];
+
+  try {
+    for (const file of files) {
+      await validateFile(file);
+
+      const decoded = await decodeFile(file);
+
+      const w = decoded.image.width;
+      const h = decoded.image.height;
+
+      if (
+        !w || !h ||
+        w > MAX_DIMENSION ||
+        h > MAX_DIMENSION ||
+        w*h > MAX_PIXELS
+      ) {
+        decoded.release();
+        throw new Error(
+          "Image dimensions exceed limits: " +
+          file.name
+        );
+      }
+
+      const previewUrl =
+        URL.createObjectURL(file);
+
+      staged.push({
+        file,
+        image:decoded.image,
+        previewUrl,
+        release:() => {
+          decoded.release();
+          URL.revokeObjectURL(previewUrl);
+        }
+      });
+    }
+
+    images.push(...staged);
+    renderFileList();
+    refreshPreview();
+
+    message(
+      images.length+" images ready."
+    );
+
+  } catch (error) {
+    // Preserve previously selected images
+    // if a new batch contains a bad file.
+    staged.forEach(releaseItem);
+
+    message(
+      error.message ||
+      "Unable to load selected images."
+    );
+
+  } finally {
+    setBusy(false);
+  }
+});
+
+[layout,cellSize,spacing,backgroundColor]
+  .forEach(control => {
+    control.addEventListener("input",() => {
+      showSettings();
+      refreshPreview();
+    });
+  });
+
+format.addEventListener("change",() => {
+  showSettings();
+  clearResult();
+});
+
+quality.addEventListener("input",() => {
+  showSettings();
+  clearResult();
+});
+
+function exportBlob(canvas,type,exportQuality) {
+  return new Promise((resolve,reject) => {
+    canvas.toBlob(blob => {
+      if (!blob || blob.type !== type) {
+        reject(new Error(
+          "Unable to export this format. " +
+          "Try PNG or JPG."
+        ));
+        return;
+      }
+
+      resolve(blob);
+    },type,exportQuality);
+  });
+}
+
+prepareBtn.addEventListener("click",async () => {
+  if (busy || !images.length) return;
+
+  setBusy(true);
+  clearResult();
+
+  message("Preparing full-resolution collage...");
+
+  const canvas =
+    document.createElement("canvas");
+
+  try {
+    await new Promise(resolve =>
+      requestAnimationFrame(resolve)
+    );
+
+    const dimensions =
+      drawCollage(canvas,true);
+
+    const s = readSettings();
+
+    const blob = await exportBlob(
+      canvas,s.format,s.quality
+    );
+
+    downloadUrl =
+      URL.createObjectURL(blob);
+
+    const extension =
+      s.format === "image/png" ? ".png" :
+      s.format === "image/jpeg" ? ".jpg" :
+      ".webp";
+
+    downloadLink.href = downloadUrl;
+    downloadLink.download =
+      "freeaitools-collage-" +
+      s.columns+"x"+s.columns+
+      extension;
+
+    resultDetails.textContent =
+      dimensions.width+" × "+
+      dimensions.height+" px | "+
+      sizeText(blob.size)+" | "+
+      extension.slice(1).toUpperCase();
+
+    result.hidden = false;
+    message("Your collage is ready!");
+
+  } catch (error) {
+    console.error("Collage error:",error);
+
+    clearResult();
+
+    message(
+      error.message ||
+      "Unable to create collage."
+    );
+
+  } finally {
+    canvas.width = 0;
+    canvas.height = 0;
+    setBusy(false);
+  }
+});
+
+clearBtn.addEventListener("click",() => {
+  if (busy) return;
+
+  clearAll();
+
+  layout.value = "2";
+  cellSize.value = "600";
+  spacing.value = "12";
+  backgroundColor.value = "#ffffff";
+  format.value = "image/png";
+  quality.value = "90";
+
+  showSettings();
+  message("");
+});
+
+showSettings();
+setBusy(false);
+</script>
+</body>
+</html>
