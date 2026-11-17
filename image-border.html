@@ -1,0 +1,1347 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Add colorful borders and rounded corners to JPG, PNG and WebP images for free. Adjust border thickness, color and corner radius, preview results and download privately in your browser.">
+<title>Free Image Border & Rounded Corners | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/image-border.html">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#080e1e;color:#eef2ff;
+  font-family:Arial,sans-serif;line-height:1.6
+}
+header{
+  padding:22px 6%;display:flex;
+  justify-content:space-between;align-items:center;
+  gap:15px;border-bottom:1px solid #293856
+}
+a{color:#b7a8ff;text-decoration:none}
+.brand{font-size:23px;font-weight:bold;color:white}
+main{max-width:1020px;margin:45px auto;padding:0 20px}
+h1{
+  text-align:center;font-size:clamp(30px,5vw,46px);
+  margin-bottom:8px
+}
+.subtitle{
+  color:#aab8d3;text-align:center;margin-bottom:30px
+}
+.panel,.info,.faq{
+  padding:26px;border-radius:18px;
+  background:#101a30;border:1px solid #293856
+}
+.upload{
+  display:block;padding:40px 18px;text-align:center;
+  background:#151e3a;border:2px dashed #7165e9;
+  border-radius:14px;cursor:pointer
+}
+.upload strong{font-size:20px}
+.upload span{
+  display:block;margin-top:8px;color:#aab8d3
+}
+.upload:focus-within{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+.visually-hidden{
+  position:absolute;width:1px;height:1px;
+  padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0
+}
+.hint,.details{color:#aab8d3;font-size:14px}
+.details{margin:15px 0;overflow-wrap:anywhere}
+.field{
+  display:block;font-weight:bold;margin:18px 0 8px
+}
+.value{color:#c4b5fd}
+input[type=range]{
+  display:block;width:100%;
+  accent-color:#9565ff
+}
+input[type=color]{
+  display:block;width:100%;height:46px;
+  padding:4px;background:#080e1e;
+  border:1px solid #46577a;
+  border-radius:10px;cursor:pointer
+}
+select{
+  display:block;width:100%;padding:13px;
+  background:#080e1e;color:white;
+  border:1px solid #46577a;
+  border-radius:10px;font-size:16px
+}
+.settings{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0 24px
+}
+.preset-row{
+  display:flex;flex-wrap:wrap;gap:9px;
+  margin:12px 0 18px
+}
+button{
+  border:0;border-radius:10px;
+  padding:13px 18px;
+  color:white;background:#30405f;cursor:pointer
+}
+button:disabled{opacity:.45;cursor:not-allowed}
+.preset-row button{
+  padding:10px 13px;
+  border:1px solid #4b5b7b
+}
+.preset-row button.active{
+  background:#6343ce;border-color:#c4b5fd
+}
+.primary{
+  width:100%;display:block;padding:16px;
+  margin-top:22px;font-size:17px;font-weight:bold;
+  background:linear-gradient(110deg,#965cff,#625ff4)
+}
+.secondary{margin-top:12px}
+.preview-panel{
+  margin-top:23px;padding:18px;
+  background:#0b1428;border:1px solid #344562;
+  border-radius:14px
+}
+.preview-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:14px;margin-top:15px
+}
+.preview-card{
+  min-width:0;text-align:center;padding:12px;
+  background:#101a30;border:1px solid #344562;
+  border-radius:12px
+}
+.preview-card strong{display:block;margin-bottom:10px}
+.canvas-wrap{
+  min-height:115px;display:flex;
+  align-items:center;justify-content:center;
+  overflow:hidden
+}
+.preview-card canvas{
+  display:block;max-width:100%;height:auto;
+  border-radius:2px;
+  background-color:#fff;
+  background-image:
+    linear-gradient(45deg,#ddd 25%,transparent 25%),
+    linear-gradient(-45deg,#ddd 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#ddd 75%),
+    linear-gradient(-45deg,transparent 75%,#ddd 75%);
+  background-size:16px 16px;
+  background-position:0 0,0 8px,8px -8px,-8px 0
+}
+#status{
+  min-height:26px;color:#c7d2fe;
+  overflow-wrap:anywhere
+}
+.result{
+  margin-top:22px;padding:20px;
+  background:#17233c;border:1px solid #46577a;
+  border-radius:12px
+}
+.download{
+  display:block;text-align:center;padding:14px;
+  margin-top:14px;border-radius:10px;
+  background:#7255ec;color:white;font-weight:bold
+}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{
+  padding:15px 0;border-bottom:1px solid #293856
+}
+.faq details:last-child{border:0}
+.faq summary{cursor:pointer;font-weight:bold}
+footer{text-align:center;padding:35px;color:#aab8d3}
+[hidden]{display:none!important}
+button,.upload,.download{
+  transition:transform .2s ease,border-color .2s ease
+}
+button:focus-visible,input:focus-visible,
+select:focus-visible,a:focus-visible,
+.faq summary:focus-visible{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+@media(hover:hover) and (pointer:fine){
+  .upload:hover{border-color:#b7a8ff}
+  button:not(:disabled):hover,.download:hover{
+    transform:translateY(-2px)
+  }
+}
+@media(max-width:650px){
+  header{flex-direction:column}
+  .panel,.info,.faq{padding:17px}
+  .settings,.preview-grid{grid-template-columns:1fr}
+  .preview-panel{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  button,.upload,.download{transition:none}
+  button:hover,.download:hover{transform:none}
+}
+</style>
+</head>
+
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/image-filters.html">Image Filters</a>
+</nav>
+</header>
+
+<main>
+<h1>Free Image Border &amp; Rounded Corners</h1>
+<p class="subtitle">
+Add beautiful borders and rounded corners
+to your photos. Preview and download for free.
+</p>
+
+<section class="panel">
+
+<label class="upload" for="imageFile">
+<strong>🖼️ Choose an Image</strong>
+<span>Select a JPG, PNG or WebP image</span>
+</label>
+
+<input id="imageFile" class="visually-hidden"
+       type="file"
+       accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+
+<p class="hint">
+One image at a time. Maximum 12 MB,
+8,000 pixels per side and 16 million
+source pixels. Animated images are not supported.
+</p>
+
+<p id="fileDetails" class="details" hidden></p>
+
+<div id="editor" hidden>
+<h2>Customize image border</h2>
+
+<label class="field">Quick border presets</label>
+
+<div id="presetRow" class="preset-row"
+     role="group" aria-label="Border presets">
+  <button type="button" data-preset="none">
+    No Border
+  </button>
+  <button type="button" data-preset="classic">
+    Classic
+  </button>
+  <button type="button" data-preset="rounded">
+    Rounded
+  </button>
+  <button type="button" data-preset="polaroid">
+    Polaroid-style
+  </button>
+</div>
+
+<div class="settings">
+
+<div>
+  <label class="field" for="borderWidth">
+    Border thickness:
+    <span id="borderWidthValue"
+          class="value">20 px</span>
+  </label>
+
+  <input id="borderWidth" type="range"
+         min="0" max="100" step="1" value="20">
+
+  <p class="hint">
+    Adds space around all four sides.
+  </p>
+</div>
+
+<div>
+  <label class="field" for="borderColor">
+    Border color
+  </label>
+
+  <input id="borderColor"
+         type="color" value="#8b5cf6">
+
+  <p class="hint">
+    Choose any available color.
+  </p>
+</div>
+
+<div>
+  <label class="field" for="cornerRadius">
+    Corner radius:
+    <span id="cornerRadiusValue"
+          class="value">30 px</span>
+  </label>
+
+  <input id="cornerRadius" type="range"
+         min="0" max="300" step="1" value="30">
+
+  <p class="hint">
+    A larger radius creates rounder corners.
+    The effective radius is limited by
+    the output image dimensions.
+  </p>
+</div>
+
+<div>
+  <label class="field" for="format">
+    Download format
+  </label>
+
+  <select id="format">
+    <option value="image/png">PNG</option>
+    <option value="image/jpeg">JPG</option>
+    <option value="image/webp">WebP</option>
+  </select>
+
+  <div id="qualityPanel" hidden>
+    <label class="field" for="quality">
+      Export quality:
+      <span id="qualityValue"
+            class="value">90%</span>
+    </label>
+
+    <input id="quality" type="range"
+           min="40" max="95"
+           step="5" value="90">
+  </div>
+</div>
+
+</div>
+
+<button id="resetBtn" class="secondary"
+        type="button">
+Reset Border Settings
+</button>
+
+<div class="preview-panel">
+<h2>Live Before / After Preview</h2>
+<p class="hint">
+The image content keeps its original size.
+A border increases the total output dimensions.
+</p>
+
+<div class="preview-grid">
+<div class="preview-card">
+  <strong>Before</strong>
+  <div class="canvas-wrap">
+    <canvas id="beforeCanvas"
+            role="img"
+            aria-label="Original image preview">
+    </canvas>
+  </div>
+</div>
+
+<div class="preview-card">
+  <strong>After</strong>
+  <div class="canvas-wrap">
+    <canvas id="afterCanvas"
+            role="img"
+            aria-label="Image border and rounded corners preview">
+    </canvas>
+  </div>
+</div>
+</div>
+
+<p id="previewDetails" class="details"></p>
+</div>
+
+<button id="prepareBtn" class="primary"
+        type="button">
+Prepare Bordered Image
+</button>
+</div>
+
+<button id="clearBtn" class="secondary"
+        type="button">
+Clear Image
+</button>
+
+<p id="status"
+   role="status"
+   aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h2>Your image is ready!</h2>
+<p id="resultDetails"></p>
+
+<a id="downloadLink"
+   class="download" download>
+  Download Bordered Image
+</a>
+</div>
+
+<p class="hint">
+Images are processed locally in your browser.
+No image content is uploaded to FreeAITools
+servers for editing.
+</p>
+
+</section>
+
+<section class="info">
+<h2>How to add an image border</h2>
+<ol>
+<li>Upload a JPG, PNG or WebP image.</li>
+<li>Choose a preset or adjust the border thickness.</li>
+<li>Choose the border color.</li>
+<li>Adjust the rounded corner radius.</li>
+<li>Check the live Before / After preview.</li>
+<li>Select PNG, JPG or WebP and download your image.</li>
+</ol>
+
+<h2>What are rounded corners?</h2>
+<p>
+Rounded corners soften the rectangular
+edges of an image. This can be useful
+for website graphics, presentations,
+social media content and product photos.
+</p>
+
+<h2>Will a border change image dimensions?</h2>
+<p>
+Yes. The border is added outside the
+original image. For example, a 1000 × 600
+image with a 20-pixel border becomes
+1040 × 640 pixels.
+</p>
+
+<h2>Private browser-based editing</h2>
+<p>
+Image borders and rounded corners are
+drawn using your browser's Canvas API.
+No API key, account or external
+image-editing library is required.
+</p>
+
+<h2>Important limitations</h2>
+<p>
+This tool supports static JPG, PNG and
+WebP images. Animated PNG and animated
+WebP files are not supported.
+</p>
+
+<p>
+PNG and supported WebP exports can
+preserve transparent rounded corners.
+JPG does not support transparency,
+so transparent areas become white.
+The original EXIF, GPS and other
+metadata may not be retained.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is Image Border free?</summary>
+<p>Yes. The tool is free and needs no account.</p>
+</details>
+
+<details>
+<summary>Can I change the border color?</summary>
+<p>Yes. Use the color picker to choose your preferred color.</p>
+</details>
+
+<details>
+<summary>Can I create rounded corners without a border?</summary>
+<p>Yes. Set Border thickness to 0 and increase Corner radius.</p>
+</details>
+
+<details>
+<summary>Does the border cover part of my picture?</summary>
+<p>No. The border is placed around the original image rather than covering its center.</p>
+</details>
+
+<details>
+<summary>Will rounded corners be transparent?</summary>
+<p>Yes, in PNG output and generally in WebP output when supported by your browser.</p>
+</details>
+
+<details>
+<summary>Why are JPG corners white?</summary>
+<p>JPG does not support transparent pixels, so empty rounded corners use white.</p>
+</details>
+
+<details>
+<summary>What does Polaroid-style mean?</summary>
+<p>It applies a thick white frame and small rounded corners. It does not add a larger bottom margin.</p>
+</details>
+
+<details>
+<summary>Can I download WebP?</summary>
+<p>Yes, if your browser supports WebP encoding.</p>
+</details>
+
+<details>
+<summary>Are my images uploaded?</summary>
+<p>No. All border editing happens in your browser.</p>
+</details>
+</section>
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden></section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const imageFile = $("imageFile");
+const fileDetails = $("fileDetails");
+const editor = $("editor");
+
+const presetRow = $("presetRow");
+const borderWidth = $("borderWidth");
+const borderWidthValue = $("borderWidthValue");
+const borderColor = $("borderColor");
+const cornerRadius = $("cornerRadius");
+const cornerRadiusValue = $("cornerRadiusValue");
+
+const format = $("format");
+const qualityPanel = $("qualityPanel");
+const quality = $("quality");
+const qualityValue = $("qualityValue");
+
+const resetBtn = $("resetBtn");
+const beforeCanvas = $("beforeCanvas");
+const afterCanvas = $("afterCanvas");
+const previewDetails = $("previewDetails");
+
+const prepareBtn = $("prepareBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+
+const result = $("result");
+const resultDetails = $("resultDetails");
+const downloadLink = $("downloadLink");
+
+const MAX_FILE_SIZE = 12 * 1048576;
+const MAX_DIMENSION = 8000;
+const MAX_SOURCE_PIXELS = 16000000;
+const MAX_OUTPUT_DIMENSION = 8200;
+const MAX_OUTPUT_PIXELS = 20000000;
+const PREVIEW_MAX_SIDE = 680;
+
+const PRESETS = {
+  none:{
+    thickness:0,
+    radius:0,
+    color:"#8b5cf6"
+  },
+  classic:{
+    thickness:20,
+    radius:0,
+    color:"#8b5cf6"
+  },
+  rounded:{
+    thickness:20,
+    radius:60,
+    color:"#8b5cf6"
+  },
+  polaroid:{
+    thickness:55,
+    radius:8,
+    color:"#ffffff"
+  }
+};
+
+let image = null;
+let imageRelease = null;
+let selectedFile = null;
+let downloadUrl = null;
+let busy = false;
+
+function message(text) {
+  status.textContent = text;
+}
+
+function sizeText(bytes) {
+  return bytes < 1048576
+    ? (bytes / 1024).toFixed(1) + " KB"
+    : (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function clearResult() {
+  result.hidden = true;
+  downloadLink.removeAttribute("href");
+
+  if (downloadUrl) {
+    URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+  }
+}
+
+function updateButtons() {
+  [
+    imageFile,borderWidth,borderColor,
+    cornerRadius,format,quality,clearBtn
+  ].forEach(control => {
+    control.disabled = busy;
+  });
+
+  presetRow.querySelectorAll("button")
+    .forEach(button => {
+      button.disabled = busy || !image;
+    });
+
+  resetBtn.disabled = busy || !image;
+  prepareBtn.disabled = busy || !image;
+}
+
+function releaseImage() {
+  if (imageRelease) {
+    imageRelease();
+    imageRelease = null;
+  }
+
+  image = null;
+  selectedFile = null;
+  imageFile.value = "";
+
+  fileDetails.hidden = true;
+  fileDetails.textContent = "";
+  editor.hidden = true;
+  previewDetails.textContent = "";
+
+  beforeCanvas.width = 0;
+  beforeCanvas.height = 0;
+
+  afterCanvas.width = 0;
+  afterCanvas.height = 0;
+
+  clearResult();
+  updateButtons();
+}
+
+function settings() {
+  return {
+    thickness:Number(borderWidth.value),
+    radius:Number(cornerRadius.value),
+    color:borderColor.value,
+    format:format.value,
+    quality:Number(quality.value)/100
+  };
+}
+
+function updateLabels() {
+  borderWidthValue.textContent =
+    borderWidth.value + " px";
+
+  cornerRadiusValue.textContent =
+    cornerRadius.value + " px";
+
+  qualityValue.textContent =
+    quality.value + "%";
+}
+
+function updatePresetButtons() {
+  const current = settings();
+
+  presetRow.querySelectorAll("button")
+    .forEach(button => {
+      const preset = PRESETS[button.dataset.preset];
+
+      const active = !!preset &&
+        preset.thickness === current.thickness &&
+        preset.radius === current.radius &&
+        preset.color === current.color;
+
+      button.classList.toggle("active",active);
+      button.setAttribute(
+        "aria-pressed",String(active)
+      );
+    });
+}
+
+function applyPreset(preset) {
+  borderWidth.value = preset.thickness;
+  cornerRadius.value = preset.radius;
+  borderColor.value = preset.color;
+
+  updateLabels();
+  refreshPreview();
+}
+
+function outputDimensions(config) {
+  return {
+    width:image.width + config.thickness*2,
+    height:image.height + config.thickness*2
+  };
+}
+
+function checkOutputLimits(config) {
+  const dimensions = outputDimensions(config);
+
+  if (
+    dimensions.width > MAX_OUTPUT_DIMENSION ||
+    dimensions.height > MAX_OUTPUT_DIMENSION ||
+    dimensions.width*dimensions.height >
+      MAX_OUTPUT_PIXELS
+  ) {
+    throw new Error(
+      "The border makes the output too large. " +
+      "Reduce border thickness or use a smaller image."
+    );
+  }
+
+  return dimensions;
+}
+
+// Rounded rectangle path with a fallback
+// for browsers without ctx.roundRect().
+function roundedPath(ctx,x,y,w,h,radius) {
+  const r = Math.min(
+    Math.max(0,radius),
+    w/2,h/2
+  );
+
+  ctx.beginPath();
+
+  if (typeof ctx.roundRect === "function") {
+    ctx.roundRect(x,y,w,h,r);
+    return;
+  }
+
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+
+  ctx.lineTo(x+w,y+h-r);
+  ctx.quadraticCurveTo(
+    x+w,y+h,x+w-r,y+h
+  );
+
+  ctx.lineTo(x+r,y+h);
+  ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+
+  ctx.lineTo(x,y+r);
+  ctx.quadraticCurveTo(x,y,x+r,y);
+
+  ctx.closePath();
+}
+
+// Draw a full-resolution image or a smaller
+// preview using the same drawing routine.
+function drawBordered(canvas,fullResolution) {
+  if (!image) return;
+
+  const config = settings();
+  const dimensions = outputDimensions(config);
+
+  const scale = fullResolution
+    ? 1
+    : Math.min(
+        1,
+        PREVIEW_MAX_SIDE /
+          Math.max(dimensions.width,dimensions.height)
+      );
+
+  canvas.width = Math.max(
+    1,Math.round(dimensions.width*scale)
+  );
+
+  canvas.height = Math.max(
+    1,Math.round(dimensions.height*scale)
+  );
+
+  const ctx = canvas.getContext("2d",{
+    alpha:config.format !== "image/jpeg"
+  });
+
+  if (!ctx) {
+    throw new Error(
+      "Canvas is unavailable."
+    );
+  }
+
+  // Use source-pixel coordinates so the
+  // border and radius scale consistently
+  // between preview and full export.
+  ctx.setTransform(
+    canvas.width/dimensions.width,
+    0,0,
+    canvas.height/dimensions.height,
+    0,0
+  );
+
+  const t = config.thickness;
+  const w = image.width;
+  const h = image.height;
+  const outerW = dimensions.width;
+  const outerH = dimensions.height;
+
+  const outerRadius = Math.min(
+    config.radius,
+    outerW/2,
+    outerH/2
+  );
+
+  const innerRadius = Math.max(
+    0,
+    outerRadius-t
+  );
+
+  // JPG has no transparency.
+  // White is used behind the rounded image.
+  if (config.format === "image/jpeg") {
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0,0,outerW,outerH);
+  }
+
+  // Outer shape: border background.
+  // With zero thickness the shape is
+  // still useful for rounded corners.
+  ctx.save();
+
+  roundedPath(
+    ctx,0,0,outerW,outerH,outerRadius
+  );
+
+  ctx.clip();
+
+  if (t > 0) {
+    ctx.fillStyle = config.color;
+    ctx.fillRect(0,0,outerW,outerH);
+  }
+
+  // Clip the photo to the inner
+  // rounded shape.
+  ctx.save();
+
+  roundedPath(
+    ctx,t,t,w,h,innerRadius
+  );
+
+  ctx.clip();
+
+  // Preserve PNG/WebP alpha unless
+  // exporting to JPG.
+  if (config.format === "image/jpeg") {
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(t,t,w,h);
+  }
+
+  ctx.drawImage(image,t,t,w,h);
+
+  ctx.restore();
+  ctx.restore();
+
+  ctx.setTransform(1,0,0,1,0,0);
+}
+
+function drawBeforePreview() {
+  const scale = Math.min(
+    1,
+    PREVIEW_MAX_SIDE /
+      Math.max(image.width,image.height)
+  );
+
+  beforeCanvas.width = Math.max(
+    1,Math.round(image.width*scale)
+  );
+
+  beforeCanvas.height = Math.max(
+    1,Math.round(image.height*scale)
+  );
+
+  const ctx = beforeCanvas.getContext("2d");
+
+  if (!ctx) {
+    throw new Error(
+      "Unable to create original preview."
+    );
+  }
+
+  ctx.drawImage(
+    image,0,0,
+    beforeCanvas.width,beforeCanvas.height
+  );
+}
+
+function refreshPreview() {
+  clearResult();
+  updatePresetButtons();
+
+  if (!image) {
+    updateButtons();
+    return;
+  }
+
+  try {
+    const config = settings();
+    const dimensions =
+      checkOutputLimits(config);
+
+    drawBordered(afterCanvas,false);
+
+    previewDetails.textContent =
+      "Original: " + image.width +
+      " × " + image.height +
+      " px | Output: " +
+      dimensions.width + " × " +
+      dimensions.height + " px";
+
+    message("Preview updated.");
+
+  } catch (error) {
+    afterCanvas.width = 0;
+    afterCanvas.height = 0;
+
+    previewDetails.textContent = "";
+    message(error.message);
+  }
+
+  updateButtons();
+}
+
+presetRow.addEventListener("click",event => {
+  const button = event.target.closest(
+    "button[data-preset]"
+  );
+
+  if (!button || !image || busy) return;
+
+  const preset =
+    PRESETS[button.dataset.preset];
+
+  if (!preset) return;
+
+  applyPreset(preset);
+});
+
+[
+  borderWidth,borderColor,cornerRadius
+].forEach(control => {
+  control.addEventListener("input",() => {
+    updateLabels();
+    refreshPreview();
+  });
+});
+
+resetBtn.addEventListener("click",() => {
+  if (!image || busy) return;
+  applyPreset(PRESETS.classic);
+  message("Border settings reset.");
+});
+
+format.addEventListener("change",() => {
+  qualityPanel.hidden =
+    format.value === "image/png";
+
+  refreshPreview();
+});
+
+quality.addEventListener("input",() => {
+  updateLabels();
+  clearResult();
+});
+
+function uint32(bytes,index) {
+  return (
+    bytes[index]*16777216 +
+    bytes[index+1]*65536 +
+    bytes[index+2]*256 +
+    bytes[index+3]
+  );
+}
+
+async function validateImage(file) {
+  if (!/\.(jpg|jpeg|png|webp)$/i.test(file.name)) {
+    throw new Error(
+      "Only JPG, PNG and WebP files are supported."
+    );
+  }
+
+  if (!file.size || file.size > MAX_FILE_SIZE) {
+    throw new Error(
+      "Image must be larger than 0 bytes " +
+      "and no more than 12 MB."
+    );
+  }
+
+  const header = new Uint8Array(
+    await file.slice(0,64).arrayBuffer()
+  );
+
+  const ascii = (start,length) =>
+    String.fromCharCode(
+      ...header.slice(start,start+length)
+    );
+
+  const jpeg =
+    header.length >= 3 &&
+    header[0] === 255 &&
+    header[1] === 216 &&
+    header[2] === 255;
+
+  const pngSignature = [
+    137,80,78,71,13,10,26,10
+  ];
+
+  const png =
+    header.length >= 24 &&
+    pngSignature.every(
+      (value,i) => header[i] === value
+    ) &&
+    uint32(header,8) === 13 &&
+    ascii(12,4) === "IHDR";
+
+  const webp =
+    header.length >= 21 &&
+    ascii(0,4) === "RIFF" &&
+    ascii(8,4) === "WEBP";
+
+  const name = file.name.toLowerCase();
+
+  const expected =
+    /\.(jpg|jpeg)$/.test(name) ? "jpeg" :
+    /\.png$/.test(name) ? "png" : "webp";
+
+  const valid =
+    (expected === "jpeg" && jpeg) ||
+    (expected === "png" && png) ||
+    (expected === "webp" && webp);
+
+  if (!valid) {
+    throw new Error(
+      "Image data does not match its file extension."
+    );
+  }
+
+  if (webp) {
+    const chunk = ascii(12,4);
+
+    if (
+      !["VP8 ","VP8L","VP8X"].includes(chunk)
+    ) {
+      throw new Error(
+        "Unsupported WebP structure."
+      );
+    }
+
+    if (
+      chunk === "VP8X" &&
+      (header[20] & 0x02) !== 0
+    ) {
+      throw new Error(
+        "Animated WebP is not supported."
+      );
+    }
+  }
+
+  if (png) {
+    const width = uint32(header,16);
+    const height = uint32(header,20);
+
+    if (
+      !width || !height ||
+      width > MAX_DIMENSION ||
+      height > MAX_DIMENSION ||
+      width*height > MAX_SOURCE_PIXELS
+    ) {
+      throw new Error(
+        "Image dimensions exceed limits."
+      );
+    }
+
+    // Detect animated PNG (APNG) chunks
+    // before the first IDAT.
+    let offset = 8;
+
+    while (offset+12 <= file.size) {
+      const bytes = new Uint8Array(
+        await file.slice(
+          offset,offset+8
+        ).arrayBuffer()
+      );
+
+      if (bytes.length !== 8) {
+        throw new Error(
+          "Invalid PNG structure."
+        );
+      }
+
+      const length = uint32(bytes,0);
+      const type = String.fromCharCode(
+        ...bytes.slice(4,8)
+      );
+
+      const next = offset+12+length;
+
+      if (
+        !Number.isSafeInteger(next) ||
+        next > file.size
+      ) {
+        throw new Error(
+          "Invalid PNG chunk structure."
+        );
+      }
+
+      if (type === "acTL") {
+        throw new Error(
+          "Animated PNG is not supported."
+        );
+      }
+
+      if (type === "IDAT" || type === "IEND") {
+        break;
+      }
+
+      offset = next;
+    }
+  }
+}
+
+async function decodeImage(file) {
+  if (window.createImageBitmap) {
+    const bitmap = await createImageBitmap(file);
+
+    return {
+      image:bitmap,
+      release:() => bitmap.close()
+    };
+  }
+
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.decoding = "async";
+
+  try {
+    await new Promise((resolve,reject) => {
+      img.onload = resolve;
+      img.onerror = () => reject(
+        new Error("Unable to decode image.")
+      );
+
+      img.src = url;
+    });
+
+    return {
+      image:{
+        width:img.naturalWidth,
+        height:img.naturalHeight,
+        element:img
+      },
+      release:() => URL.revokeObjectURL(url)
+    };
+
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+}
+
+// Supports both ImageBitmap and HTMLImageElement
+// from the browser decode fallback.
+
+// Instead of changing canvas globally,
+// normalize fallback image below.
+imageFile.addEventListener("change",async () => {
+  if (busy) return;
+
+  const file = imageFile.files[0];
+
+  busy = true;
+  updateButtons();
+  releaseImage();
+
+  if (!file) {
+    busy = false;
+    updateButtons();
+    message("");
+    return;
+  }
+
+  message("Loading image...");
+
+  let decoded = null;
+
+  try {
+    await validateImage(file);
+    decoded = await decodeImage(file);
+
+    const decodedImage = decoded.image;
+
+    const width = decodedImage.width;
+    const height = decodedImage.height;
+
+    if (
+      !width || !height ||
+      width > MAX_DIMENSION ||
+      height > MAX_DIMENSION ||
+      width*height > MAX_SOURCE_PIXELS
+    ) {
+      throw new Error(
+        "Image dimensions exceed the supported limit."
+      );
+    }
+
+    selectedFile = file;
+
+    // Native HTMLImageElement already exposes
+    // naturalWidth and naturalHeight.
+    // Use it directly if a fallback was used.
+    image = decodedImage.element ||
+      decodedImage;
+
+    imageRelease = decoded.release;
+    decoded = null;
+
+    fileDetails.textContent =
+      file.name + " | " +
+      width + " × " + height +
+      " px | " + sizeText(file.size);
+
+    fileDetails.hidden = false;
+    editor.hidden = false;
+
+    applyPreset(PRESETS.classic);
+    drawBeforePreview();
+
+    message(
+      "Image loaded. Customize the border."
+    );
+
+  } catch (error) {
+    if (decoded) decoded.release();
+    releaseImage();
+
+    message(
+      error.message ||
+      "Unable to load this image."
+    );
+
+  } finally {
+    busy = false;
+    updateButtons();
+  }
+});
+
+function exportBlob(canvas,type,exportQuality) {
+  return new Promise((resolve,reject) => {
+    canvas.toBlob(blob => {
+      if (!blob || blob.type !== type) {
+        reject(new Error(
+          "Unable to export the selected format. " +
+          "Try PNG or JPG."
+        ));
+        return;
+      }
+
+      resolve(blob);
+    },type,exportQuality);
+  });
+}
+
+prepareBtn.addEventListener("click",async () => {
+  if (!image || !selectedFile || busy) return;
+
+  busy = true;
+  updateButtons();
+  clearResult();
+
+  message("Preparing full-resolution image...");
+
+  const canvas =
+    document.createElement("canvas");
+
+  try {
+    const config = settings();
+    const dimensions = checkOutputLimits(config);
+
+    await new Promise(resolve =>
+      requestAnimationFrame(resolve)
+    );
+
+    drawBordered(canvas,true);
+
+    const blob = await exportBlob(
+      canvas,
+      config.format,
+      config.quality
+    );
+
+    downloadUrl =
+      URL.createObjectURL(blob);
+
+    const base = selectedFile.name
+      .replace(/\.(jpg|jpeg|png|webp)$/i,"")
+      .replace(/[^\w.-]+/g,"_")
+      .slice(0,70) || "image";
+
+    const extension =
+      config.format === "image/png" ? ".png" :
+      config.format === "image/jpeg" ? ".jpg" :
+      ".webp";
+
+    downloadLink.href = downloadUrl;
+
+    downloadLink.download =
+      base+"-bordered-freeaitools"+
+      extension;
+
+    resultDetails.textContent =
+      dimensions.width + " × " +
+      dimensions.height + " px | " +
+      sizeText(blob.size) + " | " +
+      extension.slice(1).toUpperCase();
+
+    result.hidden = false;
+    message("Your bordered image is ready!");
+
+  } catch (error) {
+    console.error("Border export error:",error);
+    clearResult();
+
+    message(
+      error.message ||
+      "Unable to create bordered image."
+    );
+
+  } finally {
+    canvas.width = 0;
+    canvas.height = 0;
+
+    busy = false;
+    updateButtons();
+  }
+});
+
+clearBtn.addEventListener("click",() => {
+  if (busy) return;
+
+  releaseImage();
+  applyPreset(PRESETS.classic);
+
+  format.value = "image/png";
+  quality.value = "90";
+
+  qualityPanel.hidden = true;
+  updateLabels();
+  updatePresetButtons();
+
+  message("");
+  updateButtons();
+});
+
+qualityPanel.hidden = true;
+updateLabels();
+updatePresetButtons();
+updateButtons();
+</script>
+</body>
+</html>
