@@ -1,0 +1,1245 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Add text watermarks to JPG, PNG and WebP images for free. Adjust watermark text, size, color, opacity and position. Preview and download privately in your browser.">
+<title>Free Image Watermark Tool | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/image-watermark.html">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#080e1e;color:#eef2ff;
+  font-family:Arial,sans-serif;line-height:1.6
+}
+header{
+  padding:22px 6%;
+  display:flex;align-items:center;
+  justify-content:space-between;gap:15px;
+  border-bottom:1px solid #293856
+}
+a{color:#b7a8ff;text-decoration:none}
+.brand{color:white;font-size:23px;font-weight:bold}
+main{max-width:980px;margin:45px auto;padding:0 20px}
+h1{
+  text-align:center;font-size:clamp(30px,5vw,46px);
+  margin-bottom:8px
+}
+.subtitle{
+  text-align:center;color:#aab8d3;margin-bottom:30px
+}
+.panel,.info,.faq{
+  background:#101a30;border:1px solid #293856;
+  border-radius:18px;padding:26px
+}
+.upload{
+  display:block;padding:40px 18px;text-align:center;
+  border:2px dashed #7165e9;border-radius:14px;
+  background:#151e3a;cursor:pointer
+}
+.upload strong{font-size:20px}
+.upload span{display:block;margin-top:8px;color:#aab8d3}
+.upload:focus-within{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+.visually-hidden{
+  position:absolute;width:1px;height:1px;
+  padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0
+}
+.hint,.details{color:#aab8d3;font-size:14px}
+.details{margin:15px 0;overflow-wrap:anywhere}
+.field{display:block;font-weight:bold;margin:18px 0 8px}
+input[type=text],select{
+  display:block;width:100%;padding:13px;
+  color:white;background:#080e1e;
+  border:1px solid #46577a;border-radius:10px;
+  font-size:16px
+}
+input[type=range]{width:100%;accent-color:#9565ff}
+input[type=color]{
+  display:block;width:100%;height:48px;padding:4px;
+  background:#080e1e;border:1px solid #46577a;
+  border-radius:10px;cursor:pointer
+}
+.settings{
+  display:grid;grid-template-columns:1fr 1fr;
+  column-gap:22px
+}
+.position-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:8px;max-width:360px
+}
+.position-grid button{
+  min-height:44px;padding:10px 6px;
+  background:#27344f;border:1px solid #46577a
+}
+.position-grid button.active{
+  background:#6343ce;border-color:#c4b5fd
+}
+.preview-panel{
+  padding:18px;margin-top:24px;
+  background:#0b1428;border:1px solid #344562;
+  border-radius:14px
+}
+.preview-holder{
+  display:flex;justify-content:center;
+  max-width:100%;margin:15px 0;
+  overflow:hidden
+}
+#previewCanvas{
+  display:block;max-width:100%;height:auto;
+  background:#fff;border-radius:5px
+}
+button{
+  border:0;padding:13px 18px;border-radius:10px;
+  color:white;background:#3a4768;cursor:pointer
+}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{
+  display:block;width:100%;padding:16px;
+  font-size:17px;font-weight:bold;margin-top:23px;
+  background:linear-gradient(110deg,#965cff,#625ff4)
+}
+.secondary{margin-top:12px}
+#status{min-height:26px;color:#c7d2fe;overflow-wrap:anywhere}
+.result{
+  padding:20px;margin-top:22px;background:#17233c;
+  border:1px solid #46577a;border-radius:12px
+}
+.result h2{margin-top:0}
+.download{
+  display:block;text-align:center;margin-top:14px;
+  padding:14px;background:#7255ec;color:white;
+  font-weight:bold;border-radius:10px
+}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{
+  padding:15px 0;border-bottom:1px solid #293856
+}
+.faq details:last-child{border:0}
+.faq summary{font-weight:bold;cursor:pointer}
+footer{text-align:center;padding:35px;color:#aab8d3}
+[hidden]{display:none!important}
+button,.upload,.download{
+  transition:transform .2s ease,border-color .2s ease
+}
+button:focus-visible,input:focus-visible,
+select:focus-visible,a:focus-visible,
+.faq summary:focus-visible{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+@media(hover:hover) and (pointer:fine){
+  .upload:hover{border-color:#b7a8ff}
+  button:not(:disabled):hover,.download:hover{
+    transform:translateY(-2px)
+  }
+}
+@media(max-width:600px){
+  header{flex-direction:column}
+  .panel,.info,.faq{padding:17px}
+  .settings{grid-template-columns:1fr}
+  .preview-panel{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  button,.upload,.download{transition:none}
+  button:hover,.download:hover{transform:none}
+}
+</style>
+</head>
+
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/image-cropper.html">Image Cropper</a>
+</nav>
+</header>
+
+<main>
+<h1>Free Image Watermark</h1>
+<p class="subtitle">
+Add custom text watermarks to images.
+Preview your changes and download for free.
+</p>
+
+<section class="panel">
+
+<label for="imageFile" class="upload">
+<strong>🖼️ Choose an Image</strong>
+<span>Upload a JPG, PNG or WebP image</span>
+</label>
+
+<input id="imageFile" class="visually-hidden"
+       type="file"
+       accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+
+<p class="hint">
+One image at a time. Maximum 15 MB,
+8,000 pixels per side and 20 million pixels.
+Animated PNG and animated WebP are not supported.
+</p>
+
+<p id="fileDetails" class="details" hidden></p>
+
+<div id="editor" hidden>
+
+<label class="field" for="watermarkText">
+Watermark text
+</label>
+<input id="watermarkText" type="text"
+       maxlength="80" value="FreeAITools"
+       placeholder="Enter your watermark text">
+
+<div class="settings">
+  <div>
+    <label class="field" for="font">
+      Font style
+    </label>
+    <select id="font">
+      <option value="sans-serif">Sans Serif</option>
+      <option value="serif">Serif</option>
+      <option value="monospace">Monospace</option>
+    </select>
+  </div>
+
+  <div>
+    <label class="field" for="color">
+      Text color
+    </label>
+    <input id="color" type="color" value="#ffffff">
+  </div>
+
+  <div>
+    <label class="field" for="fontSize">
+      Text size:
+      <span id="fontSizeValue">8%</span>
+    </label>
+    <input id="fontSize" type="range"
+           min="2" max="20" step="1" value="8">
+    <p class="hint">
+      Percentage of the image's shorter side.
+    </p>
+  </div>
+
+  <div>
+    <label class="field" for="opacity">
+      Opacity:
+      <span id="opacityValue">60%</span>
+    </label>
+    <input id="opacity" type="range"
+           min="10" max="100" step="5" value="60">
+    <p class="hint">
+      Lower opacity makes the text less visible.
+    </p>
+  </div>
+
+  <div>
+    <label class="field" for="outline">
+      Text outline
+    </label>
+    <select id="outline">
+      <option value="dark">Dark outline</option>
+      <option value="light">Light outline</option>
+      <option value="none">No outline</option>
+    </select>
+  </div>
+
+  <div>
+    <label class="field" for="format">
+      Download format
+    </label>
+    <select id="format">
+      <option value="image/png">PNG</option>
+      <option value="image/jpeg">JPG</option>
+    </select>
+  </div>
+</div>
+
+<div id="qualityPanel" hidden>
+<label class="field" for="quality">
+JPG quality:
+<span id="qualityValue">90%</span>
+</label>
+<input id="quality" type="range"
+       min="40" max="95" step="5" value="90">
+</div>
+
+<label class="field">Watermark position</label>
+
+<div id="positionGrid" class="position-grid"
+     role="group" aria-label="Choose watermark position">
+  <button type="button" data-position="top-left"
+          aria-label="Top left">↖</button>
+  <button type="button" data-position="top-center"
+          aria-label="Top center">↑</button>
+  <button type="button" data-position="top-right"
+          aria-label="Top right">↗</button>
+
+  <button type="button" data-position="middle-left"
+          aria-label="Middle left">←</button>
+  <button type="button" data-position="middle-center"
+          aria-label="Center">●</button>
+  <button type="button" data-position="middle-right"
+          aria-label="Middle right">→</button>
+
+  <button type="button" data-position="bottom-left"
+          aria-label="Bottom left">↙</button>
+  <button type="button" data-position="bottom-center"
+          aria-label="Bottom center">↓</button>
+  <button type="button" data-position="bottom-right"
+          aria-label="Bottom right">↘</button>
+</div>
+
+<p id="positionLabel" class="hint">
+Position: Bottom Right
+</p>
+
+<div class="preview-panel">
+  <h2>Live watermark preview</h2>
+  <p class="hint">
+    Changes appear automatically.
+    The downloaded image uses its full
+    original pixel dimensions.
+  </p>
+
+  <div class="preview-holder">
+    <canvas id="previewCanvas"
+            role="img"
+            aria-label="Preview of image with text watermark">
+    </canvas>
+  </div>
+
+  <p id="previewDetails" class="details"></p>
+</div>
+
+<button id="downloadBtn" class="primary"
+        type="button">
+Prepare Watermarked Image
+</button>
+</div>
+
+<button id="clearBtn" class="secondary"
+        type="button">
+Clear Image
+</button>
+
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h2>Your image is ready!</h2>
+<p id="resultDetails"></p>
+<a id="downloadLink" class="download" download>
+Download Watermarked Image
+</a>
+</div>
+
+<p class="hint">
+Image contents remain in your browser
+during processing. No API or account required.
+</p>
+</section>
+
+<section class="info">
+<h2>How to add a watermark to an image</h2>
+<ol>
+<li>Select a JPG, PNG or WebP image.</li>
+<li>Enter your watermark text.</li>
+<li>Adjust the font, size, color and opacity.</li>
+<li>Choose one of the nine watermark positions.</li>
+<li>Review the live preview.</li>
+<li>Select PNG or JPG and prepare your download.</li>
+</ol>
+
+<h2>Why watermark images?</h2>
+<p>
+A text watermark can help identify a creator,
+business or source. It can also discourage
+casual reuse, but it does not technically
+prevent image copying or watermark removal.
+</p>
+
+<h2>Private browser-based editing</h2>
+<p>
+The selected image is decoded and processed
+locally with the Canvas API. Image contents
+are not uploaded to FreeAITools servers for
+watermarking.
+</p>
+
+<h2>Important limitations</h2>
+<p>
+PNG output can preserve transparent areas.
+JPG output does not support transparency
+and uses a white background instead.
+Original metadata including EXIF, GPS
+and some color-profile information may
+not be preserved.
+</p>
+
+<p>
+This version supports static images only.
+The available fonts are browser-dependent,
+and text appearance may vary slightly
+between browsers.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is Image Watermark free?</summary>
+<p>Yes. The tool is free without requiring an account.</p>
+</details>
+
+<details>
+<summary>Can I choose watermark position?</summary>
+<p>Yes. Choose one of nine positions including the center and corners.</p>
+</details>
+
+<details>
+<summary>Can I adjust transparency?</summary>
+<p>Yes. Use the opacity slider to make the watermark more or less visible.</p>
+</details>
+
+<details>
+<summary>Can I change text color?</summary>
+<p>Yes. Use the color picker to choose your preferred watermark color.</p>
+</details>
+
+<details>
+<summary>Can I use Thai text?</summary>
+<p>Yes, if your browser has a suitable font available for the characters.</p>
+</details>
+
+<details>
+<summary>Will image dimensions change?</summary>
+<p>No. The output keeps the decoded image's full pixel dimensions within the tool limits.</p>
+</details>
+
+<details>
+<summary>Can I download JPG?</summary>
+<p>Yes. Select JPG and set the desired quality.</p>
+</details>
+
+<details>
+<summary>Are images uploaded?</summary>
+<p>No. Watermarking happens locally in your browser.</p>
+</details>
+
+<details>
+<summary>Can someone remove my watermark?</summary>
+<p>Possibly. A watermark is not a guarantee against copying or removal.</p>
+</details>
+</section>
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement" hidden>
+</section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const imageFile = $("imageFile");
+const fileDetails = $("fileDetails");
+const editor = $("editor");
+const watermarkText = $("watermarkText");
+const fontSelect = $("font");
+const colorInput = $("color");
+const fontSizeInput = $("fontSize");
+const fontSizeValue = $("fontSizeValue");
+const opacityInput = $("opacity");
+const opacityValue = $("opacityValue");
+const outlineSelect = $("outline");
+const formatSelect = $("format");
+const qualityPanel = $("qualityPanel");
+const qualityInput = $("quality");
+const qualityValue = $("qualityValue");
+
+const positionGrid = $("positionGrid");
+const positionLabel = $("positionLabel");
+const previewCanvas = $("previewCanvas");
+const previewDetails = $("previewDetails");
+
+const downloadBtn = $("downloadBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const resultDetails = $("resultDetails");
+const downloadLink = $("downloadLink");
+
+const MAX_FILE_SIZE = 15 * 1048576;
+const MAX_DIMENSION = 8000;
+const MAX_PIXELS = 20000000;
+const PREVIEW_MAX_SIDE = 760;
+
+let selectedFile = null;
+let image = null;
+let imageRelease = null;
+let position = "bottom-right";
+let downloadUrl = null;
+let busy = false;
+
+function message(value) {
+  status.textContent = value;
+}
+
+function sizeText(bytes) {
+  if (bytes < 1048576) {
+    return (bytes / 1024).toFixed(1) + " KB";
+  }
+
+  return (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function clearResult() {
+  result.hidden = true;
+  downloadLink.removeAttribute("href");
+
+  if (downloadUrl) {
+    URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+  }
+}
+
+function updateButtons() {
+  const controls = [
+    imageFile,watermarkText,fontSelect,
+    colorInput,fontSizeInput,opacityInput,
+    outlineSelect,formatSelect,qualityInput,
+    clearBtn
+  ];
+
+  for (const control of controls) {
+    control.disabled = busy;
+  }
+
+  positionGrid.querySelectorAll("button")
+    .forEach(button => {
+      button.disabled = busy;
+    });
+
+  downloadBtn.disabled =
+    busy || !image ||
+    !watermarkText.value.trim();
+}
+
+function releaseImage() {
+  if (imageRelease) {
+    imageRelease();
+    imageRelease = null;
+  }
+
+  image = null;
+  selectedFile = null;
+
+  imageFile.value = "";
+  fileDetails.hidden = true;
+  fileDetails.textContent = "";
+
+  editor.hidden = true;
+  previewDetails.textContent = "";
+
+  previewCanvas.width = 0;
+  previewCanvas.height = 0;
+
+  clearResult();
+  updateButtons();
+}
+
+function updatePositionButtons() {
+  positionGrid.querySelectorAll("button")
+    .forEach(button => {
+      const selected =
+        button.dataset.position === position;
+
+      button.classList.toggle("active",selected);
+
+      button.setAttribute(
+        "aria-pressed",
+        String(selected)
+      );
+    });
+
+  positionLabel.textContent =
+    "Position: " +
+    position.split("-").map(
+      word => word.charAt(0).toUpperCase() +
+      word.slice(1)
+    ).join(" ");
+}
+
+function readSettings() {
+  return {
+    text:watermarkText.value.trim(),
+    font:fontSelect.value,
+    color:colorInput.value,
+    sizePercent:Number(fontSizeInput.value),
+    opacity:Number(opacityInput.value)/100,
+    outline:outlineSelect.value,
+    format:formatSelect.value,
+    quality:Number(qualityInput.value)/100,
+    position
+  };
+}
+
+function paintWatermark(ctx,width,height,settings) {
+  const text = settings.text;
+
+  if (!text) return;
+
+  const minSide = Math.min(width,height);
+  const padding = Math.max(2,minSide*0.045);
+
+  let fontSize = Math.max(
+    1,minSide*settings.sizePercent/100
+  );
+
+  ctx.save();
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  function useFont() {
+    ctx.font =
+      "bold " + fontSize + "px " +
+      settings.font;
+  }
+
+  useFont();
+
+  // Shrink very long text to fit inside
+  // the image instead of clipping the
+  // watermark at its left or right edges.
+  const maximumWidth = Math.max(
+    1,width-2*padding
+  );
+
+  const measured =
+    ctx.measureText(text).width;
+
+  if (measured > maximumWidth) {
+    fontSize = Math.max(
+      1,fontSize * maximumWidth/measured
+    );
+    useFont();
+  }
+
+  // Leave enough room vertically,
+  // especially on unusually narrow images.
+  fontSize = Math.min(
+    fontSize,
+    Math.max(1,height-2*padding)
+  );
+  useFont();
+
+  const textWidth = Math.min(
+    ctx.measureText(text).width,
+    maximumWidth
+  );
+
+  const xPart = settings.position.split("-")[1];
+  const yPart = settings.position.split("-")[0];
+
+  let x = width/2;
+  let y = height/2;
+
+  if (xPart === "left") {
+    x = padding + textWidth/2;
+  } else if (xPart === "right") {
+    x = width-padding-textWidth/2;
+  }
+
+  if (yPart === "top") {
+    y = padding+fontSize/2;
+  } else if (yPart === "bottom") {
+    y = height-padding-fontSize/2;
+  }
+
+  ctx.globalAlpha = settings.opacity;
+  ctx.fillStyle = settings.color;
+  ctx.lineJoin = "round";
+
+  if (settings.outline !== "none") {
+    ctx.strokeStyle =
+      settings.outline === "dark"
+        ? "#000000" : "#ffffff";
+
+    ctx.lineWidth = Math.max(
+      0.8,fontSize*0.055
+    );
+
+    ctx.strokeText(text,x,y,maximumWidth);
+  }
+
+  ctx.fillText(text,x,y,maximumWidth);
+  ctx.restore();
+}
+
+function drawWatermarkedImage(
+  canvas,settings,fullResolution
+) {
+  if (!image) return;
+
+  const width = image.width;
+  const height = image.height;
+
+  const scale = fullResolution
+    ? 1
+    : Math.min(
+        1,
+        PREVIEW_MAX_SIDE/Math.max(width,height)
+      );
+
+  canvas.width = Math.max(
+    1,Math.round(width*scale)
+  );
+
+  canvas.height = Math.max(
+    1,Math.round(height*scale)
+  );
+
+  const ctx = canvas.getContext("2d",{
+    alpha:settings.format !== "image/jpeg"
+  });
+
+  if (!ctx) {
+    throw new Error(
+      "Image canvas is unavailable."
+    );
+  }
+
+  if (settings.format === "image/jpeg") {
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(
+      0,0,canvas.width,canvas.height
+    );
+  }
+
+  // All watermark coordinates are based
+  // on the ORIGINAL image dimensions.
+  // The preview uses a scaled transform so
+  // its positions match the export.
+  const scaleX = canvas.width/width;
+  const scaleY = canvas.height/height;
+
+  ctx.setTransform(scaleX,0,0,scaleY,0,0);
+
+  ctx.drawImage(image,0,0,width,height);
+
+  paintWatermark(
+    ctx,width,height,settings
+  );
+
+  ctx.setTransform(1,0,0,1,0,0);
+}
+
+function refreshPreview() {
+  clearResult();
+  updateButtons();
+
+  if (!image) return;
+
+  const settings = readSettings();
+
+  try {
+    drawWatermarkedImage(
+      previewCanvas,settings,false
+    );
+
+    previewDetails.textContent =
+      "Original resolution: " +
+      image.width + " × " +
+      image.height + " px | " +
+      (settings.format === "image/png"
+        ? "PNG" : "JPG") +
+      " output";
+
+  } catch (error) {
+    console.error("Preview error:",error);
+    message("Unable to update preview.");
+  }
+}
+
+function updateFormat() {
+  qualityPanel.hidden =
+    formatSelect.value !== "image/jpeg";
+
+  refreshPreview();
+}
+
+function readUint32(bytes,offset) {
+  return (
+    bytes[offset]*16777216 +
+    bytes[offset+1]*65536 +
+    bytes[offset+2]*256 +
+    bytes[offset+3]
+  );
+}
+
+async function validateImageFile(file) {
+  const name = file.name.toLowerCase();
+
+  if (
+    !/\.(jpg|jpeg|png|webp)$/.test(name)
+  ) {
+    throw new Error(
+      "Only JPG, PNG and WebP files are supported."
+    );
+  }
+
+  if (
+    !file.size ||
+    file.size > MAX_FILE_SIZE
+  ) {
+    throw new Error(
+      "Image must be larger than 0 bytes " +
+      "and no more than 15 MB."
+    );
+  }
+
+  const bytes = new Uint8Array(
+    await file.slice(0,64).arrayBuffer()
+  );
+
+  const ascii = (start,length) =>
+    String.fromCharCode(
+      ...bytes.slice(start,start+length)
+    );
+
+  const isJPEG =
+    bytes.length >= 3 &&
+    bytes[0] === 255 &&
+    bytes[1] === 216 &&
+    bytes[2] === 255;
+
+  const pngSignature = [
+    137,80,78,71,13,10,26,10
+  ];
+
+  const isPNG =
+    bytes.length >= 24 &&
+    pngSignature.every(
+      (v,i) => bytes[i] === v
+    ) &&
+    ascii(12,4) === "IHDR";
+
+  const isWebP =
+    bytes.length >= 21 &&
+    ascii(0,4) === "RIFF" &&
+    ascii(8,4) === "WEBP";
+
+  const expected =
+    /\.(jpg|jpeg)$/.test(name) ? "jpeg" :
+    /\.png$/.test(name) ? "png" : "webp";
+
+  const valid =
+    (expected === "jpeg" && isJPEG) ||
+    (expected === "png" && isPNG) ||
+    (expected === "webp" && isWebP);
+
+  if (!valid) {
+    throw new Error(
+      "Image data does not match its file extension."
+    );
+  }
+
+  if (isWebP) {
+    const chunk = ascii(12,4);
+
+    if (
+      !["VP8 ","VP8L","VP8X"].includes(chunk)
+    ) {
+      throw new Error(
+        "Unsupported WebP structure."
+      );
+    }
+
+    if (
+      chunk === "VP8X" &&
+      (bytes[20] & 0x02) !== 0
+    ) {
+      throw new Error(
+        "Animated WebP is not supported."
+      );
+    }
+  }
+
+  if (isPNG) {
+    if (readUint32(bytes,8) !== 13) {
+      throw new Error(
+        "Invalid PNG structure."
+      );
+    }
+
+    const width = readUint32(bytes,16);
+    const height = readUint32(bytes,20);
+
+    if (
+      width < 1 || height < 1 ||
+      width > MAX_DIMENSION ||
+      height > MAX_DIMENSION ||
+      width*height > MAX_PIXELS
+    ) {
+      throw new Error(
+        "Image dimensions exceed limits."
+      );
+    }
+
+    // Reject animated PNG files with
+    // an acTL chunk before the first IDAT.
+    let offset = 8;
+
+    while (offset+12 <= file.size) {
+      const header = new Uint8Array(
+        await file.slice(
+          offset,offset+8
+        ).arrayBuffer()
+      );
+
+      if (header.length < 8) break;
+
+      const length = readUint32(header,0);
+      const type = String.fromCharCode(
+        ...header.slice(4,8)
+      );
+
+      const next = offset+12+length;
+
+      if (
+        !Number.isSafeInteger(next) ||
+        next > file.size
+      ) {
+        throw new Error(
+          "Invalid PNG chunk structure."
+        );
+      }
+
+      if (type === "acTL") {
+        throw new Error(
+          "Animated PNG is not supported."
+        );
+      }
+
+      if (type === "IDAT" || type === "IEND") {
+        break;
+      }
+
+      offset = next;
+    }
+  }
+}
+
+async function decodeImage(file) {
+  if (window.createImageBitmap) {
+    const bitmap = await createImageBitmap(file);
+
+    return {
+      image:bitmap,
+      release:() => bitmap.close()
+    };
+  }
+
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.decoding = "async";
+
+  try {
+    await new Promise((resolve,reject) => {
+      img.onload = resolve;
+      img.onerror = () => reject(
+        new Error("Unable to decode image.")
+      );
+
+      img.src = url;
+    });
+
+    return {
+      image:img,
+      release:() => URL.revokeObjectURL(url)
+    };
+
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+}
+
+imageFile.addEventListener(
+  "change",
+  async () => {
+    if (busy) return;
+
+    const file = imageFile.files[0];
+
+    busy = true;
+    updateButtons();
+    releaseImage();
+
+    if (!file) {
+      busy = false;
+      updateButtons();
+      message("");
+      return;
+    }
+
+    message("Loading image...");
+
+    let decoded = null;
+
+    try {
+      await validateImageFile(file);
+
+      decoded = await decodeImage(file);
+
+      const width = decoded.image.width;
+      const height = decoded.image.height;
+
+      if (
+        !width || !height ||
+        width > MAX_DIMENSION ||
+        height > MAX_DIMENSION ||
+        width*height > MAX_PIXELS
+      ) {
+        throw new Error(
+          "Image dimensions exceed the supported limit."
+        );
+      }
+
+      selectedFile = file;
+      image = decoded.image;
+      imageRelease = decoded.release;
+      decoded = null;
+
+      fileDetails.textContent =
+        file.name + " | " +
+        width + " × " + height +
+        " px | " + sizeText(file.size);
+
+      fileDetails.hidden = false;
+      editor.hidden = false;
+
+      message(
+        "Image loaded. Customize your watermark."
+      );
+
+      refreshPreview();
+
+    } catch (error) {
+      if (decoded) {
+        decoded.release();
+      }
+
+      releaseImage();
+
+      message(
+        error.message ||
+        "Unable to load this image."
+      );
+
+    } finally {
+      busy = false;
+      updateButtons();
+    }
+  }
+);
+
+positionGrid.addEventListener(
+  "click",
+  event => {
+    const button = event.target.closest(
+      "button[data-position]"
+    );
+
+    if (!button || busy) return;
+
+    position = button.dataset.position;
+
+    updatePositionButtons();
+    refreshPreview();
+  }
+);
+
+[
+  watermarkText,fontSelect,colorInput,
+  fontSizeInput,opacityInput,outlineSelect
+].forEach(control => {
+  control.addEventListener("input",() => {
+    fontSizeValue.textContent =
+      fontSizeInput.value + "%";
+
+    opacityValue.textContent =
+      opacityInput.value + "%";
+
+    refreshPreview();
+  });
+});
+
+formatSelect.addEventListener(
+  "change",updateFormat
+);
+
+qualityInput.addEventListener(
+  "input",() => {
+    qualityValue.textContent =
+      qualityInput.value + "%";
+
+    clearResult();
+    updateButtons();
+  }
+);
+
+function exportBlob(canvas,type,quality) {
+  return new Promise((resolve,reject) => {
+    canvas.toBlob(blob => {
+      if (!blob || blob.type !== type) {
+        reject(new Error(
+          "Unable to export this image format."
+        ));
+        return;
+      }
+
+      resolve(blob);
+    },type,quality);
+  });
+}
+
+downloadBtn.addEventListener(
+  "click",
+  async () => {
+    if (
+      busy || !image ||
+      !watermarkText.value.trim()
+    ) return;
+
+    busy = true;
+    updateButtons();
+    clearResult();
+
+    message("Preparing watermarked image...");
+
+    const canvas =
+      document.createElement("canvas");
+
+    try {
+      const settings = readSettings();
+
+      drawWatermarkedImage(
+        canvas,settings,true
+      );
+
+      const blob = await exportBlob(
+        canvas,
+        settings.format,
+        settings.quality
+      );
+
+      downloadUrl =
+        URL.createObjectURL(blob);
+
+      const base = selectedFile.name
+        .replace(/\.(jpg|jpeg|png|webp)$/i,"")
+        .replace(/[^\w.-]+/g,"_")
+        .slice(0,70) || "image";
+
+      const extension =
+        settings.format === "image/png"
+          ? ".png" : ".jpg";
+
+      downloadLink.href = downloadUrl;
+
+      downloadLink.download =
+        base + "-watermarked-freeaitools" +
+        extension;
+
+      resultDetails.textContent =
+        image.width + " × " +
+        image.height + " px | " +
+        sizeText(blob.size) + " | " +
+        (extension === ".png" ? "PNG" : "JPG");
+
+      result.hidden = false;
+
+      message(
+        "Success! Your watermarked image is ready."
+      );
+
+    } catch (error) {
+      console.error(
+        "Watermark error:",error
+      );
+
+      clearResult();
+
+      message(
+        error.message ||
+        "Unable to create watermarked image."
+      );
+
+    } finally {
+      canvas.width = 0;
+      canvas.height = 0;
+
+      busy = false;
+      updateButtons();
+    }
+  }
+);
+
+clearBtn.addEventListener(
+  "click",
+  () => {
+    if (busy) return;
+
+    releaseImage();
+
+    watermarkText.value = "FreeAITools";
+    fontSelect.value = "sans-serif";
+    colorInput.value = "#ffffff";
+
+    fontSizeInput.value = "8";
+    fontSizeValue.textContent = "8%";
+
+    opacityInput.value = "60";
+    opacityValue.textContent = "60%";
+
+    outlineSelect.value = "dark";
+
+    formatSelect.value = "image/png";
+
+    qualityInput.value = "90";
+    qualityValue.textContent = "90%";
+
+    position = "bottom-right";
+
+    updatePositionButtons();
+    updateFormat();
+
+    message("");
+    updateButtons();
+  }
+);
+
+updatePositionButtons();
+updateFormat();
+updateButtons();
+</script>
+</body>
+</html>
