@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Blur, pixelate, or cover selected parts of JPG, PNG and WebP images for free. Draw multiple regions, preview results and download privately in your browser.">
+<title>Free Image Blur & Pixelate | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/image-blur-pixelate.html">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080e1e;color:#eef2ff;font:16px/1.6 Arial,sans-serif}
+a{color:#b7a8ff;text-decoration:none}
+header{padding:22px 6%;border-bottom:1px solid #293856;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.brand{font-size:23px;font-weight:bold;color:white}
+main{max-width:1050px;margin:45px auto;padding:0 20px}
+h1{text-align:center;font-size:clamp(30px,5vw,46px);margin:0 0 8px}
+.subtitle{text-align:center;color:#aab8d3;margin:0 0 30px}
+.panel,.info,.faq{background:#101a30;border:1px solid #293856;border-radius:18px;padding:26px}
+.upload{display:block;padding:34px 18px;text-align:center;cursor:pointer;background:#151e3a;border:2px dashed #7165e9;border-radius:14px}
+.upload strong{display:block;font-size:20px}.upload span{display:block;color:#aab8d3;margin-top:5px}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.hint,.details{font-size:14px;color:#aab8d3}.details{overflow-wrap:anywhere}
+.settings{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 23px}
+.field{display:block;font-weight:bold;margin:17px 0 8px}
+select,input[type=color]{display:block;width:100%;background:#080e1e;color:#fff;border:1px solid #46577a;border-radius:10px;padding:12px;font-size:16px}
+input[type=color]{height:46px;padding:4px;cursor:pointer}
+input[type=range]{width:100%;accent-color:#9565ff}
+.value{color:#c4b5fd;font-variant-numeric:tabular-nums}
+button{border:0;border-radius:10px;color:white;background:#30405f;cursor:pointer;padding:12px 16px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.buttons{display:flex;flex-wrap:wrap;gap:10px;margin:15px 0}
+.primary{width:100%;padding:16px;margin-top:20px;font-weight:bold;font-size:17px;background:linear-gradient(110deg,#965cff,#625ff4)}
+.secondary{margin-top:12px}
+.preview-panel{margin-top:20px;padding:16px;border-radius:14px;background:#0b1428;border:1px solid #344562}
+.canvas-wrap{display:flex;justify-content:center;align-items:center;max-width:100%;overflow:hidden;margin:15px 0}
+#previewCanvas{display:block;max-width:100%;height:auto;touch-action:none;cursor:crosshair;border-radius:3px;background-color:#fff;background-image:linear-gradient(45deg,#ddd 25%,transparent 25%),linear-gradient(-45deg,#ddd 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#ddd 75%),linear-gradient(-45deg,transparent 75%,#ddd 75%);background-size:18px 18px;background-position:0 0,0 9px,9px -9px,-9px 0}
+.region-list{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.region-list button{border:1px solid #53617e;padding:8px 10px;font-size:13px}
+.region-list button.active{background:#6343ce;border-color:#c4b5fd}
+#status{min-height:26px;color:#c7d2fe;overflow-wrap:anywhere}
+.result{margin-top:20px;padding:20px;background:#17233c;border:1px solid #46577a;border-radius:12px}
+.download{display:block;text-align:center;padding:14px;margin-top:14px;border-radius:10px;background:#7255ec;color:white;font-weight:bold}
+.info,.faq{margin-top:28px}.info p,.faq p{color:#aab8d3}.info li{margin-bottom:8px}
+.faq details{padding:14px 0;border-bottom:1px solid #293856}.faq details:last-child{border-bottom:0}
+.faq summary{cursor:pointer;font-weight:bold}
+footer{padding:35px;text-align:center;color:#aab8d3}
+[hidden]{display:none!important}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:2px solid #67e8f9;outline-offset:3px}
+@media(max-width:650px){header{flex-direction:column}.panel,.info,.faq{padding:17px}.settings{grid-template-columns:1fr}.preview-panel{padding:12px}.buttons button{flex:1}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="/">FreeAITools</a><nav><a href="/">Home</a> | <a href="/image-text-overlay.html">Image Text Overlay</a></nav></header>
+<main>
+<h1>Free Image Blur &amp; Pixelate</h1>
+<p class="subtitle">Blur, pixelate or cover selected areas. Preview and download your edited image for free.</p>
+<section class="panel">
+<label class="upload" for="imageFile"><strong>🫧 Choose an Image</strong><span>Upload a JPG, PNG or WebP image</span></label>
+<input id="imageFile" class="visually-hidden" type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+<p class="hint">One static image at a time. Maximum 12 MB, 8,000 pixels per side and 16 million pixels. Animated PNG and WebP are not supported.</p>
+<p class="hint"><strong>Privacy warning:</strong> Blur and pixelation are visual effects, not secure redaction. Use Solid Cover with a fully opaque color for sensitive information; remove EXIF/location metadata separately if needed.</p>
+<p id="fileDetails" class="details" hidden></p>
+<div id="editor" hidden>
+<h2>Edit selected areas</h2>
+<p class="hint">Drag on the preview to draw a rectangular region. Tap an existing region to select it. Each region keeps its own effect and intensity. New regions use the currently selected settings.</p>
+<div class="settings">
+<div><label class="field" for="mode">Effect</label><select id="mode"><option value="blur">Blur</option><option value="pixelate">Pixelate</option><option value="cover">Solid Cover (opaque)</option></select></div>
+<div><label class="field" for="strength">Intensity: <span id="strengthValue" class="value">14 px</span></label><input id="strength" type="range" min="2" max="48" step="2" value="14"><p class="hint">Effect size in original-image pixels. Solid Cover ignores intensity.</p></div>
+<div id="colorPanel" hidden><label class="field" for="coverColor">Solid cover color</label><input id="coverColor" type="color" value="#000000"></div>
+<div><label class="field" for="format">Download format</label><select id="format"><option value="image/png">PNG</option><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option></select></div>
+<div id="qualityPanel" hidden><label class="field" for="quality">Export quality: <span id="qualityValue" class="value">90%</span></label><input id="quality" type="range" min="40" max="95" step="5" value="90"></div>
+</div>
+<div class="buttons"><button id="removeBtn" type="button">Remove Selected Region</button><button id="undoBtn" type="button">Undo Last Region</button><button id="clearRegionsBtn" type="button">Clear All Regions</button></div>
+<div class="preview-panel">
+<h2>Live Preview</h2>
+<p class="hint">Drag a rectangle over the area you want to edit. The dashed selection outlines appear only in the editor, not in your downloaded image.</p>
+<div class="canvas-wrap"><canvas id="previewCanvas" role="img" aria-label="Interactive image preview: drag to select an area"></canvas></div>
+<p id="previewDetails" class="details"></p>
+<div id="regionList" class="region-list" aria-label="Selected regions"></div>
+</div>
+<button id="prepareBtn" class="primary" type="button">Prepare Edited Image</button>
+</div>
+<button id="clearBtn" class="secondary" type="button">Clear Image</button>
+<p id="status" role="status" aria-live="polite"></p>
+<div id="result" class="result" hidden><h2>Your image is ready!</h2><p id="resultDetails"></p><a id="downloadLink" class="download" download>Download Edited Image</a></div>
+<p class="hint">Image editing and encoding happen locally in your browser. Image contents are not uploaded to FreeAITools servers for processing.</p>
+</section>
+<section class="info">
+<h2>How to blur or pixelate an image</h2>
+<ol><li>Select a JPG, PNG or WebP image.</li><li>Choose Blur, Pixelate or Solid Cover.</li><li>Drag over the part of the image to edit.</li><li>Select a region to change its effect or strength.</li><li>Add more regions if needed and inspect the preview.</li><li>Choose PNG, JPG or WebP and download.</li></ol>
+<h2>Blur vs pixelate vs solid cover</h2>
+<p>Blur softens details. Pixelate converts an area into larger blocks of color. Neither should be trusted to permanently conceal confidential data. Solid Cover paints an opaque rectangle over the selected pixels and is the safer option for that purpose, but you should verify the exported image before sharing.</p>
+<h2>Private browser-based editing</h2>
+<p>The image is decoded and transformed with the Canvas API on your device. No account, paid API or external library is required. Output images may not retain EXIF metadata, but you should not rely on this as a guaranteed metadata-removal tool.</p>
+<h2>Important limitations</h2>
+<p>Only static JPG, PNG and WebP are supported. Regions are rectangular. Effects near a region's edges may look different from professional desktop photo editors. Existing regions are selected by tapping, not dragged to reposition; remove and redraw a region to move it.</p>
+</section>
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+<details><summary>Is Image Blur &amp; Pixelate free?</summary><p>Yes. The tool is free and requires no account.</p></details>
+<details><summary>Can I blur multiple areas?</summary><p>Yes. Draw multiple rectangles, each with its own effect and strength.</p></details>
+<details><summary>Can I pixelate a face or text?</summary><p>Yes, but pixelation is not secure redaction for private information.</p></details>
+<details><summary>How can I hide sensitive information?</summary><p>Choose Solid Cover, select a fully opaque color, cover the entire sensitive region and verify the downloaded result.</p></details>
+<details><summary>Can I change an existing region?</summary><p>Yes. Tap a region, then change its effect, intensity or cover color.</p></details>
+<details><summary>Will image dimensions change?</summary><p>No. The edited image retains the decoded source dimensions.</p></details>
+<details><summary>Can I download JPG and WebP?</summary><p>Yes, if your browser can encode the selected format. PNG is also available.</p></details>
+<details><summary>Are my images uploaded?</summary><p>No. Editing is performed inside your browser.</p></details>
+</section>
+</main>
+<footer>FreeAITools — Free online tools<p><a href="/about.html">About</a> | <a href="/privacy.html">Privacy</a> | <a href="/terms.html">Terms</a> | <a href="/contact.html">Contact</a></p></footer>
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const UI = Object.fromEntries(["imageFile","fileDetails","editor","mode","strength","strengthValue","colorPanel","coverColor","format","qualityPanel","quality","qualityValue","removeBtn","undoBtn","clearRegionsBtn","previewCanvas","previewDetails","regionList","prepareBtn","clearBtn","status","result","resultDetails","downloadLink"].map(id=>[id,$(id)]));
+const MAX_BYTES=12*1048576, MAX_SIDE=8000, MAX_PIXELS=16000000, PREVIEW_SIDE=740;
+let image=null, releaseImage=null, sourceFile=null, regions=[], active=-1, downloadUrl=null, busy=false, drag=null;
+const modeLabels={blur:"Blur",pixelate:"Pixelate",cover:"Solid Cover"};
+function notify(msg){UI.status.textContent=msg;}
+function human(bytes){return bytes<1048576?(bytes/1024).toFixed(1)+" KB":(bytes/1048576).toFixed(2)+" MB";}
+function revokeDownload(){UI.result.hidden=true;UI.downloadLink.removeAttribute("href");if(downloadUrl){URL.revokeObjectURL(downloadUrl);downloadUrl=null;}}
+function syncControls(){
+ [UI.imageFile,UI.mode,UI.strength,UI.coverColor,UI.format,UI.quality,UI.clearBtn].forEach(el=>el.disabled=busy);
+ UI.removeBtn.disabled=busy||active<0;UI.undoBtn.disabled=busy||!regions.length;UI.clearRegionsBtn.disabled=busy||!regions.length;UI.prepareBtn.disabled=busy||!image;
+ UI.regionList.querySelectorAll("button").forEach(el=>el.disabled=busy);
+}
+function resetImage(){if(releaseImage){releaseImage();releaseImage=null;}image=null;sourceFile=null;regions=[];active=-1;drag=null;UI.imageFile.value="";UI.fileDetails.hidden=true;UI.fileDetails.textContent="";UI.editor.hidden=true;UI.previewCanvas.width=0;UI.previewCanvas.height=0;UI.previewDetails.textContent="";UI.regionList.replaceChildren();revokeDownload();syncControls();}
+function updateLabels(){UI.strengthValue.textContent=UI.strength.value+" px";UI.qualityValue.textContent=UI.quality.value+"%";UI.colorPanel.hidden=UI.mode.value!=="cover";UI.qualityPanel.hidden=UI.format.value==="image/png";}
+function normalizedRect(x1,y1,x2,y2){return {x:Math.min(x1,x2),y:Math.min(y1,y2),w:Math.abs(x2-x1),h:Math.abs(y2-y1)};}
+function clamp(n,min,max){return Math.max(min,Math.min(max,n));}
+function imagePos(event){
+ const rect=UI.previewCanvas.getBoundingClientRect();
+ return {x:clamp((event.clientX-rect.left)/rect.width,0,1),y:clamp((event.clientY-rect.top)/rect.height,0,1)};
+}
+function hitTest(p){for(let i=regions.length-1;i>=0;i--){const r=regions[i];if(p.x>=r.x&&p.y>=r.y&&p.x<=r.x+r.w&&p.y<=r.y+r.h)return i;}return -1;}
+function selectRegion(i){active=i;if(i>=0){const r=regions[i];UI.mode.value=r.mode;UI.strength.value=r.strength;UI.coverColor.value=r.color;}updateLabels();refreshPreview();}
+function visiblePixelRect(r,w,h){
+ const x=clamp(Math.floor(r.x*w),0,w),y=clamp(Math.floor(r.y*h),0,h);
+ const x2=clamp(Math.ceil((r.x+r.w)*w),0,w),y2=clamp(Math.ceil((r.y+r.h)*h),0,h);
+ return {x,y,w:Math.max(0,x2-x),h:Math.max(0,y2-y)};
+}
+// Each effect is sourced from the original image. Later overlapping regions win.
+function applyEffect(ctx,original,r,w,h,scale){
+ const b=visiblePixelRect(r,w,h);if(!b.w||!b.h)return;
+ if(r.mode==="cover"){ctx.fillStyle=r.color;ctx.fillRect(b.x,b.y,b.w,b.h);return;}
+ if(r.mode==="pixelate"){
+  const block=Math.max(2,Math.round(r.strength*scale));
+  const sw=Math.max(1,Math.ceil(b.w/block)),sh=Math.max(1,Math.ceil(b.h/block));
+  const mini=document.createElement("canvas");mini.width=sw;mini.height=sh;
+  const mc=mini.getContext("2d");if(!mc)throw new Error("Canvas unavailable.");
+  mc.imageSmoothingEnabled=true;
+  mc.drawImage(original,b.x,b.y,b.w,b.h,0,0,sw,sh);
+  ctx.save();ctx.imageSmoothingEnabled=false;
+  ctx.drawImage(mini,0,0,sw,sh,b.x,b.y,b.w,b.h);
+  ctx.restore();mini.width=mini.height=0;return;
+ }
+ // Blur uses expanded source sampling, cropped to the selected rectangle.
+ // Padding avoids visible seams at the blurred region's edges.
+ const radius=Math.max(1,r.strength*scale);
+ const pad=Math.ceil(radius*3);
+ const sx=Math.max(0,b.x-pad),sy=Math.max(0,b.y-pad);
+ const ex=Math.min(w,b.x+b.w+pad),ey=Math.min(h,b.y+b.h+pad);
+ const sample=document.createElement("canvas");sample.width=ex-sx;sample.height=ey-sy;
+ const sc=sample.getContext("2d");if(!sc)throw new Error("Canvas unavailable.");
+ sc.drawImage(original,sx,sy,sample.width,sample.height,0,0,sample.width,sample.height);
+ ctx.save();ctx.beginPath();ctx.rect(b.x,b.y,b.w,b.h);ctx.clip();
+ if("filter" in ctx){ctx.filter=`blur(${radius}px)`;ctx.drawImage(sample,sx,sy);ctx.filter="none";}
+ else {
+  // Approximate blur fallback for older browsers by down/up-sampling.
+  const fraction=Math.max(2,Math.round(radius/2));
+  const tiny=document.createElement("canvas");
+  tiny.width=Math.max(1,Math.ceil(sample.width/fraction));tiny.height=Math.max(1,Math.ceil(sample.height/fraction));
+  const tc=tiny.getContext("2d");if(!tc)throw new Error("Canvas unavailable.");
+  tc.drawImage(sample,0,0,tiny.width,tiny.height);
+  ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality="high";
+  ctx.drawImage(tiny,sx,sy,sample.width,sample.height);
+  tiny.width=tiny.height=0;
+ }
+ ctx.restore();sample.width=sample.height=0;
+}
+function render(canvas,full,withGuides){
+ if(!image)return;
+ const scale=full?1:Math.min(1,PREVIEW_SIDE/Math.max(image.width,image.height));
+ const w=Math.max(1,Math.round(image.width*scale)),h=Math.max(1,Math.round(image.height*scale));
+ canvas.width=w;canvas.height=h;
+ const ctx=canvas.getContext("2d");if(!ctx)throw new Error("Canvas unavailable.");
+ if(UI.format.value==="image/jpeg"){ctx.fillStyle="#fff";ctx.fillRect(0,0,w,h);}
+ ctx.drawImage(image,0,0,w,h);
+ const original=document.createElement("canvas");original.width=w;original.height=h;
+ const oc=original.getContext("2d");if(!oc)throw new Error("Canvas unavailable.");
+ oc.drawImage(image,0,0,w,h);
+ const count=regions.length;
+ for(let i=0;i<count;i++)applyEffect(ctx,original,regions[i],w,h,w/image.width);
+ original.width=original.height=0;
+ if(withGuides){
+  const all=drag&&drag.moved?[...regions,{...normalizedRect(drag.start.x,drag.start.y,drag.current.x,drag.current.y),preview:true}]:regions;
+  all.forEach((r,i)=>{
+   const b=visiblePixelRect(r,w,h);if(!b.w||!b.h)return;
+   ctx.save();ctx.strokeStyle=i===active||r.preview?"#facc15":"#67e8f9";
+   ctx.lineWidth=Math.max(2,w/370);ctx.setLineDash([8,5]);
+   ctx.strokeRect(b.x+1,b.y+1,Math.max(1,b.w-2),Math.max(1,b.h-2));ctx.restore();
+  });
+ }
+}
+function refreshRegionList(){
+ UI.regionList.replaceChildren();regions.forEach((r,i)=>{
+  const b=document.createElement("button");b.type="button";
+  b.textContent=`Region ${i+1}: ${modeLabels[r.mode]}`;
+  b.classList.toggle("active",i===active);
+  b.setAttribute("aria-pressed",String(i===active));
+  b.addEventListener("click",()=>{if(!busy)selectRegion(i);});
+  UI.regionList.appendChild(b);
+ });
+}
+function refreshPreview(){
+ revokeDownload();refreshRegionList();syncControls();if(!image)return;
+ try{render(UI.previewCanvas,false,true);UI.previewDetails.textContent=`${image.width} × ${image.height} px | ${regions.length} selected region(s)`;notify("Preview updated.");}
+ catch(e){console.error(e);notify("Unable to render preview: "+e.message);}
+}
+UI.previewCanvas.addEventListener("pointerdown",event=>{
+ if(busy||!image||event.button!==0)return;
+ const p=imagePos(event);drag={start:p,current:p,moved:false};UI.previewCanvas.setPointerCapture(event.pointerId);event.preventDefault();
+});
+UI.previewCanvas.addEventListener("pointermove",event=>{
+ if(!drag||!image)return;
+ drag.current=imagePos(event);
+ const width=Math.abs(drag.current.x-drag.start.x)*UI.previewCanvas.width;
+ const height=Math.abs(drag.current.y-drag.start.y)*UI.previewCanvas.height;
+ drag.moved=width>=5||height>=5;
+ try{render(UI.previewCanvas,false,true);}catch(e){console.error(e);}
+});
+function finishPointer(event){
+ if(!drag)return;
+ drag.current=imagePos(event);
+ const start=drag.start,end=drag.current;drag=null;
+ const r=normalizedRect(start.x,start.y,end.x,end.y);
+ if(r.w*UI.previewCanvas.width>=5&&r.h*UI.previewCanvas.height>=5){
+  regions.push({...r,mode:UI.mode.value,strength:Number(UI.strength.value),color:UI.coverColor.value});active=regions.length-1;
+  refreshPreview();notify(`Region ${regions.length} created. Drag to add another.`);
+ }else selectRegion(hitTest(end));
+}
+UI.previewCanvas.addEventListener("pointerup",finishPointer);
+UI.previewCanvas.addEventListener("pointercancel",()=>{drag=null;refreshPreview();});
+function updateSelected(){
+ if(active>=0&&regions[active]){const r=regions[active];r.mode=UI.mode.value;r.strength=Number(UI.strength.value);r.color=UI.coverColor.value;}
+ updateLabels();refreshPreview();
+}
+[UI.mode,UI.strength,UI.coverColor].forEach(el=>el.addEventListener("input",updateSelected));
+UI.format.addEventListener("change",()=>{updateLabels();refreshPreview();});
+UI.quality.addEventListener("input",()=>{updateLabels();revokeDownload();});
+UI.removeBtn.addEventListener("click",()=>{if(active<0||busy)return;regions.splice(active,1);active=-1;refreshPreview();});
+UI.undoBtn.addEventListener("click",()=>{if(!regions.length||busy)return;regions.pop();active=-1;refreshPreview();});
+UI.clearRegionsBtn.addEventListener("click",()=>{if(busy)return;regions=[];active=-1;refreshPreview();});
+function u32(b,i){return b[i]*16777216+b[i+1]*65536+b[i+2]*256+b[i+3];}
+async function validate(file){
+ if(!/\.(jpg|jpeg|png|webp)$/i.test(file.name))throw new Error("Choose JPG, PNG or WebP only.");
+ if(!file.size||file.size>MAX_BYTES)throw new Error("Image must be between 1 byte and 12 MB.");
+ const b=new Uint8Array(await file.slice(0,64).arrayBuffer());
+ const str=(i,n)=>String.fromCharCode(...b.slice(i,i+n));
+ const jpg=b.length>=3&&b[0]===255&&b[1]===216&&b[2]===255;
+ const sig=[137,80,78,71,13,10,26,10];
+ const png=b.length>=24&&sig.every((v,i)=>b[i]===v)&&u32(b,8)===13&&str(12,4)==="IHDR";
+ const webp=b.length>=21&&str(0,4)==="RIFF"&&str(8,4)==="WEBP";
+ const kind=/\.(jpg|jpeg)$/i.test(file.name)?"jpg":/\.png$/i.test(file.name)?"png":"webp";
+ if(!((kind==="jpg"&&jpg)||(kind==="png"&&png)||(kind==="webp"&&webp)))throw new Error("File contents do not match the extension.");
+ if(webp){const chunk=str(12,4);if(!["VP8 ","VP8L","VP8X"].includes(chunk))throw new Error("Invalid WebP structure.");if(chunk==="VP8X"&&(b[20]&2)!==0)throw new Error("Animated WebP is not supported.");}
+ if(png){const w=u32(b,16),h=u32(b,20);if(!w||!h||w>MAX_SIDE||h>MAX_SIDE||w*h>MAX_PIXELS)throw new Error("Image dimensions exceed limits.");let offset=8;while(offset+12<=file.size){const h=new Uint8Array(await file.slice(offset,offset+8).arrayBuffer());if(h.length!==8)throw new Error("Invalid PNG structure.");const len=u32(h,0),type=String.fromCharCode(...h.slice(4,8)),next=offset+12+len;if(!Number.isSafeInteger(next)||next>file.size)throw new Error("Invalid PNG structure.");if(type==="acTL")throw new Error("Animated PNG is not supported.");if(type==="IDAT"||type==="IEND")break;offset=next;}}
+}
+async function decode(file){
+ if(typeof createImageBitmap==="function"){const bmp=await createImageBitmap(file);return {img:bmp,release:()=>bmp.close()};}
+ const url=URL.createObjectURL(file),img=new Image();img.decoding="async";
+ try{await new Promise((res,rej)=>{img.onload=res;img.onerror=()=>rej(new Error("Unable to decode image."));img.src=url;});return {img,release:()=>URL.revokeObjectURL(url)};}
+ catch(e){URL.revokeObjectURL(url);throw e;}
+}
+UI.imageFile.addEventListener("change",async()=>{
+ if(busy)return;const file=UI.imageFile.files[0];busy=true;syncControls();resetImage();if(!file){busy=false;syncControls();return;}notify("Loading image...");
+ let decoded=null;
+ try{await validate(file);decoded=await decode(file);const w=decoded.img.naturalWidth||decoded.img.width,h=decoded.img.naturalHeight||decoded.img.height;
+  if(!w||!h||w>MAX_SIDE||h>MAX_SIDE||w*h>MAX_PIXELS)throw new Error("Image dimensions exceed limits.");
+  image=decoded.img;releaseImage=decoded.release;decoded=null;sourceFile=file;UI.editor.hidden=false;UI.fileDetails.hidden=false;UI.fileDetails.textContent=`${file.name} | ${w} × ${h} px | ${human(file.size)}`;refreshPreview();notify("Image ready. Drag to select an area.");
+ }catch(e){if(decoded)decoded.release();resetImage();notify(e.message||"Unable to load image.");}finally{busy=false;syncControls();}
+});
+function exportBlob(canvas,type,q){return new Promise((res,rej)=>canvas.toBlob(blob=>blob&&blob.type===type?res(blob):rej(new Error("Unable to export this format. Try PNG or JPG.")),type,q));}
+UI.prepareBtn.addEventListener("click",async()=>{
+ if(busy||!image||!sourceFile)return;busy=true;syncControls();revokeDownload();notify("Preparing full-resolution image...");
+ const canvas=document.createElement("canvas");
+ try{await new Promise(resolve=>requestAnimationFrame(resolve));render(canvas,true,false);
+  const type=UI.format.value;const blob=await exportBlob(canvas,type,Number(UI.quality.value)/100);
+  downloadUrl=URL.createObjectURL(blob);
+  const ext=type==="image/png"?".png":type==="image/jpeg"?".jpg":".webp";
+  const name=sourceFile.name.replace(/\.(jpg|jpeg|png|webp)$/i,"").replace(/[^\w.-]+/g,"_").slice(0,70)||"image";
+  UI.downloadLink.href=downloadUrl;UI.downloadLink.download=name+"-blur-pixelate-freeaitools"+ext;
+  UI.resultDetails.textContent=`${image.width} × ${image.height} px | ${human(blob.size)} | ${regions.length} region(s) | ${ext.slice(1).toUpperCase()}`;
+  UI.result.hidden=false;notify("Your edited image is ready!");
+ }catch(e){console.error(e);revokeDownload();notify(e.message||"Unable to export image.");}
+ finally{canvas.width=canvas.height=0;busy=false;syncControls();}
+});
+UI.clearBtn.addEventListener("click",()=>{if(busy)return;resetImage();UI.mode.value="blur";UI.strength.value="14";UI.coverColor.value="#000000";UI.format.value="image/png";UI.quality.value="90";updateLabels();notify("");});
+updateLabels();syncControls();
+</script>
+</body>
+</html>
