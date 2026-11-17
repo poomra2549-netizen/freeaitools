@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://freeaitools-5pd.pages.dev/sitemap.xml
