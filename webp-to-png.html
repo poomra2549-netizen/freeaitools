@@ -1,0 +1,800 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Convert WebP images to PNG for free. Batch convert multiple WebP files, preserve transparency, compare file sizes and download PNG files or ZIP. Private browser-based processing.">
+<title>Free WebP to PNG Converter | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/webp-to-png.html">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080e1e;color:#eef2ff;font-family:Arial,sans-serif;line-height:1.6}
+header{padding:22px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #293856}
+a{color:#b7a8ff;text-decoration:none}
+.brand{font-size:23px;color:white;font-weight:bold}
+main{max-width:900px;margin:46px auto;padding:0 20px}
+h1{text-align:center;font-size:clamp(30px,5vw,46px);margin-bottom:8px}
+.subtitle{text-align:center;color:#aab8d3;margin-bottom:32px}
+.panel,.info,.faq{background:#101a30;border:1px solid #293856;border-radius:18px;padding:26px}
+.upload{display:block;text-align:center;padding:42px 18px;border:2px dashed #7165e9;border-radius:14px;background:#151e3a;cursor:pointer}
+.upload strong{font-size:20px}
+.upload span{display:block;color:#aab8d3;margin-top:8px}
+.upload:focus-within{outline:2px solid #67e8f9;outline-offset:3px}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.hint,.details{color:#aab8d3;font-size:14px}
+.details{overflow-wrap:anywhere;margin:15px 0}
+.file-list{display:grid;gap:10px;margin:18px 0}
+.file-item{background:#17233c;border:1px solid #344562;border-radius:12px;padding:13px 15px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.file-name{min-width:0;flex:1;overflow-wrap:anywhere}
+.file-name strong{display:block;font-size:14px}
+.file-name small{display:block;color:#aab8d3;margin-top:3px}
+button{border:0;border-radius:10px;padding:13px 18px;background:#3a4768;color:white;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.file-item button{flex-shrink:0;padding:9px 12px}
+.primary{width:100%;margin-top:22px;padding:16px;font-size:17px;font-weight:bold;background:linear-gradient(110deg,#965cff,#625ff4)}
+.secondary{margin-top:12px}
+#status{min-height:26px;color:#c7d2fe;overflow-wrap:anywhere}
+.result{margin-top:22px;padding:20px;border:1px solid #46577a;background:#17233c;border-radius:12px}
+.result h2{margin-top:0}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}
+.stat{padding:15px;background:#101a30;border:1px solid #344562;border-radius:12px}
+.stat strong{display:block;font-size:22px}
+.stat span{color:#aab8d3;font-size:13px}
+.download{display:block;text-align:center;padding:14px;margin-top:15px;border-radius:10px;background:#7255ec;color:white;font-weight:bold}
+.download-small{display:inline-block;padding:9px 13px;border-radius:8px;background:#35446d;color:white;font-size:13px;margin-top:8px}
+.output-row{padding:15px 0;border-bottom:1px solid #344562}
+.output-row:last-child{border-bottom:0}
+.output-row strong{display:block;overflow-wrap:anywhere}
+.output-row small{display:block;color:#aab8d3}
+.preview-image{display:block;max-width:110px;max-height:85px;object-fit:contain;margin-bottom:7px;border-radius:5px;background-color:#fff;background-image:linear-gradient(45deg,#d8d8d8 25%,transparent 25%),linear-gradient(-45deg,#d8d8d8 25%,transparent 25%),linear-gradient(45deg,transparent 75%,#d8d8d8 75%),linear-gradient(-45deg,transparent 75%,#d8d8d8 75%);background-size:16px 16px;background-position:0 0,0 8px,8px -8px,-8px 0}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{padding:15px 0;border-bottom:1px solid #293856}
+.faq details:last-child{border:0}
+.faq summary{font-weight:bold;cursor:pointer}
+footer{text-align:center;padding:35px;color:#aab8d3}
+[hidden]{display:none!important}
+.upload,button,.download,.download-small{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+button:focus-visible,a:focus-visible,.faq summary:focus-visible{outline:2px solid #67e8f9;outline-offset:3px}
+@media(hover:hover) and (pointer:fine){
+.upload:hover{border-color:#b7a8ff}
+button:not(:disabled):hover,.download:hover,.download-small:hover{transform:translateY(-2px)}
+.primary:not(:disabled):hover{box-shadow:0 10px 28px rgba(139,92,246,.25)}
+}
+@media(max-width:500px){
+header{flex-direction:column}
+.panel,.info,.faq{padding:17px}
+.file-item{padding:10px}
+.stat{padding:10px}
+.stat strong{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){
+.upload,button,.download,.download-small{transition:none}
+button:hover,.download:hover,.download-small:hover{transform:none}
+}
+</style>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</head>
+
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/image-to-webp.html">Image to WebP</a>
+</nav>
+</header>
+
+<main>
+<h1>Free WebP to PNG Converter</h1>
+<p class="subtitle">
+Convert WebP images to PNG in batches.
+Free, simple and private.
+</p>
+
+<section class="panel">
+<label class="upload" for="imageFiles">
+<strong>🖼️ Choose WebP Images</strong>
+<span>Select up to 15 WebP files</span>
+</label>
+
+<input id="imageFiles" class="visually-hidden"
+       type="file"
+       accept=".webp,image/webp"
+       multiple>
+
+<p class="hint">
+Maximum 15 files per batch.
+Each file: up to 12 MB.
+Combined input: up to 80 MB.
+Maximum 8,000 pixels per side and
+20 million pixels per image.
+Static WebP only; animated WebP is not supported.
+</p>
+
+<div id="selection" hidden>
+<h2>Selected images</h2>
+<p id="fileDetails" class="details"></p>
+<div id="fileList" class="file-list"></div>
+</div>
+
+<button id="convertBtn" class="primary"
+        type="button" disabled>
+Convert WebP to PNG
+</button>
+
+<button id="clearBtn" class="secondary"
+        type="button">
+Clear Images
+</button>
+
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h2>Conversion complete!</h2>
+
+<div class="stats">
+  <div class="stat">
+    <strong id="originalSize">0 MB</strong>
+    <span>Original WebP total</span>
+  </div>
+  <div class="stat">
+    <strong id="convertedSize">0 MB</strong>
+    <span>Converted PNG total</span>
+  </div>
+</div>
+
+<p id="comparison"></p>
+
+<a id="zipDownload" class="download"
+   download hidden>
+Download All PNG as ZIP
+</a>
+
+<div id="outputList"></div>
+
+<p class="hint">
+The original WebP files remain unchanged.
+Output links are cleared when you edit
+the selection or start another conversion.
+</p>
+</div>
+
+<p class="hint">
+Conversion takes place in your browser.
+Your images are not uploaded to FreeAITools
+servers for conversion.
+</p>
+</section>
+
+<section class="info">
+<h2>How to convert WebP to PNG</h2>
+<ol>
+<li>Select one or more WebP images.</li>
+<li>Review the selected files.</li>
+<li>Remove any images you do not want to convert.</li>
+<li>Click Convert WebP to PNG.</li>
+<li>Compare original and output sizes.</li>
+<li>Download PNG images individually or as a ZIP.</li>
+</ol>
+
+<h2>Why convert WebP to PNG?</h2>
+<p>
+PNG is useful for editing workflows,
+graphics that require transparency,
+and software that does not accept WebP.
+PNG is a lossless format, although
+conversion cannot restore details
+already lost in a lossy WebP image.
+</p>
+
+<h2>Private browser-based conversion</h2>
+<p>
+This tool decodes WebP images and exports
+PNG files using the browser Canvas API.
+Selected image contents are not sent to
+FreeAITools servers for conversion.
+An internet connection is required to load
+the ZIP library for batch downloads.
+</p>
+
+<h2>Important limitations</h2>
+<p>
+PNG output files may be larger than the
+original WebP files. This version supports
+static WebP images only. Animation is not
+preserved. EXIF, GPS data, color profiles
+and other metadata may not be retained.
+The original image dimensions are preserved
+within the stated limits.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is WebP to PNG free?</summary>
+<p>Yes. It is free and requires no account.</p>
+</details>
+
+<details>
+<summary>Can I convert many images at once?</summary>
+<p>Yes. Convert up to 15 static WebP images per batch and download all results as a ZIP.</p>
+</details>
+
+<details>
+<summary>Does PNG preserve transparency?</summary>
+<p>Yes. Transparent areas in a supported WebP image can remain transparent after conversion to PNG.</p>
+</details>
+
+<details>
+<summary>Will the converted PNG be smaller?</summary>
+<p>Not necessarily. PNG files are often larger than WebP files.</p>
+</details>
+
+<details>
+<summary>Can I choose PNG quality?</summary>
+<p>No. Standard browser PNG export is lossless and does not offer a JPG-style quality slider.</p>
+</details>
+
+<details>
+<summary>Are animated WebP files supported?</summary>
+<p>No. This version rejects animated WebP images instead of exporting only one frame.</p>
+</details>
+
+<details>
+<summary>Does the tool resize images?</summary>
+<p>No. It preserves image pixel dimensions, provided they are within the supported limits.</p>
+</details>
+
+<details>
+<summary>Are images uploaded?</summary>
+<p>No. Images are converted locally in your browser.</p>
+</details>
+
+<details>
+<summary>Why might conversion fail?</summary>
+<p>A file may be damaged, unsupported by your browser, too large, or your device may have insufficient memory.</p>
+</details>
+</section>
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden></section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const imageFiles = $("imageFiles");
+const selection = $("selection");
+const fileDetails = $("fileDetails");
+const fileList = $("fileList");
+const convertBtn = $("convertBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const originalSize = $("originalSize");
+const convertedSize = $("convertedSize");
+const comparison = $("comparison");
+const zipDownload = $("zipDownload");
+const outputList = $("outputList");
+
+const MAX_FILES = 15;
+const MAX_EACH = 12 * 1024 * 1024;
+const MAX_TOTAL = 80 * 1024 * 1024;
+const MAX_PIXELS = 20000000;
+const MAX_DIMENSION = 8000;
+
+let selectedFiles = [];
+let busy = false;
+let downloadUrls = [];
+
+function message(text) {
+  status.textContent = text;
+}
+
+function sizeText(bytes) {
+  if (bytes < 1048576) {
+    return (bytes / 1024).toFixed(1) + " KB";
+  }
+  return (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function clearResult() {
+  result.hidden = true;
+  outputList.replaceChildren();
+  zipDownload.removeAttribute("href");
+  zipDownload.hidden = true;
+
+  for (const url of downloadUrls) {
+    URL.revokeObjectURL(url);
+  }
+  downloadUrls = [];
+}
+
+function updateButtons() {
+  imageFiles.disabled = busy;
+  clearBtn.disabled = busy;
+  convertBtn.disabled =
+    busy || selectedFiles.length === 0;
+}
+
+function resetSelection() {
+  selectedFiles = [];
+  imageFiles.value = "";
+
+  clearResult();
+  selection.hidden = true;
+  fileList.replaceChildren();
+
+  message("");
+  updateButtons();
+}
+
+function renderSelection() {
+  fileList.replaceChildren();
+  selection.hidden = selectedFiles.length === 0;
+
+  if (!selectedFiles.length) {
+    fileDetails.textContent = "";
+    updateButtons();
+    return;
+  }
+
+  const total = selectedFiles.reduce(
+    (sum, file) => sum + file.size, 0
+  );
+
+  fileDetails.textContent =
+    selectedFiles.length + " image(s) | " +
+    sizeText(total) + " total";
+
+  selectedFiles.forEach((file, index) => {
+    const row = document.createElement("div");
+    row.className = "file-item";
+
+    const name = document.createElement("div");
+    name.className = "file-name";
+
+    const title = document.createElement("strong");
+    title.textContent = file.name;
+
+    const meta = document.createElement("small");
+    meta.textContent = sizeText(file.size);
+
+    name.append(title, meta);
+
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.textContent = "Remove";
+    remove.disabled = busy;
+    remove.setAttribute(
+      "aria-label", "Remove " + file.name
+    );
+
+    remove.addEventListener("click", () => {
+      if (busy) return;
+
+      selectedFiles.splice(index, 1);
+      clearResult();
+      renderSelection();
+
+      message(
+        selectedFiles.length
+          ? "Selection updated."
+          : "Choose WebP images to convert."
+      );
+    });
+
+    row.append(name, remove);
+    fileList.appendChild(row);
+  });
+
+  updateButtons();
+}
+
+function validFileType(file) {
+  return /\.webp$/i.test(file.name) &&
+    (file.type === "" || file.type === "image/webp");
+}
+
+function validateFiles(files) {
+  if (!files.length) {
+    throw new Error("Choose at least one WebP image.");
+  }
+
+  if (files.length > MAX_FILES) {
+    throw new Error("Select no more than 15 images.");
+  }
+
+  let total = 0;
+
+  for (const file of files) {
+    if (!validFileType(file)) {
+      throw new Error(
+        "Only WebP files are supported: " + file.name
+      );
+    }
+
+    if (!file.size || file.size > MAX_EACH) {
+      throw new Error(
+        "Each file must be larger than 0 bytes " +
+        "and no more than 12 MB: " + file.name
+      );
+    }
+
+    total += file.size;
+  }
+
+  if (total > MAX_TOTAL) {
+    throw new Error(
+      "Selected files exceed the 80 MB total limit."
+    );
+  }
+}
+
+// Check the actual file signature, rather than
+// relying only on filename or MIME type.
+// For extended WebP (VP8X), the animation flag
+// is bit 1 of the VP8X feature byte.
+async function checkWebP(file) {
+  const bytes = new Uint8Array(
+    await file.slice(0, 64).arrayBuffer()
+  );
+
+  if (bytes.length < 20) {
+    throw new Error(
+      "Invalid WebP file: " + file.name
+    );
+  }
+
+  function ascii(offset, length) {
+    return String.fromCharCode(
+      ...bytes.slice(offset, offset + length)
+    );
+  }
+
+  if (
+    ascii(0, 4) !== "RIFF" ||
+    ascii(8, 4) !== "WEBP"
+  ) {
+    throw new Error(
+      "File is not a valid WebP: " + file.name
+    );
+  }
+
+  const chunk = ascii(12, 4);
+
+  if (!["VP8 ", "VP8L", "VP8X"].includes(chunk)) {
+    throw new Error(
+      "Unsupported WebP structure: " + file.name
+    );
+  }
+
+  if (
+    chunk === "VP8X" &&
+    bytes.length >= 21 &&
+    (bytes[20] & 0x02) !== 0
+  ) {
+    throw new Error(
+      "Animated WebP is not supported: " + file.name
+    );
+  }
+}
+
+async function loadImage(file) {
+  if (window.createImageBitmap) {
+    return await createImageBitmap(file);
+  }
+
+  const url = URL.createObjectURL(file);
+
+  try {
+    const img = new Image();
+    img.decoding = "async";
+
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = () => reject(
+        new Error("Cannot decode image: " + file.name)
+      );
+      img.src = url;
+    });
+
+    return img;
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+function exportPNG(canvas) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(blob => {
+      if (!blob || blob.type !== "image/png") {
+        reject(new Error(
+          "Unable to export PNG image."
+        ));
+        return;
+      }
+
+      resolve(blob);
+    }, "image/png");
+  });
+}
+
+async function convertImage(file) {
+  await checkWebP(file);
+
+  let img = null;
+  let canvas = null;
+
+  try {
+    img = await loadImage(file);
+
+    const width =
+      img.width || img.naturalWidth;
+
+    const height =
+      img.height || img.naturalHeight;
+
+    if (
+      !width || !height ||
+      width > MAX_DIMENSION ||
+      height > MAX_DIMENSION ||
+      width * height > MAX_PIXELS
+    ) {
+      throw new Error(
+        "Image dimensions exceed limits: " +
+        file.name
+      );
+    }
+
+    canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext("2d", {
+      alpha: true
+    });
+
+    if (!ctx) {
+      throw new Error("Canvas is unavailable.");
+    }
+
+    // Keep canvas transparent: do not paint
+    // a white background before drawing.
+    ctx.drawImage(img, 0, 0, width, height);
+
+    return await exportPNG(canvas);
+
+  } finally {
+    if (canvas) {
+      canvas.width = 0;
+      canvas.height = 0;
+    }
+
+    if (img && typeof img.close === "function") {
+      img.close();
+    }
+  }
+}
+
+function safeName(name) {
+  return name
+    .replace(/\.webp$/i, "")
+    .replace(/[^\w.-]+/g, "_")
+    .slice(0, 65) || "image";
+}
+
+function addOutputRow(item) {
+  const row = document.createElement("div");
+  row.className = "output-row";
+
+  const title = document.createElement("strong");
+  title.textContent = item.name;
+
+  const meta = document.createElement("small");
+  meta.textContent =
+    sizeText(item.originalBytes) + " → " +
+    sizeText(item.blob.size);
+
+  const url = URL.createObjectURL(item.blob);
+  downloadUrls.push(url);
+
+  const preview = document.createElement("img");
+  preview.src = url;
+  preview.alt = "Converted PNG preview";
+  preview.className = "preview-image";
+  preview.loading = "lazy";
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = item.name;
+  link.className = "download-small";
+  link.textContent = "Download PNG";
+
+  row.append(title, meta, preview, link);
+  outputList.appendChild(row);
+}
+
+imageFiles.addEventListener("change", () => {
+  if (busy) return;
+
+  const files = Array.from(imageFiles.files);
+
+  try {
+    validateFiles(files);
+
+    selectedFiles = files;
+    imageFiles.value = "";
+
+    clearResult();
+    renderSelection();
+    message("WebP images ready for conversion.");
+
+  } catch (error) {
+    resetSelection();
+    message(error.message);
+  }
+});
+
+clearBtn.addEventListener("click", () => {
+  if (busy) return;
+  resetSelection();
+});
+
+convertBtn.addEventListener("click", async () => {
+  if (busy || !selectedFiles.length) return;
+
+  try {
+    validateFiles(selectedFiles);
+  } catch (error) {
+    message(error.message);
+    return;
+  }
+
+  if (
+    selectedFiles.length > 1 &&
+    !window.JSZip
+  ) {
+    message(
+      "ZIP library unavailable. Check your " +
+      "connection and refresh."
+    );
+    return;
+  }
+
+  busy = true;
+  updateButtons();
+  renderSelection();
+  clearResult();
+
+  const files = [...selectedFiles];
+  const outputs = [];
+
+  try {
+    let inputTotal = 0;
+    let outputTotal = 0;
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+
+      message(
+        "Converting image " + (i + 1) +
+        " of " + files.length + "..."
+      );
+
+      const blob = await convertImage(file);
+
+      const name =
+        String(i + 1).padStart(2, "0") +
+        "-" + safeName(file.name) + ".png";
+
+      outputs.push({
+        name,
+        blob,
+        originalBytes: file.size
+      });
+
+      inputTotal += file.size;
+      outputTotal += blob.size;
+    }
+
+    if (outputs.length > 1) {
+      message("Preparing ZIP file...");
+
+      const zip = new JSZip();
+
+      for (const item of outputs) {
+        zip.file(item.name, item.blob, {
+          compression: "STORE"
+        });
+      }
+
+      const zipBlob = await zip.generateAsync({
+        type: "blob",
+        compression: "STORE"
+      });
+
+      const url = URL.createObjectURL(zipBlob);
+      downloadUrls.push(url);
+
+      zipDownload.href = url;
+      zipDownload.download =
+        "freeaitools-png-images.zip";
+
+      zipDownload.hidden = false;
+    }
+
+    for (const item of outputs) {
+      addOutputRow(item);
+    }
+
+    originalSize.textContent =
+      sizeText(inputTotal);
+
+    convertedSize.textContent =
+      sizeText(outputTotal);
+
+    const change =
+      (outputTotal - inputTotal) /
+      inputTotal * 100;
+
+    if (change > 0) {
+      comparison.textContent =
+        "PNG files are " +
+        change.toFixed(1) +
+        "% larger in total.";
+    } else if (change < 0) {
+      comparison.textContent =
+        "PNG files are " +
+        Math.abs(change).toFixed(1) +
+        "% smaller in total.";
+    } else {
+      comparison.textContent =
+        "Total file size is unchanged.";
+    }
+
+    result.hidden = false;
+
+    message(
+      "Success! " + outputs.length +
+      " PNG image(s) ready."
+    );
+
+  } catch (error) {
+    console.error("WebP to PNG error:", error);
+    clearResult();
+
+    message(
+      error.message ||
+      "Conversion failed. Try fewer images."
+    );
+
+  } finally {
+    busy = false;
+    updateButtons();
+    renderSelection();
+  }
+});
+
+updateButtons();
+</script>
+</body>
+</html>
