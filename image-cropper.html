@@ -1,0 +1,1285 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Crop JPG, PNG and WebP images online for free. Drag to select an area, choose an aspect ratio, preview your crop and download PNG or JPG. Private browser-based image cropping.">
+<title>Free Image Cropper Online | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/image-cropper.html">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#080e1e;color:#eef2ff;
+  font-family:Arial,sans-serif;line-height:1.6
+}
+header{
+  padding:22px 6%;display:flex;
+  justify-content:space-between;align-items:center;
+  gap:15px;border-bottom:1px solid #293856
+}
+a{color:#b7a8ff;text-decoration:none}
+.brand{color:#fff;font-size:23px;font-weight:bold}
+main{max-width:980px;margin:46px auto;padding:0 20px}
+h1{
+  text-align:center;
+  font-size:clamp(30px,5vw,46px);
+  margin-bottom:8px
+}
+.subtitle{
+  text-align:center;color:#aab8d3;
+  margin-bottom:32px
+}
+.panel,.info,.faq{
+  padding:26px;background:#101a30;
+  border:1px solid #293856;border-radius:18px
+}
+.upload{
+  display:block;text-align:center;padding:38px 18px;
+  background:#151e3a;border:2px dashed #7165e9;
+  border-radius:14px;cursor:pointer
+}
+.upload strong{font-size:20px}
+.upload span{display:block;margin-top:8px;color:#aab8d3}
+.upload:focus-within{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+.visually-hidden{
+  position:absolute;width:1px;height:1px;padding:0;
+  margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0
+}
+.hint,.details{color:#aab8d3;font-size:14px}
+.details{margin:17px 0;overflow-wrap:anywhere}
+.field{
+  display:block;font-weight:bold;
+  margin:18px 0 8px
+}
+select,input[type=range]{
+  width:100%;font-size:16px
+}
+select{
+  padding:13px;background:#080e1e;color:#fff;
+  border:1px solid #46577a;border-radius:10px
+}
+input[type=range]{accent-color:#9565ff}
+.settings{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:0 20px
+}
+.preview-panel{
+  margin-top:23px;padding:18px;
+  background:#0b1428;border:1px solid #344562;
+  border-radius:14px
+}
+.canvas-holder{
+  display:flex;justify-content:center;
+  margin:15px 0;max-width:100%;
+  overflow:hidden
+}
+#editorCanvas{
+  display:block;max-width:100%;height:auto;
+  border-radius:5px;background:#fff;
+  touch-action:none;cursor:crosshair;
+  user-select:none
+}
+#outputCanvas{
+  display:block;max-width:100%;height:auto;
+  max-height:340px;margin:15px auto;
+  object-fit:contain;background:#fff;
+  border-radius:5px
+}
+.controls{
+  display:flex;gap:9px;flex-wrap:wrap;
+  margin-top:12px
+}
+button{
+  border:0;border-radius:10px;padding:13px 18px;
+  color:#fff;background:#3a4768;cursor:pointer
+}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{
+  display:block;width:100%;padding:16px;
+  margin-top:22px;font-size:17px;font-weight:bold;
+  background:linear-gradient(110deg,#965cff,#625ff4)
+}
+.secondary{margin-top:12px}
+.move-btn{min-width:52px}
+#status{
+  min-height:26px;color:#c7d2fe;
+  overflow-wrap:anywhere
+}
+.result{
+  margin-top:22px;padding:20px;
+  background:#17233c;border:1px solid #46577a;
+  border-radius:12px
+}
+.result h2{margin-top:0}
+.download{
+  display:block;margin-top:15px;padding:14px;
+  background:#7255ec;color:#fff;
+  text-align:center;font-weight:bold;border-radius:10px
+}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{
+  padding:15px 0;border-bottom:1px solid #293856
+}
+.faq details:last-child{border:0}
+.faq summary{font-weight:bold;cursor:pointer}
+footer{text-align:center;padding:35px;color:#aab8d3}
+[hidden]{display:none!important}
+button,.upload,.download{
+  transition:transform .2s ease,border-color .2s ease
+}
+button:focus-visible,select:focus-visible,
+a:focus-visible,input:focus-visible,
+.faq summary:focus-visible{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+@media(hover:hover) and (pointer:fine){
+  .upload:hover{border-color:#b7a8ff}
+  button:not(:disabled):hover,.download:hover{
+    transform:translateY(-2px)
+  }
+}
+@media(max-width:600px){
+  header{flex-direction:column}
+  .panel,.info,.faq{padding:17px}
+  .preview-panel{padding:12px}
+  .settings{grid-template-columns:1fr}
+  .controls{justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){
+  button,.upload,.download{transition:none}
+  button:hover,.download:hover{transform:none}
+}
+</style>
+</head>
+
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/image-resizer.html">Image Resizer</a>
+</nav>
+</header>
+
+<main>
+<h1>Free Image Cropper</h1>
+<p class="subtitle">
+Crop images with a visual selection.
+Choose an aspect ratio and download your result.
+</p>
+
+<section class="panel">
+
+<label class="upload" for="imageFile">
+<strong>✂️ Choose an Image</strong>
+<span>Upload a JPG, PNG or WebP file</span>
+</label>
+
+<input id="imageFile" class="visually-hidden"
+       type="file"
+       accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+
+<p class="hint">
+One image at a time. Maximum 15 MB,
+8,000 pixels per side and 20 million pixels.
+Animated images are not supported.
+</p>
+
+<p id="fileDetails" class="details" hidden></p>
+
+<div id="editor" hidden>
+
+<div class="settings">
+  <div>
+    <label class="field" for="ratio">
+      Aspect ratio
+    </label>
+    <select id="ratio">
+      <option value="free">Free (any shape)</option>
+      <option value="1">Square 1:1</option>
+      <option value="1.3333333333333333">Landscape 4:3</option>
+      <option value="1.7777777777777777">Widescreen 16:9</option>
+      <option value="0.5625">Portrait 9:16</option>
+    </select>
+  </div>
+
+  <div>
+    <label class="field" for="format">
+      Download format
+    </label>
+    <select id="format">
+      <option value="image/png">PNG</option>
+      <option value="image/jpeg">JPG</option>
+    </select>
+  </div>
+</div>
+
+<div id="qualityPanel" hidden>
+  <label class="field" for="quality">
+    JPG quality:
+    <span id="qualityValue">90%</span>
+  </label>
+  <input id="quality" type="range"
+         min="40" max="95" step="5" value="90">
+</div>
+
+<div class="preview-panel">
+<h2>Choose your crop area</h2>
+
+<p class="hint">
+Drag on the image to create a selection.
+Drag inside the green frame to move it.
+On phones, drag with one finger.
+</p>
+
+<div class="canvas-holder">
+  <canvas id="editorCanvas"
+          role="img"
+          aria-label="Image crop area with selection frame">
+  </canvas>
+</div>
+
+<p id="cropDetails" class="details"></p>
+
+<div class="controls">
+  <button id="centerBtn" type="button">
+    Center Crop
+  </button>
+  <button id="fullBtn" type="button">
+    Select Entire Image
+  </button>
+</div>
+
+<p class="hint">
+Fine adjustment: use the buttons below
+to move the selection by 1 source pixel.
+</p>
+
+<div class="controls">
+  <button id="upBtn" class="move-btn"
+          type="button" aria-label="Move crop up">
+    ↑
+  </button>
+  <button id="leftBtn" class="move-btn"
+          type="button" aria-label="Move crop left">
+    ←
+  </button>
+  <button id="downBtn" class="move-btn"
+          type="button" aria-label="Move crop down">
+    ↓
+  </button>
+  <button id="rightBtn" class="move-btn"
+          type="button" aria-label="Move crop right">
+    →
+  </button>
+</div>
+</div>
+
+<button id="cropBtn"
+        class="primary"
+        type="button">
+Preview Cropped Image
+</button>
+</div>
+
+<button id="clearBtn"
+        class="secondary"
+        type="button">
+Clear Image
+</button>
+
+<p id="status" role="status"
+   aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h2>Your cropped image is ready!</h2>
+
+<p id="resultDetails"></p>
+
+<canvas id="outputCanvas"
+        aria-label="Preview of cropped image">
+</canvas>
+
+<a id="downloadLink"
+   class="download" download>
+Download Cropped Image
+</a>
+</div>
+
+<p class="hint">
+Your image is processed in this browser.
+No file contents are uploaded to
+FreeAITools servers for cropping.
+</p>
+
+</section>
+
+<section class="info">
+<h2>How to crop an image</h2>
+<ol>
+<li>Upload a JPG, PNG or WebP image.</li>
+<li>Choose an aspect ratio or use Free mode.</li>
+<li>Drag to select the area you want to keep.</li>
+<li>Move the frame to adjust its position.</li>
+<li>Choose PNG or JPG output.</li>
+<li>Preview the crop and download your image.</li>
+</ol>
+
+<h2>Popular aspect ratios</h2>
+<p>
+A 1:1 crop creates a square image.
+A 4:3 crop is suitable for traditional
+landscape layouts. A 16:9 crop creates a
+widescreen image, while 9:16 is useful
+for vertical layouts.
+</p>
+
+<h2>Private image cropping</h2>
+<p>
+This tool uses the Canvas API inside
+your browser. The crop operation does
+not send your image to FreeAITools servers.
+No API key or account is required.
+</p>
+
+<h2>Important limitations</h2>
+<p>
+This version supports static JPG, PNG
+and WebP images. Animated images,
+including APNG and animated WebP,
+are not supported.
+</p>
+
+<p>
+PNG can preserve transparency, while JPG
+cannot. Transparent pixels are replaced
+with white when exporting JPG.
+Original EXIF, GPS and other metadata
+may not be preserved. Image orientation
+can depend on the browser's decoding.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is Image Cropper free?</summary>
+<p>Yes. You can crop supported images without paying or creating an account.</p>
+</details>
+
+<details>
+<summary>Can I crop a square image?</summary>
+<p>Yes. Choose the Square 1:1 aspect ratio.</p>
+</details>
+
+<details>
+<summary>Does it work on mobile?</summary>
+<p>Yes. The selection supports mouse, pen and touch input through browser pointer events.</p>
+</details>
+
+<details>
+<summary>Can I move the selected area?</summary>
+<p>Yes. Drag inside the green frame or use the arrow buttons for small adjustments.</p>
+</details>
+
+<details>
+<summary>Can I export JPG?</summary>
+<p>Yes. Select JPG as the output format and choose the quality.</p>
+</details>
+
+<details>
+<summary>Will PNG transparency remain?</summary>
+<p>PNG output can retain transparent pixels inside the cropped area.</p>
+</details>
+
+<details>
+<summary>Will cropping reduce file size?</summary>
+<p>Sometimes. File size depends on the cropped area, output format and compression.</p>
+</details>
+
+<details>
+<summary>Are my images uploaded?</summary>
+<p>No. Cropping is performed locally in your browser.</p>
+</details>
+</section>
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden></section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const fileInput = $("imageFile");
+const fileDetails = $("fileDetails");
+const editor = $("editor");
+const editorCanvas = $("editorCanvas");
+const ratioSelect = $("ratio");
+const formatSelect = $("format");
+const qualityPanel = $("qualityPanel");
+const qualityInput = $("quality");
+const qualityValue = $("qualityValue");
+const cropDetails = $("cropDetails");
+
+const centerBtn = $("centerBtn");
+const fullBtn = $("fullBtn");
+const upBtn = $("upBtn");
+const leftBtn = $("leftBtn");
+const downBtn = $("downBtn");
+const rightBtn = $("rightBtn");
+
+const cropBtn = $("cropBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const resultDetails = $("resultDetails");
+const outputCanvas = $("outputCanvas");
+const downloadLink = $("downloadLink");
+
+const MAX_SIZE = 15 * 1048576;
+const MAX_DIMENSION = 8000;
+const MAX_PIXELS = 20000000;
+const MAX_PREVIEW_SIDE = 780;
+
+let selectedFile = null;
+let image = null;
+let imageRelease = null;
+let cropRect = null;
+let activePointer = null;
+let downloadUrl = null;
+let busy = false;
+
+function message(value) {
+  status.textContent = value;
+}
+
+function clamp(value, min, max) {
+  return Math.max(min, Math.min(max, value));
+}
+
+function sizeText(bytes) {
+  if (bytes < 1048576) {
+    return (bytes / 1024).toFixed(1) + " KB";
+  }
+
+  return (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function clearResult() {
+  result.hidden = true;
+  downloadLink.removeAttribute("href");
+
+  if (downloadUrl) {
+    URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+  }
+}
+
+function updateButtons() {
+  fileInput.disabled = busy;
+  clearBtn.disabled = busy;
+  ratioSelect.disabled = busy;
+  formatSelect.disabled = busy;
+  qualityInput.disabled = busy;
+
+  [
+    centerBtn,fullBtn,upBtn,
+    leftBtn,downBtn,rightBtn,cropBtn
+  ].forEach(button => {
+    button.disabled = busy || !image;
+  });
+}
+
+function clearImage() {
+  if (imageRelease) {
+    imageRelease();
+    imageRelease = null;
+  }
+
+  image = null;
+  selectedFile = null;
+  cropRect = null;
+  activePointer = null;
+
+  fileInput.value = "";
+  fileDetails.textContent = "";
+  fileDetails.hidden = true;
+  editor.hidden = true;
+
+  editorCanvas.width = 0;
+  editorCanvas.height = 0;
+
+  outputCanvas.width = 0;
+  outputCanvas.height = 0;
+
+  cropDetails.textContent = "";
+
+  clearResult();
+  updateButtons();
+}
+
+function getRatio() {
+  return ratioSelect.value === "free"
+    ? null
+    : Number(ratioSelect.value);
+}
+
+function fitSize(width, height, ratio) {
+  if (!ratio) {
+    return {width,height};
+  }
+
+  let w = Math.min(width, height * ratio);
+  let h = w / ratio;
+
+  if (h > height) {
+    h = height;
+    w = h * ratio;
+  }
+
+  return {width:w,height:h};
+}
+
+function centeredRect() {
+  const ratio = getRatio();
+
+  const fit = fitSize(
+    image.width * 0.82,
+    image.height * 0.82,
+    ratio
+  );
+
+  return {
+    x:(image.width-fit.width)/2,
+    y:(image.height-fit.height)/2,
+    w:fit.width,
+    h:fit.height
+  };
+}
+
+function fullRect() {
+  const fit = fitSize(
+    image.width,
+    image.height,
+    getRatio()
+  );
+
+  return {
+    x:(image.width-fit.width)/2,
+    y:(image.height-fit.height)/2,
+    w:fit.width,
+    h:fit.height
+  };
+}
+
+function rectToPixels(rect) {
+  const x = clamp(
+    Math.round(rect.x),0,image.width-1
+  );
+
+  const y = clamp(
+    Math.round(rect.y),0,image.height-1
+  );
+
+  const w = clamp(
+    Math.round(rect.x+rect.w)-x,
+    1,image.width-x
+  );
+
+  const h = clamp(
+    Math.round(rect.y+rect.h)-y,
+    1,image.height-y
+  );
+
+  return {x,y,w,h};
+}
+
+function drawEditor() {
+  if (!image || !cropRect) return;
+
+  const ctx = editorCanvas.getContext("2d");
+
+  if (!ctx) return;
+
+  const cw = editorCanvas.width;
+  const ch = editorCanvas.height;
+
+  const scaleX = cw/image.width;
+  const scaleY = ch/image.height;
+
+  const r = {
+    x:cropRect.x*scaleX,
+    y:cropRect.y*scaleY,
+    w:cropRect.w*scaleX,
+    h:cropRect.h*scaleY
+  };
+
+  ctx.clearRect(0,0,cw,ch);
+  ctx.drawImage(image,0,0,cw,ch);
+
+  // Darken everything outside the crop area.
+  ctx.fillStyle = "rgba(7,12,25,.58)";
+  ctx.beginPath();
+  ctx.rect(0,0,cw,ch);
+  ctx.rect(r.x,r.y,r.w,r.h);
+  ctx.fill("evenodd");
+
+  ctx.strokeStyle = "#34d399";
+  ctx.lineWidth = 2.5;
+  ctx.strokeRect(r.x,r.y,r.w,r.h);
+
+  // Rule-of-thirds grid.
+  ctx.strokeStyle = "rgba(255,255,255,.7)";
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+
+  for (let i=1;i<=2;i++) {
+    const gx = r.x+r.w*i/3;
+    const gy = r.y+r.h*i/3;
+
+    ctx.moveTo(gx,r.y);
+    ctx.lineTo(gx,r.y+r.h);
+
+    ctx.moveTo(r.x,gy);
+    ctx.lineTo(r.x+r.w,gy);
+  }
+
+  ctx.stroke();
+
+  const px = rectToPixels(cropRect);
+
+  cropDetails.textContent =
+    "Crop position: X " + px.x +
+    ", Y " + px.y +
+    " | Size: " + px.w +
+    " × " + px.h + " px";
+}
+
+function setupEditor() {
+  const scale = Math.min(
+    1,
+    MAX_PREVIEW_SIDE /
+      Math.max(image.width,image.height)
+  );
+
+  editorCanvas.width =
+    Math.max(1,Math.round(image.width*scale));
+
+  editorCanvas.height =
+    Math.max(1,Math.round(image.height*scale));
+
+  cropRect = centeredRect();
+  drawEditor();
+}
+
+function pointerPosition(event) {
+  const bounds =
+    editorCanvas.getBoundingClientRect();
+
+  return {
+    x:clamp(
+      (event.clientX-bounds.left) /
+      bounds.width * image.width,
+      0,image.width
+    ),
+    y:clamp(
+      (event.clientY-bounds.top) /
+      bounds.height * image.height,
+      0,image.height
+    )
+  };
+}
+
+function pointInside(point, rect) {
+  return (
+    point.x >= rect.x &&
+    point.x <= rect.x+rect.w &&
+    point.y >= rect.y &&
+    point.y <= rect.y+rect.h
+  );
+}
+
+function createDragRect(start,end) {
+  const dx = end.x-start.x;
+  const dy = end.y-start.y;
+
+  const signX = dx < 0 ? -1 : 1;
+  const signY = dy < 0 ? -1 : 1;
+
+  let w = Math.abs(dx);
+  let h = Math.abs(dy);
+
+  const availableW =
+    signX > 0 ? image.width-start.x : start.x;
+
+  const availableH =
+    signY > 0 ? image.height-start.y : start.y;
+
+  w = Math.min(w,availableW);
+  h = Math.min(h,availableH);
+
+  const ratio = getRatio();
+
+  if (ratio) {
+    // Fit the largest ratio-locked box inside
+    // the rectangle defined by the gesture.
+    w = Math.min(w,h*ratio);
+    h = w/ratio;
+  }
+
+  if (w < 1 || h < 1) {
+    return null;
+  }
+
+  return {
+    x:signX > 0 ? start.x : start.x-w,
+    y:signY > 0 ? start.y : start.y-h,
+    w,h
+  };
+}
+
+function moveRect(rect,dx,dy) {
+  return {
+    ...rect,
+    x:clamp(
+      rect.x+dx,0,image.width-rect.w
+    ),
+    y:clamp(
+      rect.y+dy,0,image.height-rect.h
+    )
+  };
+}
+
+function updateAfterEdit() {
+  clearResult();
+  drawEditor();
+}
+
+editorCanvas.addEventListener(
+  "pointerdown",event => {
+    if (!image || busy || activePointer) return;
+    if (!event.isPrimary) return;
+
+    const point = pointerPosition(event);
+
+    activePointer = {
+      id:event.pointerId,
+      start:point,
+      original:{...cropRect},
+      mode:pointInside(point,cropRect)
+        ? "move"
+        : "create"
+    };
+
+    editorCanvas.setPointerCapture(
+      event.pointerId
+    );
+  }
+);
+
+editorCanvas.addEventListener(
+  "pointermove",event => {
+    if (
+      !activePointer ||
+      event.pointerId !== activePointer.id ||
+      !image
+    ) return;
+
+    const point = pointerPosition(event);
+
+    if (activePointer.mode === "move") {
+      cropRect = moveRect(
+        activePointer.original,
+        point.x-activePointer.start.x,
+        point.y-activePointer.start.y
+      );
+    } else {
+      const next = createDragRect(
+        activePointer.start,
+        point
+      );
+
+      if (next) cropRect = next;
+    }
+
+    updateAfterEdit();
+  }
+);
+
+function finishDrag(event) {
+  if (
+    !activePointer ||
+    event.pointerId !== activePointer.id
+  ) return;
+
+  activePointer = null;
+}
+
+editorCanvas.addEventListener(
+  "pointerup",finishDrag
+);
+
+editorCanvas.addEventListener(
+  "pointercancel",finishDrag
+);
+
+editorCanvas.addEventListener(
+  "lostpointercapture",() => {
+    activePointer = null;
+  }
+);
+
+ratioSelect.addEventListener("change",() => {
+  if (!image || busy) return;
+
+  cropRect = centeredRect();
+  updateAfterEdit();
+});
+
+centerBtn.addEventListener("click",() => {
+  if (!image || busy) return;
+  cropRect = centeredRect();
+  updateAfterEdit();
+});
+
+fullBtn.addEventListener("click",() => {
+  if (!image || busy) return;
+  cropRect = fullRect();
+  updateAfterEdit();
+});
+
+function nudge(dx,dy) {
+  if (!image || busy || !cropRect) return;
+
+  cropRect = moveRect(cropRect,dx,dy);
+  updateAfterEdit();
+}
+
+upBtn.addEventListener("click",() => nudge(0,-1));
+downBtn.addEventListener("click",() => nudge(0,1));
+leftBtn.addEventListener("click",() => nudge(-1,0));
+rightBtn.addEventListener("click",() => nudge(1,0));
+
+function updateFormat() {
+  qualityPanel.hidden =
+    formatSelect.value !== "image/jpeg";
+
+  clearResult();
+}
+
+formatSelect.addEventListener(
+  "change",updateFormat
+);
+
+qualityInput.addEventListener("input",() => {
+  qualityValue.textContent =
+    qualityInput.value + "%";
+
+  clearResult();
+});
+
+async function checkFile(file) {
+  const name = file.name.toLowerCase();
+
+  if (
+    !/\.(jpg|jpeg|png|webp)$/.test(name)
+  ) {
+    throw new Error(
+      "Only JPG, PNG and WebP files are supported."
+    );
+  }
+
+  if (!file.size || file.size > MAX_SIZE) {
+    throw new Error(
+      "Image must be larger than 0 bytes " +
+      "and no more than 15 MB."
+    );
+  }
+
+  const bytes = new Uint8Array(
+    await file.slice(0,64).arrayBuffer()
+  );
+
+  const isJpeg =
+    bytes.length >= 3 &&
+    bytes[0] === 255 &&
+    bytes[1] === 216 &&
+    bytes[2] === 255;
+
+  const pngSig = [
+    137,80,78,71,13,10,26,10
+  ];
+
+  const isPng =
+    bytes.length >= 24 &&
+    pngSig.every((v,i) => bytes[i] === v);
+
+  const textAt = (offset,length) =>
+    String.fromCharCode(
+      ...bytes.slice(offset,offset+length)
+    );
+
+  const isWebP =
+    bytes.length >= 21 &&
+    textAt(0,4) === "RIFF" &&
+    textAt(8,4) === "WEBP";
+
+  const expected =
+    /\.(jpg|jpeg)$/.test(name) ? "jpeg" :
+    /\.png$/.test(name) ? "png" : "webp";
+
+  const valid =
+    (expected === "jpeg" && isJpeg) ||
+    (expected === "png" && isPng) ||
+    (expected === "webp" && isWebP);
+
+  if (!valid) {
+    throw new Error(
+      "Image data does not match the file type."
+    );
+  }
+
+  // WebP VP8X animation flag.
+  if (
+    isWebP &&
+    textAt(12,4) === "VP8X" &&
+    (bytes[20] & 0x02) !== 0
+  ) {
+    throw new Error(
+      "Animated WebP is not supported."
+    );
+  }
+
+  // Scan PNG chunks for APNG acTL before IDAT.
+  if (isPng) {
+    let offset = 8;
+
+    while (offset+12 <= file.size) {
+      const header = new Uint8Array(
+        await file.slice(
+          offset,offset+8
+        ).arrayBuffer()
+      );
+
+      if (header.length < 8) break;
+
+      const length =
+        header[0]*16777216 +
+        header[1]*65536 +
+        header[2]*256 +
+        header[3];
+
+      const type = String.fromCharCode(
+        ...header.slice(4,8)
+      );
+
+      const next = offset+12+length;
+
+      if (
+        !Number.isSafeInteger(next) ||
+        next > file.size
+      ) {
+        throw new Error(
+          "Invalid PNG chunk structure."
+        );
+      }
+
+      if (type === "acTL") {
+        throw new Error(
+          "Animated PNG is not supported."
+        );
+      }
+
+      if (type === "IDAT" || type === "IEND") {
+        break;
+      }
+
+      offset = next;
+    }
+  }
+}
+
+async function decodeImage(file) {
+  if (window.createImageBitmap) {
+    const bitmap = await createImageBitmap(file);
+
+    return {
+      image:bitmap,
+      release:() => bitmap.close()
+    };
+  }
+
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+
+  try {
+    await new Promise((resolve,reject) => {
+      img.onload = resolve;
+      img.onerror = () => reject(
+        new Error("Unable to decode image.")
+      );
+      img.src = url;
+    });
+
+    return {
+      image:img,
+      release:() => URL.revokeObjectURL(url)
+    };
+
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+}
+
+fileInput.addEventListener(
+  "change",
+  async () => {
+    if (busy) return;
+
+    const file = fileInput.files[0];
+
+    busy = true;
+    updateButtons();
+    clearImage();
+
+    if (!file) {
+      busy = false;
+      updateButtons();
+      return;
+    }
+
+    message("Loading image...");
+
+    let decoded = null;
+
+    try {
+      await checkFile(file);
+      decoded = await decodeImage(file);
+
+      const width =
+        decoded.image.width ||
+        decoded.image.naturalWidth;
+
+      const height =
+        decoded.image.height ||
+        decoded.image.naturalHeight;
+
+      if (
+        !width || !height ||
+        width > MAX_DIMENSION ||
+        height > MAX_DIMENSION ||
+        width*height > MAX_PIXELS
+      ) {
+        throw new Error(
+          "Image dimensions exceed the supported limit."
+        );
+      }
+
+      selectedFile = file;
+      image = decoded.image;
+      imageRelease = decoded.release;
+      decoded = null;
+
+      fileDetails.textContent =
+        file.name + " | " +
+        width + " × " + height +
+        " px | " + sizeText(file.size);
+
+      fileDetails.hidden = false;
+      editor.hidden = false;
+
+      setupEditor();
+
+      message(
+        "Image loaded. Drag to adjust your crop."
+      );
+
+    } catch (error) {
+      if (decoded) decoded.release();
+      clearImage();
+
+      message(
+        error.message ||
+        "Unable to load image."
+      );
+
+    } finally {
+      busy = false;
+      updateButtons();
+    }
+  }
+);
+
+function exportBlob(canvas,type,quality) {
+  return new Promise((resolve,reject) => {
+    canvas.toBlob(blob => {
+      if (!blob || blob.type !== type) {
+        reject(new Error(
+          "Unable to export the selected image format."
+        ));
+        return;
+      }
+
+      resolve(blob);
+    },type,quality);
+  });
+}
+
+cropBtn.addEventListener("click",async () => {
+  if (!image || !cropRect || busy) return;
+
+  busy = true;
+  updateButtons();
+  clearResult();
+
+  message("Preparing cropped image...");
+
+  try {
+    const r = rectToPixels(cropRect);
+
+    const type = formatSelect.value;
+    const quality =
+      Number(qualityInput.value)/100;
+
+    const canvas =
+      document.createElement("canvas");
+
+    canvas.width = r.w;
+    canvas.height = r.h;
+
+    const ctx = canvas.getContext("2d",{
+      alpha:type !== "image/jpeg"
+    });
+
+    if (!ctx) {
+      throw new Error("Canvas is unavailable.");
+    }
+
+    if (type === "image/jpeg") {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0,0,r.w,r.h);
+    }
+
+    // Crop the chosen source rectangle
+    // without resizing the output.
+    ctx.drawImage(
+      image,
+      r.x,r.y,r.w,r.h,
+      0,0,r.w,r.h
+    );
+
+    const blob = await exportBlob(
+      canvas,type,quality
+    );
+
+    downloadUrl = URL.createObjectURL(blob);
+
+    const base = selectedFile.name
+      .replace(/\.(jpg|jpeg|png|webp)$/i,"")
+      .replace(/[^\w.-]+/g,"_")
+      .slice(0,70) || "image";
+
+    const extension =
+      type === "image/png" ? ".png" : ".jpg";
+
+    downloadLink.href = downloadUrl;
+    downloadLink.download =
+      base+"-cropped-freeaitools"+extension;
+
+    // Preview at a smaller canvas size to
+    // reduce memory and page layout cost.
+    const previewScale = Math.min(
+      1,480/Math.max(r.w,r.h)
+    );
+
+    const previewW = Math.max(
+      1,Math.round(r.w*previewScale)
+    );
+
+    const previewH = Math.max(
+      1,Math.round(r.h*previewScale)
+    );
+
+    outputCanvas.width = previewW;
+    outputCanvas.height = previewH;
+
+    const previewCtx =
+      outputCanvas.getContext("2d");
+
+    if (!previewCtx) {
+      throw new Error(
+        "Output preview is unavailable."
+      );
+    }
+
+    previewCtx.drawImage(
+      canvas,
+      0,0,previewW,previewH
+    );
+
+    resultDetails.textContent =
+      "Output: " + r.w + " × " +
+      r.h + " px | " +
+      sizeText(blob.size) +
+      " | " + (type === "image/png" ? "PNG" : "JPG");
+
+    result.hidden = false;
+    message("Your cropped image is ready!");
+
+    canvas.width = 0;
+    canvas.height = 0;
+
+  } catch (error) {
+    clearResult();
+
+    message(
+      error.message ||
+      "Unable to crop this image."
+    );
+
+  } finally {
+    busy = false;
+    updateButtons();
+  }
+});
+
+clearBtn.addEventListener("click",() => {
+  if (busy) return;
+
+  clearImage();
+
+  ratioSelect.value = "free";
+  formatSelect.value = "image/png";
+  qualityInput.value = "90";
+  qualityValue.textContent = "90%";
+  updateFormat();
+
+  message("");
+  updateButtons();
+});
+
+updateFormat();
+updateButtons();
+</script>
+</body>
+</html>
