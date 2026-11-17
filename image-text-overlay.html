@@ -1,0 +1,909 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Add custom text to JPG, PNG and WebP images online for free. Customize fonts, text position, color and background boxes. Preview and download your image privately in your browser.">
+<title>Free Image Text Overlay Tool | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/image-text-overlay.html">
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#080e1e;color:#eef2ff;
+ font:16px/1.6 Arial,sans-serif
+}
+header{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:15px;padding:22px 6%;
+ border-bottom:1px solid #293856
+}
+a{color:#b7a8ff;text-decoration:none}
+.brand{color:#fff;font-size:23px;font-weight:bold}
+main{max-width:1000px;margin:44px auto;padding:0 20px}
+h1{
+ text-align:center;font-size:clamp(30px,5vw,46px);
+ margin-bottom:8px
+}
+.subtitle{text-align:center;color:#aab8d3;margin-bottom:30px}
+.panel,.info,.faq{
+ background:#101a30;border:1px solid #293856;
+ border-radius:18px;padding:26px
+}
+.upload{
+ display:block;padding:38px 18px;text-align:center;
+ cursor:pointer;background:#151e3a;
+ border:2px dashed #7165e9;border-radius:14px
+}
+.upload strong{font-size:20px}
+.upload span{display:block;color:#aab8d3;margin-top:8px}
+.upload:focus-within{outline:2px solid #67e8f9;outline-offset:3px}
+.visually-hidden{
+ position:absolute;width:1px;height:1px;
+ margin:-1px;padding:0;overflow:hidden;
+ clip:rect(0,0,0,0);white-space:nowrap;border:0
+}
+.hint,.details{font-size:14px;color:#aab8d3}
+.details{overflow-wrap:anywhere}
+.field{display:block;font-weight:bold;margin:17px 0 7px}
+.settings{
+ display:grid;grid-template-columns:1fr 1fr;
+ column-gap:22px
+}
+textarea,select,input[type=color]{
+ display:block;width:100%;background:#080e1e;
+ color:#eef2ff;border:1px solid #46577a;
+ border-radius:10px;font-size:16px;padding:12px
+}
+textarea{resize:vertical;min-height:115px;font:inherit}
+input[type=color]{height:48px;padding:4px;cursor:pointer}
+input[type=range]{display:block;width:100%;accent-color:#9565ff}
+.check{
+ display:flex;align-items:center;gap:10px;
+ padding:12px;background:#17233c;
+ border-radius:10px;margin-top:14px
+}
+.check input{width:20px;height:20px;accent-color:#9565ff}
+.position-grid{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:8px;max-width:320px
+}
+.position-grid button{
+ padding:9px;min-height:44px;
+ border:1px solid #46577a
+}
+.position-grid button.active{
+ background:#6343ce;border-color:#c4b5fd
+}
+button{
+ border:0;border-radius:10px;padding:12px 16px;
+ background:#30405f;color:white;cursor:pointer
+}
+button:disabled{opacity:.45;cursor:not-allowed}
+.primary{
+ display:block;width:100%;padding:16px;
+ margin-top:22px;font-size:17px;font-weight:bold;
+ background:linear-gradient(110deg,#965cff,#625ff4)
+}
+.secondary{margin-top:12px}
+.value{color:#c4b5fd}
+.preview-panel{
+ background:#0b1428;border:1px solid #344562;
+ border-radius:14px;margin-top:22px;padding:18px
+}
+.preview-holder{
+ display:flex;align-items:center;justify-content:center;
+ margin:15px 0;max-width:100%;overflow:hidden
+}
+#previewCanvas{
+ display:block;max-width:100%;height:auto;
+ border-radius:5px;background-color:#fff;
+ background-image:
+ linear-gradient(45deg,#ddd 25%,transparent 25%),
+ linear-gradient(-45deg,#ddd 25%,transparent 25%),
+ linear-gradient(45deg,transparent 75%,#ddd 75%),
+ linear-gradient(-45deg,transparent 75%,#ddd 75%);
+ background-size:18px 18px;
+ background-position:0 0,0 9px,9px -9px,-9px 0
+}
+#status{min-height:26px;color:#c7d2fe;overflow-wrap:anywhere}
+.result{
+ background:#17233c;border:1px solid #46577a;
+ border-radius:12px;margin-top:20px;padding:20px
+}
+.download{
+ display:block;background:#7255ec;color:white;
+ text-align:center;font-weight:bold;padding:14px;
+ border-radius:10px;margin-top:14px
+}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{padding:15px 0;border-bottom:1px solid #293856}
+.faq details:last-child{border:0}
+.faq summary{cursor:pointer;font-weight:bold}
+footer{text-align:center;color:#aab8d3;padding:35px}
+[hidden]{display:none!important}
+a:focus-visible,button:focus-visible,
+input:focus-visible,select:focus-visible,
+textarea:focus-visible,summary:focus-visible{
+ outline:2px solid #67e8f9;outline-offset:3px
+}
+@media(hover:hover) and (pointer:fine){
+ .upload:hover{border-color:#b7a8ff}
+ button:not(:disabled):hover,.download:hover{filter:brightness(1.15)}
+}
+@media(max-width:620px){
+ header{flex-direction:column}
+ .panel,.info,.faq{padding:17px}
+ .settings{grid-template-columns:1fr}
+ .preview-panel{padding:12px}
+}
+</style>
+</head>
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/image-watermark.html">Image Watermark</a>
+</nav>
+</header>
+
+<main>
+<h1>Free Image Text Overlay</h1>
+<p class="subtitle">
+Add eye-catching titles, captions and text boxes
+to your photos. Preview and download for free.
+</p>
+
+<section class="panel">
+<label class="upload" for="imageFile">
+<strong>🔤 Choose an Image</strong>
+<span>JPG, PNG or WebP — one image at a time</span>
+</label>
+<input id="imageFile" class="visually-hidden"
+ type="file" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+
+<p class="hint">
+Maximum 12 MB, 8,000 pixels per side and
+16 million pixels. Static images only.
+Animated PNG and WebP are not supported.
+</p>
+
+<p id="fileDetails" class="details" hidden></p>
+
+<div id="editor" hidden>
+<label class="field" for="overlayText">Overlay text</label>
+<textarea id="overlayText" maxlength="400"
+ placeholder="Enter your headline or caption...">Your Creative Headline
+Add a subtitle here</textarea>
+<p class="hint">
+Maximum 400 characters. Multiple lines supported.
+Long text wraps automatically.
+</p>
+
+<div class="settings">
+<div>
+<label class="field" for="font">Font</label>
+<select id="font">
+<option value="Arial, sans-serif">Arial / Sans Serif</option>
+<option value="Georgia, serif">Georgia / Serif</option>
+<option value="monospace">Monospace</option>
+<option value="Tahoma, sans-serif">Tahoma</option>
+</select>
+</div>
+
+<div>
+<label class="field" for="weight">Font weight</label>
+<select id="weight">
+<option value="700">Bold</option>
+<option value="400">Regular</option>
+</select>
+</div>
+
+<div>
+<label class="field" for="size">
+Text size: <span id="sizeValue" class="value">7%</span>
+</label>
+<input id="size" type="range" min="2" max="18"
+ step="1" value="7">
+<p class="hint">Percentage of image's shorter side.</p>
+</div>
+
+<div>
+<label class="field" for="textColor">Text color</label>
+<input id="textColor" type="color" value="#ffffff">
+</div>
+
+<div>
+<label class="field" for="alignText">Text alignment</label>
+<select id="alignText">
+<option value="center">Center</option>
+<option value="left">Left</option>
+<option value="right">Right</option>
+</select>
+</div>
+
+<div>
+<label class="field" for="format">Download format</label>
+<select id="format">
+<option value="image/png">PNG</option>
+<option value="image/jpeg">JPG</option>
+<option value="image/webp">WebP</option>
+</select>
+</div>
+</div>
+
+<div class="check">
+<input id="showBox" type="checkbox" checked>
+<label for="showBox">
+<strong>Show background behind text</strong>
+</label>
+</div>
+
+<div id="boxSettings" class="settings">
+<div>
+<label class="field" for="boxColor">Background color</label>
+<input id="boxColor" type="color" value="#000000">
+</div>
+<div>
+<label class="field" for="boxOpacity">
+Background opacity:
+<span id="boxOpacityValue" class="value">60%</span>
+</label>
+<input id="boxOpacity" type="range" min="0" max="100"
+ step="5" value="60">
+</div>
+</div>
+
+<div id="qualityPanel" hidden>
+<label class="field" for="quality">
+Export quality: <span id="qualityValue" class="value">90%</span>
+</label>
+<input id="quality" type="range" min="40" max="95"
+ step="5" value="90">
+</div>
+
+<label class="field">Text box position</label>
+<div id="positionGrid" class="position-grid"
+ role="group" aria-label="Text position">
+<button type="button" data-pos="top-left" aria-label="Top left">↖</button>
+<button type="button" data-pos="top-center" aria-label="Top center">↑</button>
+<button type="button" data-pos="top-right" aria-label="Top right">↗</button>
+<button type="button" data-pos="middle-left" aria-label="Middle left">←</button>
+<button type="button" data-pos="middle-center" aria-label="Center">●</button>
+<button type="button" data-pos="middle-right" aria-label="Middle right">→</button>
+<button type="button" data-pos="bottom-left" aria-label="Bottom left">↙</button>
+<button type="button" data-pos="bottom-center" aria-label="Bottom center">↓</button>
+<button type="button" data-pos="bottom-right" aria-label="Bottom right">↘</button>
+</div>
+<p id="positionLabel" class="hint">Position: Bottom Center</p>
+
+<div class="preview-panel">
+<h2>Live Text Overlay Preview</h2>
+<p class="hint">
+The preview updates automatically.
+Downloads use the full decoded image resolution.
+</p>
+<div class="preview-holder">
+<canvas id="previewCanvas" role="img"
+ aria-label="Image with text overlay preview"></canvas>
+</div>
+<p id="previewDetails" class="details"></p>
+</div>
+
+<button id="prepareBtn" class="primary" type="button">
+Prepare Image Download
+</button>
+</div>
+
+<button id="clearBtn" class="secondary" type="button">
+Clear Image
+</button>
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h2>Your image is ready!</h2>
+<p id="resultDetails"></p>
+<a id="downloadLink" class="download" download>
+Download Image With Text
+</a>
+</div>
+<p class="hint">
+The image is edited in your browser.
+Image contents are not uploaded to
+FreeAITools servers for processing.
+</p>
+</section>
+
+<section class="info">
+<h2>How to add text to an image</h2>
+<ol>
+<li>Select a JPG, PNG or WebP image.</li>
+<li>Write a headline, caption or multiple lines.</li>
+<li>Choose the font, text size and color.</li>
+<li>Select text alignment and one of nine positions.</li>
+<li>Customize the background box if needed.</li>
+<li>Preview the result and download your image.</li>
+</ol>
+
+<h2>Make headlines and social media graphics</h2>
+<p>
+Use an image text overlay to create
+announcements, social media graphics, blog
+illustrations and simple promotional posts.
+Add a readable background box over
+busy photos.
+</p>
+
+<h2>Private image editing</h2>
+<p>
+This tool uses the browser Canvas API.
+No external image-processing library,
+paid API or user account is required.
+</p>
+
+<h2>Important limitations</h2>
+<p>
+This tool supports static images only.
+Font availability depends on your device.
+Very long text is reduced in size to fit,
+but may become difficult to read.
+</p>
+<p>
+PNG and supported WebP outputs can retain
+transparency. JPG uses a white background.
+EXIF, GPS and other metadata may be lost.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+<details><summary>Is Image Text Overlay free?</summary>
+<p>Yes. No payment or account is required.</p></details>
+<details><summary>Can I add multiple lines?</summary>
+<p>Yes. Press Enter in the text editor. Long lines wrap automatically.</p></details>
+<details><summary>Can I use Thai text?</summary>
+<p>Yes, if the browser has a font supporting Thai characters.</p></details>
+<details><summary>Can I add a background behind text?</summary>
+<p>Yes. Choose the background color and opacity or turn the box off.</p></details>
+<details><summary>Can I adjust text position?</summary>
+<p>Yes. Choose from nine positions on the image.</p></details>
+<details><summary>Will image dimensions change?</summary>
+<p>No. Output dimensions match the decoded original image.</p></details>
+<details><summary>Can I download JPG and WebP?</summary>
+<p>Yes, if your browser supports the selected format.</p></details>
+<details><summary>Are my images uploaded?</summary>
+<p>No. Image processing happens locally in your browser.</p></details>
+</section>
+</main>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const imageFile = $("imageFile");
+const fileDetails = $("fileDetails");
+const editor = $("editor");
+const overlayText = $("overlayText");
+const font = $("font");
+const weight = $("weight");
+const size = $("size");
+const sizeValue = $("sizeValue");
+const textColor = $("textColor");
+const alignText = $("alignText");
+const format = $("format");
+const qualityPanel = $("qualityPanel");
+const quality = $("quality");
+const qualityValue = $("qualityValue");
+const showBox = $("showBox");
+const boxSettings = $("boxSettings");
+const boxColor = $("boxColor");
+const boxOpacity = $("boxOpacity");
+const boxOpacityValue = $("boxOpacityValue");
+const positionGrid = $("positionGrid");
+const positionLabel = $("positionLabel");
+const previewCanvas = $("previewCanvas");
+const previewDetails = $("previewDetails");
+const prepareBtn = $("prepareBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const resultDetails = $("resultDetails");
+const downloadLink = $("downloadLink");
+
+const MAX_SIZE = 12*1048576;
+const MAX_DIMENSION = 8000;
+const MAX_PIXELS = 16000000;
+const PREVIEW_SIDE = 760;
+
+let selectedFile = null;
+let image = null;
+let imageRelease = null;
+let position = "bottom-center";
+let downloadUrl = null;
+let busy = false;
+
+function message(text) {
+ status.textContent = text;
+}
+function sizeText(bytes) {
+ return bytes < 1048576
+  ? (bytes/1024).toFixed(1)+" KB"
+  : (bytes/1048576).toFixed(2)+" MB";
+}
+function clearResult() {
+ result.hidden = true;
+ downloadLink.removeAttribute("href");
+ if(downloadUrl) {
+  URL.revokeObjectURL(downloadUrl);
+  downloadUrl = null;
+ }
+}
+function updateButtons() {
+ const controls = [
+  imageFile,overlayText,font,weight,size,
+  textColor,alignText,format,quality,
+  showBox,boxColor,boxOpacity,clearBtn
+ ];
+ controls.forEach(control => control.disabled = busy);
+ positionGrid.querySelectorAll("button")
+  .forEach(button => button.disabled = busy);
+ prepareBtn.disabled =
+  busy || !image || !overlayText.value.trim();
+}
+function releaseImage() {
+ if(imageRelease) {
+  imageRelease();
+  imageRelease = null;
+ }
+ image = null;
+ selectedFile = null;
+ imageFile.value = "";
+ fileDetails.hidden = true;
+ fileDetails.textContent = "";
+ editor.hidden = true;
+ previewCanvas.width = 0;
+ previewCanvas.height = 0;
+ previewDetails.textContent = "";
+ clearResult();
+ updateButtons();
+}
+function settings() {
+ return {
+  text:overlayText.value.replace(/\r/g,""),
+  font:font.value,
+  weight:weight.value,
+  size:Number(size.value),
+  color:textColor.value,
+  align:alignText.value,
+  format:format.value,
+  quality:Number(quality.value)/100,
+  hasBox:showBox.checked,
+  boxColor:boxColor.value,
+  boxOpacity:Number(boxOpacity.value)/100,
+  position
+ };
+}
+function updateLabels() {
+ sizeValue.textContent = size.value+"%";
+ qualityValue.textContent = quality.value+"%";
+ boxOpacityValue.textContent = boxOpacity.value+"%";
+ qualityPanel.hidden = format.value==="image/png";
+ boxSettings.hidden = !showBox.checked;
+}
+function updatePosition() {
+ positionGrid.querySelectorAll("button").forEach(button => {
+  const active=button.dataset.pos===position;
+  button.classList.toggle("active",active);
+  button.setAttribute("aria-pressed",String(active));
+ });
+ positionLabel.textContent="Position: "+
+  position.split("-").map(s=>s[0].toUpperCase()+s.slice(1)).join(" ");
+}
+// Split long lines without stretching text.
+// Code points avoid breaking ordinary surrogate pairs.
+function splitLongWord(ctx,word,maxWidth) {
+ const out=[];
+ let fragment="";
+ for(const char of Array.from(word)) {
+  if(fragment && ctx.measureText(fragment+char).width>maxWidth) {
+   out.push(fragment);
+   fragment=char;
+  } else {
+   fragment+=char;
+  }
+ }
+ if(fragment) out.push(fragment);
+ return out;
+}
+function wrapLines(ctx,text,maxWidth) {
+ const result=[];
+ for(const paragraph of text.split("\n")) {
+  if(!paragraph.trim()) {
+   result.push("");
+   continue;
+  }
+  const words=paragraph.trim().split(/\s+/u);
+  let line="";
+  for(const word of words) {
+   const parts=splitLongWord(ctx,word,maxWidth);
+   for(let j=0;j<parts.length;j++) {
+    const part=parts[j];
+    const trial=line
+     ? line+(j===0?" ":"")+part
+     : part;
+    if(line && ctx.measureText(trial).width>maxWidth) {
+     result.push(line);
+     line=part;
+    } else {
+     line=trial;
+    }
+   }
+  }
+  result.push(line);
+ }
+ return result;
+}
+function roundedRect(ctx,x,y,w,h,r) {
+ r=Math.max(0,Math.min(r,w/2,h/2));
+ ctx.beginPath();
+ if(typeof ctx.roundRect==="function") {
+  ctx.roundRect(x,y,w,h,r);
+ } else {
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);
+  ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);
+  ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);
+  ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+ }
+}
+// Draw text in original-image coordinates.
+// The same routine is used for preview and export.
+function drawOverlay(ctx,width,height,s) {
+ if(!s.text.trim()) return;
+
+ const minSide=Math.min(width,height);
+ const margin=Math.max(2,minSide*0.045);
+ const padding=Math.max(2,minSide*0.025);
+ const maxBoxW=Math.max(1,width-2*margin);
+ const maxBoxH=Math.max(1,height-2*margin);
+ const maxTextW=Math.max(1,maxBoxW-2*padding);
+
+ let fontSize=Math.max(1,minSide*s.size/100);
+ let lines=[];
+ let lineHeight=0;
+ let textWidth=0;
+
+ ctx.save();
+ ctx.textBaseline="middle";
+
+ // Find a size that fits the horizontal
+ // and vertical space, including wrapping.
+ for(let attempt=0;attempt<50;attempt++) {
+  ctx.font=s.weight+" "+fontSize+"px "+s.font;
+  lines=wrapLines(ctx,s.text,maxTextW);
+  lineHeight=fontSize*1.28;
+  textWidth=Math.max(
+   0,...lines.map(line=>ctx.measureText(line).width)
+  );
+
+  if(
+   lines.length*lineHeight+2*padding<=maxBoxH &&
+   textWidth<=maxTextW+0.5
+  ) break;
+
+  fontSize*=0.88;
+ }
+ // Reject layouts too small to fit reliably.
+ if(lines.length*lineHeight+2*padding>maxBoxH) {
+  ctx.restore();
+  return;
+ }
+
+ const boxW=Math.min(maxBoxW,textWidth+2*padding);
+ const boxH=lines.length*lineHeight+2*padding;
+
+ const [vertical,horizontal]=s.position.split("-");
+ const x=horizontal==="left"?margin:
+  horizontal==="right"?width-margin-boxW:
+  (width-boxW)/2;
+
+ const y=vertical==="top"?margin:
+  vertical==="bottom"?height-margin-boxH:
+  (height-boxH)/2;
+
+ if(s.hasBox && s.boxOpacity>0) {
+  ctx.save();
+  ctx.globalAlpha=s.boxOpacity;
+  ctx.fillStyle=s.boxColor;
+  roundedRect(ctx,x,y,boxW,boxH,Math.min(14,fontSize*.35));
+  ctx.fill();
+  ctx.restore();
+ }
+
+ ctx.font=s.weight+" "+fontSize+"px "+s.font;
+ ctx.fillStyle=s.color;
+
+ let textX=x+boxW/2;
+ if(s.align==="left") textX=x+padding;
+ if(s.align==="right") textX=x+boxW-padding;
+
+ ctx.textAlign=s.align;
+
+ lines.forEach((line,i)=>{
+  const textY=y+padding+(i+.5)*lineHeight;
+  ctx.fillText(line,textX,textY,maxTextW);
+ });
+
+ ctx.restore();
+}
+function drawImage(canvas,full) {
+ if(!image) return;
+ const s=settings();
+ const scale=full?1:Math.min(
+  1,PREVIEW_SIDE/Math.max(image.width,image.height)
+ );
+ canvas.width=Math.max(1,Math.round(image.width*scale));
+ canvas.height=Math.max(1,Math.round(image.height*scale));
+
+ const ctx=canvas.getContext("2d",{
+  alpha:s.format!=="image/jpeg"
+ });
+ if(!ctx) throw new Error("Canvas unavailable.");
+
+ if(s.format==="image/jpeg") {
+  ctx.fillStyle="#ffffff";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+ }
+
+ ctx.setTransform(
+  canvas.width/image.width,0,
+  0,canvas.height/image.height,0,0
+ );
+ ctx.drawImage(image,0,0,image.width,image.height);
+ drawOverlay(ctx,image.width,image.height,s);
+ ctx.setTransform(1,0,0,1,0,0);
+}
+function refreshPreview() {
+ clearResult();
+ updateButtons();
+ if(!image) return;
+ try {
+  drawImage(previewCanvas,false);
+  previewDetails.textContent=
+   "Output resolution: "+image.width+" × "+image.height+
+   " px | "+(format.value==="image/png"?"PNG":
+    format.value==="image/jpeg"?"JPG":"WebP");
+  message("Preview updated.");
+ } catch(error) {
+  console.error(error);
+  message("Unable to update preview.");
+ }
+}
+function uint32(b,i) {
+ return b[i]*16777216+b[i+1]*65536+b[i+2]*256+b[i+3];
+}
+async function validateFile(file) {
+ if(!/\.(jpg|jpeg|png|webp)$/i.test(file.name))
+  throw new Error("Choose JPG, PNG or WebP only.");
+ if(!file.size || file.size>MAX_SIZE)
+  throw new Error("File must be 1 byte to 12 MB.");
+
+ const b=new Uint8Array(await file.slice(0,64).arrayBuffer());
+ const ascii=(i,n)=>String.fromCharCode(...b.slice(i,i+n));
+
+ const jpg=b.length>=3 &&
+  b[0]===255 && b[1]===216 && b[2]===255;
+ const pngSig=[137,80,78,71,13,10,26,10];
+ const png=b.length>=24 &&
+  pngSig.every((v,i)=>b[i]===v) &&
+  uint32(b,8)===13 && ascii(12,4)==="IHDR";
+ const webp=b.length>=21 &&
+  ascii(0,4)==="RIFF" && ascii(8,4)==="WEBP";
+ const name=file.name.toLowerCase();
+ const expected=/\.(jpg|jpeg)$/.test(name)?"jpg":
+  /\.png$/.test(name)?"png":"webp";
+ if(!(
+  (expected==="jpg"&&jpg) ||
+  (expected==="png"&&png) ||
+  (expected==="webp"&&webp)
+ )) throw new Error("File extension does not match image data.");
+
+ if(webp) {
+  const chunk=ascii(12,4);
+  if(!["VP8 ","VP8L","VP8X"].includes(chunk))
+   throw new Error("Invalid WebP structure.");
+  if(chunk==="VP8X" && (b[20]&0x02)!==0)
+   throw new Error("Animated WebP is not supported.");
+ }
+
+ if(png) {
+  const w=uint32(b,16),h=uint32(b,20);
+  if(!w||!h||w>MAX_DIMENSION||h>MAX_DIMENSION||
+    w*h>MAX_PIXELS)
+   throw new Error("Image dimensions exceed limits.");
+
+  let offset=8;
+  while(offset+12<=file.size) {
+   const head=new Uint8Array(
+    await file.slice(offset,offset+8).arrayBuffer()
+   );
+   if(head.length!==8) throw new Error("Invalid PNG data.");
+   const length=uint32(head,0);
+   const type=String.fromCharCode(...head.slice(4,8));
+   const next=offset+12+length;
+   if(!Number.isSafeInteger(next)||next>file.size)
+    throw new Error("Invalid PNG chunk structure.");
+   if(type==="acTL")
+    throw new Error("Animated PNG is not supported.");
+   if(type==="IDAT"||type==="IEND") break;
+   offset=next;
+  }
+ }
+}
+async function decodeFile(file) {
+ if(typeof createImageBitmap==="function") {
+  const bmp=await createImageBitmap(file);
+  return {img:bmp,release:()=>bmp.close()};
+ }
+ const url=URL.createObjectURL(file);
+ const img=new Image();
+ img.decoding="async";
+ try {
+  await new Promise((resolve,reject)=>{
+   img.onload=resolve;
+   img.onerror=()=>reject(new Error("Image decode failed."));
+   img.src=url;
+  });
+  return {
+   img,
+   release:()=>URL.revokeObjectURL(url)
+  };
+ } catch(e) {
+  URL.revokeObjectURL(url);
+  throw e;
+ }
+}
+imageFile.addEventListener("change",async ()=>{
+ if(busy) return;
+ const file=imageFile.files[0];
+ busy=true;
+ updateButtons();
+ releaseImage();
+ if(!file) {
+  busy=false;updateButtons();return;
+ }
+ message("Loading image...");
+ let decoded=null;
+ try {
+  await validateFile(file);
+  decoded=await decodeFile(file);
+  const img=decoded.img;
+  const w=img.naturalWidth||img.width;
+  const h=img.naturalHeight||img.height;
+  if(!w||!h||w>MAX_DIMENSION||h>MAX_DIMENSION||
+     w*h>MAX_PIXELS)
+   throw new Error("Image dimensions exceed limits.");
+
+  selectedFile=file;
+  image=img;
+  imageRelease=decoded.release;
+  decoded=null;
+  fileDetails.textContent=
+   file.name+" | "+w+" × "+h+" px | "+sizeText(file.size);
+  fileDetails.hidden=false;
+  editor.hidden=false;
+  refreshPreview();
+  message("Image loaded. Edit your text.");
+ } catch(e) {
+  if(decoded) decoded.release();
+  releaseImage();
+  message(e.message||"Unable to load image.");
+ } finally {
+  busy=false;
+  updateButtons();
+ }
+});
+positionGrid.addEventListener("click",event=>{
+ const button=event.target.closest("button[data-pos]");
+ if(!button || busy) return;
+ position=button.dataset.pos;
+ updatePosition();
+ refreshPreview();
+});
+[
+ overlayText,font,weight,size,textColor,alignText,
+ format,quality,showBox,boxColor,boxOpacity
+].forEach(control=>{
+ control.addEventListener("input",()=>{
+  updateLabels();
+  refreshPreview();
+ });
+});
+function exportBlob(canvas,type,q) {
+ return new Promise((resolve,reject)=>{
+  canvas.toBlob(blob=>{
+   if(!blob || blob.type!==type) {
+    reject(new Error(
+     "Browser cannot export this format. Try PNG or JPG."
+    ));
+   } else resolve(blob);
+  },type,q);
+ });
+}
+prepareBtn.addEventListener("click",async ()=>{
+ if(busy||!image||!selectedFile||!overlayText.value.trim()) return;
+ busy=true;
+ updateButtons();
+ clearResult();
+ message("Rendering full-resolution image...");
+ const canvas=document.createElement("canvas");
+ try {
+  await new Promise(resolve=>requestAnimationFrame(resolve));
+  drawImage(canvas,true);
+  const s=settings();
+  const blob=await exportBlob(canvas,s.format,s.quality);
+  downloadUrl=URL.createObjectURL(blob);
+
+  const base=selectedFile.name
+   .replace(/\.(jpg|jpeg|png|webp)$/i,"")
+   .replace(/[^\w.-]+/g,"_").slice(0,70)||"image";
+  const ext=s.format==="image/png"?".png":
+   s.format==="image/jpeg"?".jpg":".webp";
+  downloadLink.href=downloadUrl;
+  downloadLink.download=base+"-text-freeaitools"+ext;
+  resultDetails.textContent=
+   image.width+" × "+image.height+" px | "+
+   sizeText(blob.size)+" | "+ext.slice(1).toUpperCase();
+  result.hidden=false;
+  message("Your image is ready!");
+ } catch(e) {
+  console.error(e);
+  clearResult();
+  message(e.message||"Unable to export image.");
+ } finally {
+  canvas.width=0;canvas.height=0;
+  busy=false;updateButtons();
+ }
+});
+clearBtn.addEventListener("click",()=>{
+ if(busy) return;
+ releaseImage();
+ overlayText.value="Your Creative Headline\nAdd a subtitle here";
+ font.value="Arial, sans-serif";
+ weight.value="700";
+ size.value="7";
+ textColor.value="#ffffff";
+ alignText.value="center";
+ format.value="image/png";
+ quality.value="90";
+ showBox.checked=true;
+ boxColor.value="#000000";
+ boxOpacity.value="60";
+ position="bottom-center";
+ updatePosition();
+ updateLabels();
+ message("");
+ updateButtons();
+});
+updateLabels();
+updatePosition();
+updateButtons();
+</script>
+</body>
+</html>
