@@ -11,17 +11,26 @@
 <body>
   <header class="topbar">
     <a class="brand" href="/" aria-label="FreeAITools home"><span class="brand-mark">✦</span> FreeAI<span>Tools</span></a>
-    <nav><a href="#tools">Tools</a><a href="/about.html">About</a><a href="/blog.html">Blog</a></nav>
-    <a class="nav-cta" href="#tools">Try for free <span>↗</span></a>
+    <nav><a 
+<a href="#pdf-tools">Tools</a>
+<a href="/about.html">About</a><a href="/blog.html">Blog</a></nav>
+    
+<a class="nav-cta" href="#pdf-tools">Try for free</a>
+
   </header>
 
   <main>
     <section class="hero">
       <div class="eyebrow"><span class="pulse"></span> SIMPLE TOOLS. SMARTER WORK.</div>
-      <h1>Make everyday work<br><span>easier with AI.</span></h1>
-      <p class="hero-copy">Free, practical AI tools to help you write better, think faster and get more done. No complicated setup.</p>
-      <a class="primary-btn" href="#tools">Explore free tools <span>↓</span></a>
-      <div class="hero-note">✦ Useful tools for professionals, creators and small businesses</div>
+      
+<h1>
+  Free PDF &amp; Image Tools
+  <span>Made Simple.</span>
+</h1>
+    
+      <p class="hero-copy">Edit PDFs, convert images, resize photos, create collages and more. Explore free, easy-to-use tools for everyday tasks.</p>
+      <a class="primary-btn" href="#pdf-tools">Explore free tools <span>↓</span></a>
+      <div class="hero-note">✦ Free PDF &amp; image tools for students, creators, professionals and everyday tasks.</div>
       <div class="orb orb-one"></div><div class="orb orb-two"></div>
     </section>
 
@@ -613,8 +622,21 @@
 
           <div class="controls">
             <label class="sr-only" for="tone">Tone</label>
-            <select id="tone"><option value="clear and helpful">Clear and helpful</option><option value="friendly and conversational">Friendly</option><option value="professional">Professional</option><option value="creative and engaging">Creative</option></select>
-            <button id="generate" class="primary-btn">Generate <span>✦</span></button>
+            <select id="tone"><option value="clear and helpful">Clear and helpful</option><option value="friendly and conversational">Friendly</option><option value="professional">Professional</option><option value="creative and engaging">Creative</option></select>          
+<button id="generate"
+        class="primary-btn"
+        type="button"
+        disabled
+        title="AI generation is temporarily unavailable">
+  AI Temporarily Unavailable
+</button>
+            
+<p style="color:#fbbf72;font-size:13px;line-height:1.6;margin-top:12px;">
+  AI writing features are temporarily unavailable.
+  Our free PDF and image editing tools remain available.
+  Please explore them while we improve this service.
+</p>
+
           </div>
           <div id="status" class="status" role="status" aria-live="polite"></div>
           <section id="result-wrap" class="result-wrap" hidden>
