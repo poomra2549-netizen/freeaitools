@@ -1,0 +1,1107 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Rotate and flip JPG, PNG and WebP images online for free. Rotate 90 or 180 degrees, flip horizontally or vertically, preview and download privately in your browser.">
+<title>Free Image Rotator & Flipper | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/image-rotator.html">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;background:#080e1e;color:#eef2ff;
+  font-family:Arial,sans-serif;line-height:1.6
+}
+header{
+  padding:22px 6%;display:flex;
+  align-items:center;justify-content:space-between;
+  gap:15px;border-bottom:1px solid #293856
+}
+a{color:#b7a8ff;text-decoration:none}
+.brand{font-size:23px;font-weight:bold;color:#fff}
+main{max-width:950px;margin:46px auto;padding:0 20px}
+h1{
+  text-align:center;font-size:clamp(30px,5vw,46px);
+  margin-bottom:8px
+}
+.subtitle{
+  color:#aab8d3;text-align:center;margin-bottom:30px
+}
+.panel,.info,.faq{
+  background:#101a30;border:1px solid #293856;
+  padding:26px;border-radius:18px
+}
+.upload{
+  display:block;padding:40px 18px;
+  text-align:center;cursor:pointer;
+  background:#151e3a;border:2px dashed #7165e9;
+  border-radius:14px
+}
+.upload strong{font-size:20px}
+.upload span{display:block;margin-top:8px;color:#aab8d3}
+.upload:focus-within{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+.visually-hidden{
+  position:absolute;width:1px;height:1px;
+  margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0
+}
+.hint,.details{font-size:14px;color:#aab8d3}
+.details{margin:16px 0;overflow-wrap:anywhere}
+h2{margin-top:0}
+.field{display:block;font-weight:bold;margin:20px 0 8px}
+.action-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:12px;margin:16px 0
+}
+button{
+  padding:13px 17px;border:0;border-radius:10px;
+  color:white;background:#30405f;cursor:pointer
+}
+button:disabled{opacity:.45;cursor:not-allowed}
+.action-grid button{
+  min-height:74px;
+  border:1px solid #4b5b7b;
+  font-size:14px
+}
+.action-grid button span{
+  display:block;font-size:25px;margin-bottom:2px
+}
+.secondary{margin-top:12px}
+.primary{
+  width:100%;padding:16px;margin-top:24px;
+  font-size:17px;font-weight:bold;
+  background:linear-gradient(110deg,#965cff,#625ff4)
+}
+.settings{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:20px
+}
+select{
+  width:100%;font-size:16px;
+  padding:13px;background:#080e1e;color:#fff;
+  border:1px solid #46577a;border-radius:10px
+}
+input[type=range]{
+  width:100%;accent-color:#9565ff
+}
+.preview-panel{
+  padding:18px;margin-top:22px;
+  background:#0b1428;border:1px solid #344562;
+  border-radius:14px
+}
+.preview-holder{
+  display:flex;align-items:center;
+  justify-content:center;max-width:100%;
+  margin:14px auto;overflow:hidden
+}
+#previewCanvas{
+  display:block;max-width:100%;height:auto;
+  border-radius:5px;
+  background-color:#fff;
+  background-image:
+    linear-gradient(45deg,#ddd 25%,transparent 25%),
+    linear-gradient(-45deg,#ddd 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#ddd 75%),
+    linear-gradient(-45deg,transparent 75%,#ddd 75%);
+  background-size:18px 18px;
+  background-position:0 0,0 9px,9px -9px,-9px 0
+}
+.status-row{
+  display:flex;justify-content:space-between;
+  flex-wrap:wrap;gap:7px
+}
+#status{
+  color:#c7d2fe;min-height:26px;
+  overflow-wrap:anywhere
+}
+.result{
+  margin-top:22px;padding:20px;
+  border:1px solid #46577a;
+  background:#17233c;border-radius:12px
+}
+.download{
+  display:block;text-align:center;
+  padding:14px;margin-top:15px;
+  color:#fff;background:#7255ec;
+  font-weight:bold;border-radius:10px
+}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{
+  padding:15px 0;border-bottom:1px solid #293856
+}
+.faq details:last-child{border:0}
+.faq summary{cursor:pointer;font-weight:bold}
+footer{text-align:center;padding:35px;color:#aab8d3}
+[hidden]{display:none!important}
+.upload,button,.download{
+  transition:transform .2s ease,border-color .2s ease
+}
+button:focus-visible,input:focus-visible,
+select:focus-visible,a:focus-visible,
+.faq summary:focus-visible{
+  outline:2px solid #67e8f9;outline-offset:3px
+}
+@media(hover:hover) and (pointer:fine){
+  .upload:hover{border-color:#b7a8ff}
+  button:not(:disabled):hover,.download:hover{
+    transform:translateY(-2px)
+  }
+}
+@media(max-width:600px){
+  header{flex-direction:column}
+  .panel,.info,.faq{padding:17px}
+  .settings{grid-template-columns:1fr;gap:0}
+  .action-grid{grid-template-columns:repeat(2,1fr)}
+  .action-grid button{padding:10px 7px}
+  .preview-panel{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){
+  .upload,button,.download{transition:none}
+  button:hover,.download:hover{transform:none}
+}
+</style>
+</head>
+
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/image-cropper.html">Image Cropper</a>
+</nav>
+</header>
+
+<main>
+<h1>Free Image Rotator &amp; Flipper</h1>
+
+<p class="subtitle">
+Rotate and flip images in your browser.
+Preview every change and download for free.
+</p>
+
+<section class="panel">
+<label class="upload" for="imageFile">
+<strong>🔄 Choose an Image</strong>
+<span>Upload a JPG, PNG or WebP image</span>
+</label>
+
+<input id="imageFile" class="visually-hidden"
+       type="file"
+       accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp">
+
+<p class="hint">
+One image at a time. Maximum 15 MB,
+8,000 pixels per side, and 20 million pixels.
+Animated PNG and WebP are not supported.
+</p>
+
+<p id="fileDetails" class="details" hidden></p>
+
+<div id="editor" hidden>
+<h2>Rotate and flip</h2>
+
+<p class="hint">
+You can combine multiple rotations and flips.
+Flip Horizontal and Flip Vertical use the
+image's currently displayed orientation.
+</p>
+
+<div class="action-grid">
+  <button id="leftBtn" type="button">
+    <span>↶</span> Rotate Left 90°
+  </button>
+
+  <button id="rightBtn" type="button">
+    <span>↷</span> Rotate Right 90°
+  </button>
+
+  <button id="halfBtn" type="button">
+    <span>⟳</span> Rotate 180°
+  </button>
+
+  <button id="flipHBtn" type="button">
+    <span>⇆</span> Flip Horizontal
+  </button>
+
+  <button id="flipVBtn" type="button">
+    <span>⇅</span> Flip Vertical
+  </button>
+
+  <button id="resetBtn" type="button">
+    <span>↺</span> Reset Changes
+  </button>
+</div>
+
+<div class="settings">
+  <div>
+    <label class="field" for="format">
+      Download format
+    </label>
+
+    <select id="format">
+      <option value="image/png">PNG</option>
+      <option value="image/jpeg">JPG</option>
+      <option value="image/webp">WebP</option>
+    </select>
+  </div>
+
+  <div id="qualityPanel" hidden>
+    <label class="field" for="quality">
+      Image quality:
+      <span id="qualityValue">90%</span>
+    </label>
+
+    <input id="quality" type="range"
+           min="40" max="95" step="5" value="90">
+
+    <p class="hint">
+      Quality applies to JPG and WebP.
+      PNG export is lossless.
+    </p>
+  </div>
+</div>
+
+<div class="preview-panel">
+<h2>Live image preview</h2>
+
+<p class="hint">
+The preview updates whenever you rotate
+or flip the image. Downloaded images retain
+their transformed pixel dimensions.
+</p>
+
+<div class="preview-holder">
+  <canvas id="previewCanvas"
+          role="img"
+          aria-label="Rotated and flipped image preview">
+  </canvas>
+</div>
+
+<div class="status-row">
+  <p id="rotationDetails" class="hint"></p>
+  <p id="dimensionDetails" class="hint"></p>
+</div>
+</div>
+
+<button id="prepareBtn" class="primary"
+        type="button">
+Prepare Image Download
+</button>
+</div>
+
+<button id="clearBtn" class="secondary"
+        type="button">
+Clear Image
+</button>
+
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+  <h2>Your image is ready!</h2>
+  <p id="resultDetails"></p>
+
+  <a id="downloadLink"
+     class="download"
+     download>
+    Download Rotated Image
+  </a>
+</div>
+
+<p class="hint">
+Images are processed locally in your browser.
+Your image contents are not uploaded to
+FreeAITools servers for editing.
+</p>
+</section>
+
+<section class="info">
+<h2>How to rotate or flip an image</h2>
+<ol>
+  <li>Select a JPG, PNG or WebP image.</li>
+  <li>Rotate it 90° left, 90° right, or 180°.</li>
+  <li>Flip it horizontally or vertically if needed.</li>
+  <li>Check the live preview.</li>
+  <li>Select PNG, JPG or WebP output.</li>
+  <li>Prepare the file and download your result.</li>
+</ol>
+
+<h2>Rotate vs flip</h2>
+<p>
+Rotating an image changes its orientation.
+A 90° or 270° rotation swaps the width
+and height. Flipping mirrors the image
+horizontally or vertically without changing
+its dimensions.
+</p>
+
+<h2>Private browser-based editing</h2>
+<p>
+All image transformations use the browser
+Canvas API. Image contents are not uploaded
+to FreeAITools servers for editing.
+There is no API key or account requirement.
+</p>
+
+<h2>Important limitations</h2>
+<p>
+This tool supports static JPG, PNG and WebP.
+Animated images are not supported.
+Original metadata such as EXIF and GPS
+may not be retained.
+</p>
+<p>
+PNG and supported WebP exports can preserve
+transparent backgrounds. JPG output uses
+a white background because JPG does not
+support transparency. File sizes and
+encoding results vary between formats.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is Image Rotator free?</summary>
+<p>Yes. This tool is free and requires no account.</p>
+</details>
+
+<details>
+<summary>Can I rotate an image 90 degrees?</summary>
+<p>Yes. Use Rotate Left 90° or Rotate Right 90°.</p>
+</details>
+
+<details>
+<summary>Can I rotate an image 270 degrees?</summary>
+<p>Yes. Click Rotate Right 90° three times, or Rotate Left 90° once.</p>
+</details>
+
+<details>
+<summary>Can I mirror an image?</summary>
+<p>Yes. Choose Flip Horizontal for a left-right mirror or Flip Vertical for an up-down mirror.</p>
+</details>
+
+<details>
+<summary>Can I combine rotation and flipping?</summary>
+<p>Yes. Multiple actions can be combined and previewed.</p>
+</details>
+
+<details>
+<summary>Can I reset the image?</summary>
+<p>Yes. Reset Changes restores the original displayed orientation without removing the selected file.</p>
+</details>
+
+<details>
+<summary>Will a transparent PNG remain transparent?</summary>
+<p>Yes, when exported to PNG, and generally when exported to WebP in a supporting browser.</p>
+</details>
+
+<details>
+<summary>Will JPG retain transparency?</summary>
+<p>No. JPG output fills transparent areas with white.</p>
+</details>
+
+<details>
+<summary>Are my images uploaded?</summary>
+<p>No. Image transformations happen locally in your browser.</p>
+</details>
+</section>
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement" hidden></section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const imageFile = $("imageFile");
+const fileDetails = $("fileDetails");
+const editor = $("editor");
+
+const leftBtn = $("leftBtn");
+const rightBtn = $("rightBtn");
+const halfBtn = $("halfBtn");
+const flipHBtn = $("flipHBtn");
+const flipVBtn = $("flipVBtn");
+const resetBtn = $("resetBtn");
+
+const formatSelect = $("format");
+const qualityPanel = $("qualityPanel");
+const qualityInput = $("quality");
+const qualityValue = $("qualityValue");
+
+const previewCanvas = $("previewCanvas");
+const rotationDetails = $("rotationDetails");
+const dimensionDetails = $("dimensionDetails");
+
+const prepareBtn = $("prepareBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const resultDetails = $("resultDetails");
+const downloadLink = $("downloadLink");
+
+const MAX_SIZE = 15 * 1048576;
+const MAX_DIMENSION = 8000;
+const MAX_PIXELS = 20000000;
+const PREVIEW_MAX_SIDE = 780;
+
+let selectedFile = null;
+let image = null;
+let imageRelease = null;
+
+// Image transform stored as an orthogonal
+// 2D matrix [a,b,c,d].
+// Output orientation is defined relative
+// to the displayed, decoded source image.
+let matrix = [1,0,0,1];
+
+let downloadUrl = null;
+let busy = false;
+
+function message(text) {
+  status.textContent = text;
+}
+
+function sizeText(bytes) {
+  return bytes < 1048576
+    ? (bytes / 1024).toFixed(1) + " KB"
+    : (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function clearResult() {
+  result.hidden = true;
+  downloadLink.removeAttribute("href");
+
+  if (downloadUrl) {
+    URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+  }
+}
+
+function updateButtons() {
+  imageFile.disabled = busy;
+  clearBtn.disabled = busy;
+  formatSelect.disabled = busy;
+  qualityInput.disabled = busy;
+
+  [
+    leftBtn,rightBtn,halfBtn,
+    flipHBtn,flipVBtn,resetBtn,prepareBtn
+  ].forEach(button => {
+    button.disabled = busy || !image;
+  });
+}
+
+function releaseImage() {
+  if (imageRelease) {
+    imageRelease();
+    imageRelease = null;
+  }
+
+  image = null;
+  selectedFile = null;
+  matrix = [1,0,0,1];
+
+  imageFile.value = "";
+  fileDetails.textContent = "";
+  fileDetails.hidden = true;
+  editor.hidden = true;
+
+  previewCanvas.width = 0;
+  previewCanvas.height = 0;
+
+  rotationDetails.textContent = "";
+  dimensionDetails.textContent = "";
+
+  clearResult();
+  updateButtons();
+}
+
+function multiply(left,right) {
+  // Matrix layout:
+  // [a c]
+  // [b d]
+  const [a,b,c,d] = left;
+  const [e,f,g,h] = right;
+
+  return [
+    a*e+c*f,
+    b*e+d*f,
+    a*g+c*h,
+    b*g+d*h
+  ];
+}
+
+// Applying a new action on the LEFT
+// makes each rotation or flip relative
+// to the currently displayed image.
+function applyTransform(action) {
+  if (!image || busy) return;
+
+  matrix = multiply(action,matrix);
+
+  refreshPreview();
+}
+
+leftBtn.addEventListener("click",() => {
+  // 90 degrees counter-clockwise
+  applyTransform([0,-1,1,0]);
+});
+
+rightBtn.addEventListener("click",() => {
+  // 90 degrees clockwise
+  applyTransform([0,1,-1,0]);
+});
+
+halfBtn.addEventListener("click",() => {
+  applyTransform([-1,0,0,-1]);
+});
+
+flipHBtn.addEventListener("click",() => {
+  applyTransform([-1,0,0,1]);
+});
+
+flipVBtn.addEventListener("click",() => {
+  applyTransform([1,0,0,-1]);
+});
+
+resetBtn.addEventListener("click",() => {
+  if (!image || busy) return;
+  matrix = [1,0,0,1];
+  refreshPreview();
+});
+
+function getDimensions() {
+  if (!image) return {width:0,height:0};
+
+  const [a,b,c,d] = matrix;
+
+  return {
+    width:
+      Math.abs(a)*image.width +
+      Math.abs(c)*image.height,
+
+    height:
+      Math.abs(b)*image.width +
+      Math.abs(d)*image.height
+  };
+}
+
+function orientationLabel() {
+  const [a,b,c,d] = matrix;
+
+  const angle =
+    ((Math.round(
+      Math.atan2(b,a)*180/Math.PI
+    ) % 360)+360)%360;
+
+  // The first matrix column identifies where
+  // the image's original right edge points.
+  const determinant = a*d-b*c;
+
+  return "Right edge direction: " +
+    angle + "° clockwise" +
+    (determinant < 0
+      ? " | Mirrored"
+      : " | Not mirrored");
+}
+
+function drawTransformed(canvas,fullResolution) {
+  if (!image) return;
+
+  const output = getDimensions();
+
+  const scale = fullResolution
+    ? 1
+    : Math.min(
+        1,
+        PREVIEW_MAX_SIDE /
+          Math.max(output.width,output.height)
+      );
+
+  const targetWidth = Math.max(
+    1,Math.round(output.width*scale)
+  );
+
+  const targetHeight = Math.max(
+    1,Math.round(output.height*scale)
+  );
+
+  canvas.width = targetWidth;
+  canvas.height = targetHeight;
+
+  const type = formatSelect.value;
+
+  const ctx = canvas.getContext("2d",{
+    alpha:type !== "image/jpeg"
+  });
+
+  if (!ctx) {
+    throw new Error("Canvas is unavailable.");
+  }
+
+  if (type === "image/jpeg") {
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0,0,targetWidth,targetHeight);
+  }
+
+  // Map image center to output center.
+  // Apply the same matrix at preview
+  // and full export resolutions.
+  const sx = targetWidth/output.width;
+  const sy = targetHeight/output.height;
+
+  const [a,b,c,d] = matrix;
+
+  ctx.setTransform(
+    a*sx,b*sy,
+    c*sx,d*sy,
+    targetWidth/2,
+    targetHeight/2
+  );
+
+  ctx.drawImage(
+    image,
+    -image.width/2,
+    -image.height/2,
+    image.width,
+    image.height
+  );
+
+  ctx.setTransform(1,0,0,1,0,0);
+}
+
+function refreshPreview() {
+  clearResult();
+
+  if (!image) {
+    updateButtons();
+    return;
+  }
+
+  try {
+    drawTransformed(previewCanvas,false);
+
+    const output = getDimensions();
+
+    rotationDetails.textContent =
+      orientationLabel();
+
+    dimensionDetails.textContent =
+      "Output: " +
+      output.width + " × " +
+      output.height + " px";
+
+    message("Preview updated.");
+
+  } catch (error) {
+    console.error("Preview error:",error);
+    message("Unable to render preview.");
+  }
+
+  updateButtons();
+}
+
+function updateFormat() {
+  qualityPanel.hidden =
+    formatSelect.value === "image/png";
+
+  refreshPreview();
+}
+
+formatSelect.addEventListener(
+  "change",updateFormat
+);
+
+qualityInput.addEventListener(
+  "input",() => {
+    qualityValue.textContent =
+      qualityInput.value + "%";
+
+    clearResult();
+  }
+);
+
+function uint32(bytes,index) {
+  return (
+    bytes[index]*16777216 +
+    bytes[index+1]*65536 +
+    bytes[index+2]*256 +
+    bytes[index+3]
+  );
+}
+
+async function validateFile(file) {
+  const name = file.name.toLowerCase();
+
+  if (!/\.(jpg|jpeg|png|webp)$/.test(name)) {
+    throw new Error(
+      "Choose JPG, PNG or WebP files only."
+    );
+  }
+
+  if (!file.size || file.size > MAX_SIZE) {
+    throw new Error(
+      "Image must be larger than 0 bytes " +
+      "and no more than 15 MB."
+    );
+  }
+
+  const bytes = new Uint8Array(
+    await file.slice(0,64).arrayBuffer()
+  );
+
+  const ascii = (start,length) =>
+    String.fromCharCode(
+      ...bytes.slice(start,start+length)
+    );
+
+  const jpeg =
+    bytes.length >= 3 &&
+    bytes[0] === 255 &&
+    bytes[1] === 216 &&
+    bytes[2] === 255;
+
+  const pngSignature = [
+    137,80,78,71,13,10,26,10
+  ];
+
+  const png =
+    bytes.length >= 24 &&
+    pngSignature.every(
+      (value,i) => bytes[i] === value
+    ) &&
+    uint32(bytes,8) === 13 &&
+    ascii(12,4) === "IHDR";
+
+  const webp =
+    bytes.length >= 21 &&
+    ascii(0,4) === "RIFF" &&
+    ascii(8,4) === "WEBP";
+
+  const expected =
+    /\.(jpg|jpeg)$/.test(name) ? "jpeg" :
+    /\.png$/.test(name) ? "png" : "webp";
+
+  const valid =
+    (expected === "jpeg" && jpeg) ||
+    (expected === "png" && png) ||
+    (expected === "webp" && webp);
+
+  if (!valid) {
+    throw new Error(
+      "Image data does not match its extension."
+    );
+  }
+
+  if (webp) {
+    const chunk = ascii(12,4);
+
+    if (
+      !["VP8 ","VP8L","VP8X"].includes(chunk)
+    ) {
+      throw new Error(
+        "Unsupported WebP structure."
+      );
+    }
+
+    if (
+      chunk === "VP8X" &&
+      (bytes[20] & 0x02) !== 0
+    ) {
+      throw new Error(
+        "Animated WebP is not supported."
+      );
+    }
+  }
+
+  if (png) {
+    const width = uint32(bytes,16);
+    const height = uint32(bytes,20);
+
+    if (
+      !width || !height ||
+      width > MAX_DIMENSION ||
+      height > MAX_DIMENSION ||
+      width*height > MAX_PIXELS
+    ) {
+      throw new Error(
+        "Image dimensions exceed the limit."
+      );
+    }
+
+    // Detect APNG animation before the
+    // first image data chunk.
+    let offset = 8;
+
+    while (offset+12 <= file.size) {
+      const header = new Uint8Array(
+        await file.slice(
+          offset,offset+8
+        ).arrayBuffer()
+      );
+
+      if (header.length !== 8) break;
+
+      const length = uint32(header,0);
+      const chunk = String.fromCharCode(
+        ...header.slice(4,8)
+      );
+
+      const next = offset+12+length;
+
+      if (
+        !Number.isSafeInteger(next) ||
+        next > file.size
+      ) {
+        throw new Error(
+          "Invalid PNG chunk structure."
+        );
+      }
+
+      if (chunk === "acTL") {
+        throw new Error(
+          "Animated PNG is not supported."
+        );
+      }
+
+      if (chunk === "IDAT" || chunk === "IEND") {
+        break;
+      }
+
+      offset = next;
+    }
+  }
+}
+
+async function decodeImage(file) {
+  if (window.createImageBitmap) {
+    const bitmap = await createImageBitmap(file);
+
+    return {
+      image:bitmap,
+      release:() => bitmap.close()
+    };
+  }
+
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.decoding = "async";
+
+  try {
+    await new Promise((resolve,reject) => {
+      img.onload = resolve;
+      img.onerror = () => reject(
+        new Error("Unable to decode image.")
+      );
+      img.src = url;
+    });
+
+    return {
+      image:img,
+      release:() => URL.revokeObjectURL(url)
+    };
+
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+}
+
+imageFile.addEventListener("change",async () => {
+  if (busy) return;
+
+  const file = imageFile.files[0];
+
+  busy = true;
+  updateButtons();
+  releaseImage();
+
+  if (!file) {
+    busy = false;
+    updateButtons();
+    message("");
+    return;
+  }
+
+  message("Loading image...");
+
+  let decoded = null;
+
+  try {
+    await validateFile(file);
+
+    decoded = await decodeImage(file);
+
+    const width = decoded.image.width;
+    const height = decoded.image.height;
+
+    if (
+      !width || !height ||
+      width > MAX_DIMENSION ||
+      height > MAX_DIMENSION ||
+      width*height > MAX_PIXELS
+    ) {
+      throw new Error(
+        "Image dimensions exceed the supported limit."
+      );
+    }
+
+    selectedFile = file;
+    image = decoded.image;
+    imageRelease = decoded.release;
+    decoded = null;
+
+    matrix = [1,0,0,1];
+
+    fileDetails.textContent =
+      file.name + " | " +
+      width + " × " + height +
+      " px | " + sizeText(file.size);
+
+    fileDetails.hidden = false;
+    editor.hidden = false;
+
+    refreshPreview();
+
+    message(
+      "Image ready. Rotate or flip to begin."
+    );
+
+  } catch (error) {
+    if (decoded) decoded.release();
+
+    releaseImage();
+
+    message(
+      error.message ||
+      "Unable to load image."
+    );
+
+  } finally {
+    busy = false;
+    updateButtons();
+  }
+});
+
+function exportBlob(canvas,type,quality) {
+  return new Promise((resolve,reject) => {
+    canvas.toBlob(blob => {
+      if (!blob || blob.type !== type) {
+        reject(new Error(
+          "Unable to export this image format. " +
+          "Try PNG or JPG."
+        ));
+        return;
+      }
+
+      resolve(blob);
+    },type,quality);
+  });
+}
+
+prepareBtn.addEventListener("click",async () => {
+  if (!image || !selectedFile || busy) return;
+
+  busy = true;
+  updateButtons();
+  clearResult();
+
+  message("Preparing image...");
+
+  const canvas = document.createElement("canvas");
+
+  try {
+    drawTransformed(canvas,true);
+
+    const type = formatSelect.value;
+    const quality = Number(qualityInput.value)/100;
+
+    const blob = await exportBlob(
+      canvas,type,quality
+    );
+
+    downloadUrl = URL.createObjectURL(blob);
+
+    const base = selectedFile.name
+      .replace(/\.(jpg|jpeg|png|webp)$/i,"")
+      .replace(/[^\w.-]+/g,"_")
+      .slice(0,70) || "image";
+
+    const extension =
+      type === "image/png" ? ".png" :
+      type === "image/jpeg" ? ".jpg" : ".webp";
+
+    downloadLink.href = downloadUrl;
+
+    downloadLink.download =
+      base + "-rotated-freeaitools" +
+      extension;
+
+    const output = getDimensions();
+
+    resultDetails.textContent =
+      output.width + " × " +
+      output.height + " px | " +
+      sizeText(blob.size) +
+      " | " + extension.slice(1).toUpperCase();
+
+    result.hidden = false;
+
+    message("Success! Your image is ready.");
+
+  } catch (error) {
+    console.error("Export error:",error);
+
+    clearResult();
+
+    message(
+      error.message ||
+      "Unable to create image."
+    );
+
+  } finally {
+    canvas.width = 0;
+    canvas.height = 0;
+
+    busy = false;
+    updateButtons();
+  }
+});
+
+clearBtn.addEventListener("click",() => {
+  if (busy) return;
+
+  releaseImage();
+
+  formatSelect.value = "image/png";
+  qualityInput.value = "90";
+  qualityValue.textContent = "90%";
+
+  updateFormat();
+  message("");
+  updateButtons();
+});
+
+updateFormat();
+updateButtons();
+</script>
+</body>
+</html>
