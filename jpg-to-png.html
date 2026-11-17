@@ -1,0 +1,834 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Convert JPG and JPEG images to PNG for free. Convert multiple images in your browser, compare file sizes and download PNG images or a ZIP file.">
+<title>JPG to PNG Converter Free Online | FreeAITools</title>
+<link rel="canonical" href="https://freeaitools-5pd.pages.dev/jpg-to-png.html">
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#080e1e;color:#eef2ff;font-family:Arial,sans-serif;line-height:1.6}
+header{padding:22px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #293856}
+a{color:#b7a8ff;text-decoration:none}
+.brand{color:#fff;font-weight:bold;font-size:23px}
+main{max-width:900px;margin:46px auto;padding:0 20px}
+h1{text-align:center;font-size:clamp(30px,5vw,46px);margin-bottom:8px}
+.subtitle{text-align:center;color:#aab8d3;margin-bottom:32px}
+.panel,.info,.faq{background:#101a30;border:1px solid #293856;border-radius:18px;padding:26px}
+.upload{display:block;text-align:center;padding:42px 18px;border:2px dashed #7165e9;border-radius:14px;background:#151e3a;cursor:pointer}
+.upload strong{font-size:20px}
+.upload span{display:block;margin-top:8px;color:#aab8d3}
+.upload:focus-within{outline:2px solid #67e8f9;outline-offset:3px}
+.visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.hint,.details{font-size:14px;color:#aab8d3}
+.details{margin:16px 0;overflow-wrap:anywhere}
+.file-list{display:grid;gap:10px;margin:18px 0}
+.file-item{display:flex;align-items:center;gap:12px;justify-content:space-between;background:#17233c;border:1px solid #344562;border-radius:12px;padding:13px 15px}
+.file-name{flex:1;min-width:0;overflow-wrap:anywhere}
+.file-name strong{display:block;font-size:14px}
+.file-name small{display:block;color:#aab8d3;margin-top:3px}
+button{border:0;border-radius:10px;padding:13px 18px;background:#3a4768;color:white;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+.file-item button{padding:9px 12px;flex-shrink:0}
+.primary{display:block;width:100%;padding:16px;margin-top:24px;font-size:17px;font-weight:bold;background:linear-gradient(110deg,#965cff,#625ff4)}
+.secondary{margin-top:12px}
+#status{min-height:26px;color:#c7d2fe;overflow-wrap:anywhere}
+.result{margin-top:22px;padding:20px;background:#17233c;border:1px solid #46577a;border-radius:12px}
+.result h2{margin-top:0}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:18px 0}
+.stat{padding:15px;background:#101a30;border:1px solid #344562;border-radius:12px}
+.stat strong{display:block;font-size:21px;overflow-wrap:anywhere}
+.stat span{color:#aab8d3;font-size:13px}
+.download{display:block;text-align:center;padding:14px;margin-top:15px;background:#7255ec;color:white;border-radius:10px;font-weight:bold}
+.download-small{display:inline-block;padding:9px 13px;margin-top:9px;background:#35446d;color:white;border-radius:8px;font-size:13px}
+.output-row{display:flex;align-items:center;gap:15px;padding:14px 0;border-bottom:1px solid #344562}
+.output-row:last-child{border-bottom:0}
+.output-details{flex:1;min-width:0}
+.output-details strong{display:block;overflow-wrap:anywhere}
+.output-details small{display:block;color:#aab8d3}
+.preview-image{display:block;max-width:105px;max-height:85px;object-fit:contain;border-radius:5px;background:white}
+.info,.faq{margin-top:28px}
+.info p,.faq p{color:#aab8d3}
+.info li{margin-bottom:8px}
+.faq details{padding:15px 0;border-bottom:1px solid #293856}
+.faq details:last-child{border:0}
+.faq summary{font-weight:bold;cursor:pointer}
+footer{text-align:center;padding:35px;color:#aab8d3}
+[hidden]{display:none!important}
+.upload,button,.download,.download-small{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+button:focus-visible,a:focus-visible,.faq summary:focus-visible{outline:2px solid #67e8f9;outline-offset:3px}
+@media(hover:hover) and (pointer:fine){
+.upload:hover{border-color:#b7a8ff}
+button:not(:disabled):hover,.download:hover,.download-small:hover{transform:translateY(-2px)}
+.primary:not(:disabled):hover{box-shadow:0 10px 28px rgba(139,92,246,.25)}
+}
+@media(max-width:500px){
+header{flex-direction:column}
+.panel,.info,.faq{padding:17px}
+.file-item{padding:10px}
+.preview-image{max-width:75px}
+.stat{padding:10px}
+.stat strong{font-size:18px}
+}
+@media(prefers-reduced-motion:reduce){
+.upload,button,.download,.download-small{transition:none}
+button:hover,.download:hover,.download-small:hover{transform:none}
+}
+</style>
+
+<script defer
+src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js">
+</script>
+</head>
+
+<body>
+<header>
+<a class="brand" href="/">FreeAITools</a>
+<nav>
+<a href="/">Home</a> |
+<a href="/png-to-jpg.html">PNG to JPG</a>
+</nav>
+</header>
+
+<main>
+<h1>Free JPG to PNG Converter</h1>
+<p class="subtitle">
+Convert JPG and JPEG images to PNG in batches.
+Free, simple and private.
+</p>
+
+<section class="panel">
+
+<label class="upload" for="imageFiles">
+<strong>🖼️ Choose JPG or JPEG Images</strong>
+<span>Select up to 15 images</span>
+</label>
+
+<input id="imageFiles"
+       class="visually-hidden"
+       type="file"
+       accept=".jpg,.jpeg,image/jpeg"
+       multiple>
+
+<p class="hint">
+Maximum 15 images per batch.
+Each file up to 12 MB; 80 MB total.
+Maximum 8,000 pixels per side and
+20 million pixels per image.
+</p>
+
+<div id="selection" hidden>
+<h2>Selected images</h2>
+<p id="fileDetails" class="details"></p>
+<div id="fileList" class="file-list"></div>
+</div>
+
+<button id="convertBtn"
+        class="primary"
+        type="button"
+        disabled>
+Convert JPG to PNG
+</button>
+
+<button id="clearBtn"
+        class="secondary"
+        type="button">
+Clear Images
+</button>
+
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="result" class="result" hidden>
+<h2>Conversion complete!</h2>
+
+<div class="stats">
+  <div class="stat">
+    <strong id="originalSize">0 MB</strong>
+    <span>Original JPG total</span>
+  </div>
+  <div class="stat">
+    <strong id="convertedSize">0 MB</strong>
+    <span>Converted PNG total</span>
+  </div>
+</div>
+
+<p id="comparison"></p>
+
+<a id="zipDownload"
+   class="download"
+   download
+   hidden>
+Download All PNG as ZIP
+</a>
+
+<div id="outputList"></div>
+
+<p class="hint">
+Download links stay available until you change
+the selection, clear the images or convert again.
+</p>
+</div>
+
+<p class="hint">
+All selected images are converted locally in your
+browser. Image contents are not uploaded to
+FreeAITools servers for conversion.
+An internet connection is needed to load
+the ZIP library for batch downloads.
+</p>
+</section>
+
+<section class="info">
+<h2>How to convert JPG to PNG</h2>
+<ol>
+<li>Choose one or more JPG or JPEG images.</li>
+<li>Review the selected files.</li>
+<li>Remove any unwanted images.</li>
+<li>Click Convert JPG to PNG.</li>
+<li>Compare the original and converted file sizes.</li>
+<li>Download PNG images individually or as a ZIP.</li>
+</ol>
+
+<h2>Why convert JPG to PNG?</h2>
+<p>
+PNG is widely supported in image editing
+and graphic design software. Unlike JPG,
+PNG uses lossless encoding when saving
+image pixels. However, converting JPG to PNG
+cannot recover image details already lost
+through JPG compression.
+</p>
+
+<h2>Private browser-based conversion</h2>
+<p>
+This tool decodes JPG/JPEG images and exports
+PNG files using your browser's Canvas API.
+No image contents are uploaded to
+FreeAITools servers for conversion.
+</p>
+
+<h2>Important limitations</h2>
+<p>
+PNG output may be significantly larger than
+the original JPG. Image width and height are
+preserved within the tool limits, but EXIF,
+GPS metadata, color profiles and other original
+metadata may not be retained.
+</p>
+
+<p>
+Converting JPG to PNG does not automatically
+create a transparent background.
+The resulting PNG normally remains opaque.
+</p>
+</section>
+
+<section class="faq" aria-labelledby="faqTitle">
+<h2 id="faqTitle">Frequently Asked Questions</h2>
+
+<details>
+<summary>Is JPG to PNG free?</summary>
+<p>Yes. This converter is free and does not require an account.</p>
+</details>
+
+<details>
+<summary>Can I convert multiple JPG images?</summary>
+<p>Yes. You can convert up to 15 images at once and download all results as ZIP.</p>
+</details>
+
+<details>
+<summary>Are .jpg and .jpeg both supported?</summary>
+<p>Yes. Both common JPEG file extensions are supported.</p>
+</details>
+
+<details>
+<summary>Will PNG make my image higher quality?</summary>
+<p>No. PNG cannot restore details that were already lost in the original JPG.</p>
+</details>
+
+<details>
+<summary>Will PNG files be smaller?</summary>
+<p>Not necessarily. PNG images are often larger than JPG images.</p>
+</details>
+
+<details>
+<summary>Will my PNG have a transparent background?</summary>
+<p>No. Converting a JPG to PNG does not remove its existing background.</p>
+</details>
+
+<details>
+<summary>Can I change PNG quality?</summary>
+<p>PNG export in this tool is lossless, so there is no JPG-style quality slider.</p>
+</details>
+
+<details>
+<summary>Will image dimensions change?</summary>
+<p>No. The converter keeps the decoded pixel dimensions within its limits.</p>
+</details>
+
+<details>
+<summary>Are images uploaded?</summary>
+<p>No. Images are processed locally in your browser.</p>
+</details>
+</section>
+</main>
+
+<section class="future-ad-slot"
+         aria-label="Advertisement"
+         hidden>
+</section>
+
+<footer>
+FreeAITools — Free online tools
+<p>
+<a href="/about.html">About</a> |
+<a href="/privacy.html">Privacy</a> |
+<a href="/terms.html">Terms</a> |
+<a href="/contact.html">Contact</a>
+</p>
+</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const imageFiles = $("imageFiles");
+const selection = $("selection");
+const fileDetails = $("fileDetails");
+const fileList = $("fileList");
+const convertBtn = $("convertBtn");
+const clearBtn = $("clearBtn");
+const status = $("status");
+const result = $("result");
+const originalSize = $("originalSize");
+const convertedSize = $("convertedSize");
+const comparison = $("comparison");
+const zipDownload = $("zipDownload");
+const outputList = $("outputList");
+
+const MAX_FILES = 15;
+const MAX_EACH = 12 * 1024 * 1024;
+const MAX_TOTAL = 80 * 1024 * 1024;
+const MAX_PIXELS = 20000000;
+const MAX_DIMENSION = 8000;
+
+let selectedFiles = [];
+let busy = false;
+let downloadUrls = [];
+
+function message(text) {
+  status.textContent = text;
+}
+
+function sizeText(bytes) {
+  if (bytes < 1048576) {
+    return (bytes / 1024).toFixed(1) + " KB";
+  }
+
+  return (bytes / 1048576).toFixed(2) + " MB";
+}
+
+function clearResult() {
+  result.hidden = true;
+  outputList.replaceChildren();
+
+  zipDownload.hidden = true;
+  zipDownload.removeAttribute("href");
+
+  for (const url of downloadUrls) {
+    URL.revokeObjectURL(url);
+  }
+
+  downloadUrls = [];
+}
+
+function updateButtons() {
+  imageFiles.disabled = busy;
+  clearBtn.disabled = busy;
+  convertBtn.disabled =
+    busy || selectedFiles.length === 0;
+}
+
+function resetSelection() {
+  selectedFiles = [];
+  imageFiles.value = "";
+
+  clearResult();
+  fileList.replaceChildren();
+  selection.hidden = true;
+
+  message("");
+  updateButtons();
+}
+
+function renderSelection() {
+  fileList.replaceChildren();
+
+  selection.hidden = selectedFiles.length === 0;
+
+  if (!selectedFiles.length) {
+    fileDetails.textContent = "";
+    updateButtons();
+    return;
+  }
+
+  const total = selectedFiles.reduce(
+    (sum, file) => sum + file.size, 0
+  );
+
+  fileDetails.textContent =
+    selectedFiles.length + " image(s) | " +
+    sizeText(total) + " total";
+
+  selectedFiles.forEach((file, index) => {
+    const row = document.createElement("div");
+    row.className = "file-item";
+
+    const details = document.createElement("div");
+    details.className = "file-name";
+
+    const title = document.createElement("strong");
+    title.textContent = file.name;
+
+    const meta = document.createElement("small");
+    meta.textContent = sizeText(file.size);
+
+    details.append(title, meta);
+
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.textContent = "Remove";
+    remove.disabled = busy;
+
+    remove.setAttribute(
+      "aria-label",
+      "Remove " + file.name
+    );
+
+    remove.addEventListener("click", () => {
+      if (busy) return;
+
+      selectedFiles.splice(index, 1);
+
+      clearResult();
+      renderSelection();
+
+      message(
+        selectedFiles.length
+          ? "Selection updated."
+          : "Choose JPG images to convert."
+      );
+    });
+
+    row.append(details, remove);
+    fileList.appendChild(row);
+  });
+
+  updateButtons();
+}
+
+function validFileType(file) {
+  return /\.(jpg|jpeg)$/i.test(file.name) &&
+    (
+      file.type === "" ||
+      file.type === "image/jpeg"
+    );
+}
+
+function validateFiles(files) {
+  if (!files.length) {
+    throw new Error("Choose at least one JPG image.");
+  }
+
+  if (files.length > MAX_FILES) {
+    throw new Error(
+      "Select no more than 15 images."
+    );
+  }
+
+  let total = 0;
+
+  for (const file of files) {
+    if (!validFileType(file)) {
+      throw new Error(
+        "Only JPG/JPEG images are supported: " +
+        file.name
+      );
+    }
+
+    if (!file.size || file.size > MAX_EACH) {
+      throw new Error(
+        "Each JPG must be larger than 0 bytes " +
+        "and no more than 12 MB: " +
+        file.name
+      );
+    }
+
+    total += file.size;
+  }
+
+  if (total > MAX_TOTAL) {
+    throw new Error(
+      "Selected files exceed the 80 MB total limit."
+    );
+  }
+}
+
+// Check the JPEG start-of-image signature.
+// The browser decoder will additionally verify
+// whether the file can be read as an image.
+async function checkJPEG(file) {
+  const bytes = new Uint8Array(
+    await file.slice(0, 4).arrayBuffer()
+  );
+
+  if (
+    bytes.length < 4 ||
+    bytes[0] !== 0xFF ||
+    bytes[1] !== 0xD8 ||
+    bytes[2] !== 0xFF
+  ) {
+    throw new Error(
+      "Invalid JPG/JPEG file: " +
+      file.name
+    );
+  }
+}
+
+async function loadImage(file) {
+  if (window.createImageBitmap) {
+    const bitmap = await createImageBitmap(file);
+
+    return {
+      image: bitmap,
+      release: () => bitmap.close()
+    };
+  }
+
+  const url = URL.createObjectURL(file);
+  const img = new Image();
+  img.decoding = "async";
+
+  try {
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = () => reject(
+        new Error(
+          "Cannot decode JPG: " +
+          file.name
+        )
+      );
+
+      img.src = url;
+    });
+
+    return {
+      image: img,
+      release: () => URL.revokeObjectURL(url)
+    };
+
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
+}
+
+function exportPNG(canvas) {
+  return new Promise((resolve, reject) => {
+    canvas.toBlob(blob => {
+      if (
+        !blob ||
+        blob.type !== "image/png"
+      ) {
+        reject(new Error(
+          "Unable to export PNG image."
+        ));
+        return;
+      }
+
+      resolve(blob);
+    }, "image/png");
+  });
+}
+
+async function convertImage(file) {
+  await checkJPEG(file);
+
+  let decoded = null;
+  let canvas = null;
+
+  try {
+    decoded = await loadImage(file);
+
+    const img = decoded.image;
+
+    const width =
+      img.width || img.naturalWidth;
+
+    const height =
+      img.height || img.naturalHeight;
+
+    if (
+      !width || !height ||
+      width > MAX_DIMENSION ||
+      height > MAX_DIMENSION ||
+      width * height > MAX_PIXELS
+    ) {
+      throw new Error(
+        "Image dimensions exceed limits: " +
+        file.name
+      );
+    }
+
+    canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext("2d", {
+      alpha: false
+    });
+
+    if (!ctx) {
+      throw new Error(
+        "Canvas is unavailable."
+      );
+    }
+
+    // JPG images do not contain transparency.
+    // An opaque canvas is sufficient.
+    ctx.fillStyle = "#ffffff";
+    ctx.fillRect(0, 0, width, height);
+    ctx.drawImage(img, 0, 0, width, height);
+
+    return await exportPNG(canvas);
+
+  } finally {
+    if (canvas) {
+      canvas.width = 0;
+      canvas.height = 0;
+    }
+
+    if (decoded) {
+      decoded.release();
+    }
+  }
+}
+
+function safeName(name) {
+  return name
+    .replace(/\.(jpg|jpeg)$/i, "")
+    .replace(/[^\w.-]+/g, "_")
+    .slice(0, 65) || "image";
+}
+
+function addOutputRow(item) {
+  const row = document.createElement("div");
+  row.className = "output-row";
+
+  const url = URL.createObjectURL(item.blob);
+  downloadUrls.push(url);
+
+  const preview = document.createElement("img");
+  preview.src = url;
+  preview.alt = "Converted PNG preview";
+  preview.className = "preview-image";
+  preview.loading = "lazy";
+
+  const details = document.createElement("div");
+  details.className = "output-details";
+
+  const name = document.createElement("strong");
+  name.textContent = item.name;
+
+  const meta = document.createElement("small");
+  meta.textContent =
+    sizeText(item.originalBytes) + " → " +
+    sizeText(item.blob.size);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = item.name;
+  link.className = "download-small";
+  link.textContent = "Download PNG";
+
+  details.append(name, meta, link);
+  row.append(preview, details);
+
+  outputList.appendChild(row);
+}
+
+imageFiles.addEventListener("change", () => {
+  if (busy) return;
+
+  const files = Array.from(imageFiles.files);
+  imageFiles.value = "";
+
+  try {
+    validateFiles(files);
+
+    selectedFiles = files;
+
+    clearResult();
+    renderSelection();
+
+    message(
+      "JPG images ready for conversion."
+    );
+
+  } catch (error) {
+    resetSelection();
+    message(error.message);
+  }
+});
+
+clearBtn.addEventListener("click", () => {
+  if (busy) return;
+  resetSelection();
+});
+
+convertBtn.addEventListener("click", async () => {
+  if (busy || !selectedFiles.length) return;
+
+  try {
+    validateFiles(selectedFiles);
+  } catch (error) {
+    message(error.message);
+    return;
+  }
+
+  if (
+    selectedFiles.length > 1 &&
+    !window.JSZip
+  ) {
+    message(
+      "ZIP library unavailable. " +
+      "Check your connection and refresh."
+    );
+    return;
+  }
+
+  busy = true;
+  updateButtons();
+  renderSelection();
+  clearResult();
+
+  const inputs = [...selectedFiles];
+  const outputs = [];
+
+  try {
+    let inputTotal = 0;
+    let outputTotal = 0;
+
+    for (let i = 0; i < inputs.length; i++) {
+      const file = inputs[i];
+
+      message(
+        "Converting image " + (i + 1) +
+        " of " + inputs.length + "..."
+      );
+
+      const blob = await convertImage(file);
+
+      const fileName =
+        String(i + 1).padStart(2, "0") +
+        "-" + safeName(file.name) +
+        ".png";
+
+      outputs.push({
+        name: fileName,
+        blob,
+        originalBytes: file.size
+      });
+
+      inputTotal += file.size;
+      outputTotal += blob.size;
+    }
+
+    if (outputs.length > 1) {
+      message("Preparing ZIP download...");
+
+      const zip = new JSZip();
+
+      for (const item of outputs) {
+        zip.file(
+          item.name,
+          item.blob,
+          {compression: "STORE"}
+        );
+      }
+
+      const zipBlob = await zip.generateAsync({
+        type: "blob",
+        compression: "STORE"
+      });
+
+      const url = URL.createObjectURL(zipBlob);
+      downloadUrls.push(url);
+
+      zipDownload.href = url;
+      zipDownload.download =
+        "freeaitools-jpg-to-png.zip";
+
+      zipDownload.hidden = false;
+    }
+
+    for (const item of outputs) {
+      addOutputRow(item);
+    }
+
+    originalSize.textContent =
+      sizeText(inputTotal);
+
+    convertedSize.textContent =
+      sizeText(outputTotal);
+
+    const change =
+      (outputTotal - inputTotal) /
+      inputTotal * 100;
+
+    if (change > 0) {
+      comparison.textContent =
+        "PNG images are " +
+        change.toFixed(1) +
+        "% larger in total.";
+    } else if (change < 0) {
+      comparison.textContent =
+        "PNG images are " +
+        Math.abs(change).toFixed(1) +
+        "% smaller in total.";
+    } else {
+      comparison.textContent =
+        "Total file size is unchanged.";
+    }
+
+    result.hidden = false;
+
+    message(
+      "Success! " +
+      outputs.length +
+      " PNG image(s) ready."
+    );
+
+  } catch (error) {
+    console.error("JPG to PNG error:", error);
+
+    clearResult();
+
+    message(
+      error.message ||
+      "Conversion failed. Try fewer images."
+    );
+
+  } finally {
+    busy = false;
+    updateButtons();
+    renderSelection();
+  }
+});
+
+updateButtons();
+</script>
+</body>
+</html>
