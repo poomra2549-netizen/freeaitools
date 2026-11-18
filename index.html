@@ -670,11 +670,9 @@
 (() => {
   if (!('IntersectionObserver' in window)) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  const sections = document.querySelectorAll(
-    '.tool-section, .why-section, .ad-area'
-  );
-
+const sections = document.querySelectorAll(
+  '#pdf-tools, #image-tools, .why-section, .ad-area'
+);
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
