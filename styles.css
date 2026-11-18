@@ -161,3 +161,36 @@
     transform: none !important;
   }
 }
+
+/* ========================================
+   FreeAITools — Premium Hover Upgrade
+======================================== */
+
+@media (hover: hover) and (pointer: fine) {
+  #pdf-tools a:hover,
+  #image-tools a:hover,
+  .benefits article:hover {
+    transform: translateY(-5px);
+    border-color: #8b9cff !important;
+    box-shadow:
+      0 12px 30px rgba(90, 110, 255, 0.14),
+      0 0 18px rgba(103, 232, 249, 0.10);
+  }
+
+  .primary-btn:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.12);
+    box-shadow:
+      0 14px 32px rgba(139, 92, 246, 0.30),
+      0 0 20px rgba(103, 232, 249, 0.12);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #pdf-tools a:hover,
+  #image-tools a:hover,
+  .benefits article:hover,
+  .primary-btn:hover {
+    transform: none !important;
+  }
+}
