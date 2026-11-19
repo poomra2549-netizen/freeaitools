@@ -17,7 +17,7 @@
   <main class="tools-section">
     <div class="eyebrow">LEGAL & PRIVACY</div>
     <h1>Privacy Policy</h1>
-    <p><strong>Last updated:</strong> November 16, 2026</p>
+    <p><strong>Last updated:</strong> November 20, 2026</p>
 
     <p>
       Welcome to FreeAITools. This Privacy Policy explains how information
@@ -33,11 +33,15 @@
     </p>
 
     <h2>1. Information you provide</h2>
-    <p>
-      When you use our AI writing tools, the text you enter, your selected
-      tool, and relevant generation preferences are processed to respond
-      to your request.
-    </p>
+   
+<p>
+  Public AI writing tools are currently unavailable.
+  If these features are re-enabled, information you
+  choose to submit, such as prompts, selected tools,
+  and generation preferences, may be processed to
+  provide the requested AI-generated results.
+</p>
+
     <p>
       Please do not enter passwords, payment details, government
       identification numbers, confidential documents, sensitive personal
@@ -45,24 +49,45 @@
       an external AI provider.
     </p>
 
-    <h2>2. AI processing and Google Gemini</h2>
-    <p>
-      FreeAITools uses Google's Gemini API to generate text for tools
-      such as AI Writer, Caption Generator, Business Name Generator,
-      and Email Writer.
-    </p>
-    <p>
-      AI prompts are sent from our Cloudflare-hosted backend to Google's
-      Gemini API. Google processes the submitted content to generate
-      responses.
-    </p>
-    <p>
-      Our current Gemini API project uses Google's free service tier.
-      Under Google's terms for unpaid Gemini API services, submitted
-      prompts and generated responses may be used to provide, improve,
-      and develop Google's products and services. Human reviewers may
-      review some content as described in Google's terms.
-    </p>
+<h2>2. AI processing and Google Gemini</h2>
+<p>
+  Public AI text generation is currently suspended on FreeAITools.
+  Our AI Writer, Caption Generator, Business Name Generator,
+  and Email Writer are not currently available for public use.
+</p>
+<p>
+  If these AI features become available in the future,
+  FreeAITools may use Google's Gemini API to process submitted
+  prompts and generate responses. Before re-enabling these
+  features, we will review the applicable provider requirements
+  and update this Privacy Policy as necessary.
+</p>
+  
+<p>
+  While public AI text generation is suspended, FreeAITools
+  does not offer public AI prompt processing through its
+  Gemini API integration.
+</p>
+<p>
+  If AI features are re-enabled, prompts submitted through
+  those features may be transmitted from our Cloudflare-hosted
+  backend to Google's Gemini API for processing and response
+  generation. Such processing would be subject to the
+  applicable provider terms and privacy practices.
+</p>
+
+<p>
+  Public AI text generation is currently suspended.
+  If these features are re-enabled, the applicable
+  Gemini API service tier and Google's then-current
+  terms will determine how submitted prompts and
+  generated responses are handled.
+  Depending on the service terms, this may include
+  processing for service improvement or human review.
+  We will review and disclose relevant data practices
+  before enabling public AI processing.
+</p>
+
     <p>
       Please review
       <a href="https://ai.google.dev/gemini-api/terms"
@@ -94,38 +119,51 @@
     </p>
 
     <h2>4. Security and usage limits</h2>
-    <p>
-      We use Cloudflare services to host and protect FreeAITools,
-      verify legitimate requests, and limit automated or excessive
-      use of our AI tools.
-    </p>
-    <p>
-      Our backend receives technical request information, including
-      the request IP address. For daily rate limiting, it generates
-      a SHA-256 hash from the date and IP address and uses that hash
-      as part of a temporary usage-counter key in Cloudflare KV.
-    </p>
-    <p>
-      The rate-limit counter is configured with an expiration time
-      of approximately 24 hours. Our system also maintains
-      website-wide AI usage counters.
-    </p>
+<p>
+  We use Cloudflare services to host and protect FreeAITools,
+  support website security, and help distinguish legitimate
+  requests from automated or abusive activity.
+</p>
+<p>
+  Public AI text generation is currently suspended.
+  Security checks, request verification, and usage limits
+  may apply to AI features if they are re-enabled.
+</p>
+<p>
+  Public AI generation is currently suspended, so the AI
+  endpoint does not currently execute its IP-based rate
+  limiting or Cloudflare KV usage-counter logic for
+  public AI generation requests.
+</p>
+<p>
+  If AI generation is re-enabled, the backend is designed
+  to read the request IP address and generate a SHA-256
+  hash using the date and IP address. This hash may be
+  used as part of a temporary rate-limit key in Cloudflare
+  KV. The configured expiration time for these counters
+  is approximately 24 hours. The system also includes
+  website-wide AI usage counters.
+</p>
     <p>
       Hashing an IP address does not necessarily make the resulting
       information anonymous. We use this processing for service
       protection, abuse prevention, and fair resource allocation.
     </p>
 
-    <h2>5. Cloudflare Turnstile</h2>
-    <p>
-      We use Cloudflare Turnstile to help distinguish legitimate
-      visitors from automated activity before processing AI requests.
-    </p>
-    <p>
-      Cloudflare may process technical information associated with
-      security checks, such as browser, device, network, and request
-      information, in accordance with its applicable privacy terms.
-    </p>
+    <h2>5. Cloudflare Turnstile</h2> 
+<p>
+  FreeAITools integrates Cloudflare Turnstile as a security
+  verification measure for AI-related features.
+  Public AI text generation is currently suspended, so
+  AI generation requests do not currently proceed to
+  backend Turnstile verification.
+</p>
+<p>
+  Turnstile scripts or components may still be present
+  on website pages. Where loaded, Cloudflare may process
+  technical information for security and verification
+  purposes under its applicable privacy practices.
+</p>
     <p>
       Learn more in
       <a href="https://www.cloudflare.com/privacypolicy/"
@@ -185,11 +223,15 @@
     </p>
 
     <h2>9. Data retention</h2>
-    <p>
-      Our AI endpoint is designed to return generated responses
-      without instructing browsers or intermediaries to cache
-      successful responses.
-    </p>
+<p>
+  Public AI text generation is currently suspended.
+  If AI features are re-enabled, our AI endpoint is
+  designed to return generated responses without
+  instructing browsers or intermediaries to cache
+  successful responses. This does not guarantee
+  that external service providers will not retain
+  information under their own policies.
+</p>
     <p>
       Daily rate-limit counters stored in Cloudflare KV are
       configured to expire after approximately 24 hours.
